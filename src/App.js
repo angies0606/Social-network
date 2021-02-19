@@ -1,32 +1,30 @@
+// import React from 'react';
 import './App.css';
+import Header from './components/Header/Header';
+import Navbar from './components/Navbar/Navbar';
+import Profile from './components/Profile/Profile';
+import Music from './components/Music/Music';
+import Settings from './components/Settings/Settings';
+import News from './components/News/News';
+import {Route} from "react-router-dom";
+import DialogsContainer from './components/Dialogs/DialogsContainer';
+import UsersContainer from './components/Users/UsersContainer';
 
-const App = () => {
+
+const App = (props) => {
   return (
-    <div className="app-wrapper">
-      <header className="header">
-        <img src='https://www.pinclipart.com/picdir/big/526-5262236_transparent-falling-png-phoenix-egg-png-clipart.png'/>
-      </header>
-      <nav className="nav">
-        <div>
-         <a> Profile</a>
+      <div className="app-wrapper">
+        <Header />
+        <Navbar />
+        <div className="app-wrapper-content">
+          <Route path="/dialogs" render={ () => <DialogsContainer store={props.store} />} />              
+          <Route path="/profile" render={ () => <Profile store={props.store} />} />
+          <Route path="/users" render={ () => <UsersContainer store={props.store} />} />
+          <Route path="/music" component={Music} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/news" component={News} />
         </div>
-        <div>
-          <a> Messages</a>
-        </div>
-        <div>
-          <a> News</a>
-        </div>
-        <div>
-          <a> Music </a>
-        </div>
-        <div>
-          <a> Settings</a>
-        </div>
-      </nav>
-      <div className="content">
-        Main content
       </div>
-    </div>
   );
 }
 
