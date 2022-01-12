@@ -1,3 +1,5 @@
+import { usersAPI } from "../../api/api";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET-USERS";
@@ -75,12 +77,12 @@ const usersReducer = (state = initialState, action) => {
 }
 
 // action- криейторы
-export const follow = (userId) => ({
+export const followSucces = (userId) => ({
   type: FOLLOW,
   userId
 }); // можно писать в одну строку
 
-export const unfollow= (userId) => {
+export const unfollowSuccess= (userId) => {
   return {
     type: UNFOLLOW,
     userId
@@ -115,6 +117,42 @@ export const toggleFollowingInProgress = (isFetching, userId) => {
     type: TOGGLE_IS_FOLLOWING_PROGRESS,
     isFetching,
     userId
+  }
+}
+export const getUsers = (page, pageSize) => {
+  return (dispatch) => {
+  dispatch(toggleIsFetching(true));
+  dispatch(setCurrentPage(page));
+  usersAPI.getUsers(page, pageSize)
+    .then(data => {
+      dispatch(toggleIsFetching(false));
+      dispatch(setUsers(data.items));
+      dispatch(setTotalUsersCount(data.totalCount));
+  });
+}
+}
+export const follow = (userId) => {
+  return (dispatch) => {
+    dispatch(toggleFollowingInProgress(true, userId));
+              usersAPI.follow(userId) // y post запроса 3 параметра
+                .then(response => {
+                  if(response.data.resultCode === 0) {
+                    dispatch(followSucces(userId));
+                  }
+                  dispatch(toggleFollowingInProgress(false, userId));
+                });
+  }
+}
+export const unfollow = (userId) => {
+  return (dispatch) => {
+    dispatch(toggleFollowingInProgress(true, userId));
+              usersAPI.unfollow(userId)
+                .then(response => {
+                  if (response.data.resultCode === 0) {
+                    dispatch(unfollowSuccess(userId));
+                  }
+                  dispatch(toggleFollowingInProgress(false, userId));
+                });
   }
 }
 export default usersReducer;
