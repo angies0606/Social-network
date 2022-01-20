@@ -1,4 +1,4 @@
-let initialState = {};
+import initialState from "@redux/store/initial-state";
 
 const sidebarReducer = (state = initialState, action) => {
   return state;

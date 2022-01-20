@@ -1,5 +1,5 @@
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import PostsBlockConnected from "./PostsBlock/PostsBlockConnected";
 
 
 
@@ -8,7 +8,7 @@ const Profile = (props) => {
     <div>
         <ProfileInfo profile={props.profile} status={props.status}
                       updateStatus={props.updateStatus}/>
-        <MyPostsContainer store={props.store} />
+        <PostsBlockConnected store={props.store} />
       </div>
   )
 }
