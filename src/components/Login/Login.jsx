@@ -4,7 +4,7 @@ import { Redirect } from "react-router";
 import { Field, reduxForm } from "redux-form";
 import { required } from "../../utils/validators/validators";
 import { Input } from "../common/FormsControls/FormsControls";
-import { login } from "../redux/auth-reducer";
+import { login } from "@redux/reducers/auth-reducer.js";
 import classes from "../common/FormsControls/FormsControls.module.css"
 
 const LoginForm = (props) => {

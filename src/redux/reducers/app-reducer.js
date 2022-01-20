@@ -1,15 +1,11 @@
 import { stopSubmit } from "redux-form";
-import { authAPI } from "../../api/api";
-import { getAuthUserData } from "./auth-reducer";
+import { authAPI } from "@api/api.js";
+import { getAuthUserData } from "@redux/reducers/auth-reducer.js";
+import initialState from "@redux/store/initial-state";
 
 const INITIALIZED_SUCCESS = "INITIALIZED-SUCCESS";
 
-
-let initialState = {
- initialized: false,
-};
-
-const appReducer = (state = initialState, action) => {
+const appReducer = (state = initialState.app, action) => {
   switch(action.type) {
     case INITIALIZED_SUCCESS:
       return {

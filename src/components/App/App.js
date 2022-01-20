@@ -1,23 +1,28 @@
 import React from 'react';
 import './App.css';
-import './assets/styles/preloader.css';
-import Navbar from './components/Navbar/Navbar';
-import Music from './components/Music/Music';
-import Settings from './components/Settings/Settings';
-import News from './components/News/News';
+import '@assets/styles/preloader.css';
+import Navbar from '../Navbar/Navbar';
+import Music from '../Music/Music';
+import Settings from '../Settings/Settings';
+import News from '../News/News';
 import {Route} from "react-router-dom";
-import DialogsContainer from './components/Dialogs/DialogsContainer';
-import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
-import HeaderContainer from './components/Header/HeaderContainer';
-import Login from "./components/Login/Login";
+import DialogsContainer from '../Dialogs/DialogsContainer';
+import UsersContainer from '../Users/UsersContainer';
+import ProfileContainer from '../Profile/ProfileContainer';
+import HeaderContainer from '../Header/HeaderContainer';
+import Login from "../Login/Login";
 import { connect } from 'react-redux';
-import { initializeApp } from './components/redux/app-reducer';
-import Preloader from './components/Preloader/Preloader';
+import { initializeApp } from '@redux/reducers/app-reducer.js';
+import Preloader from '../Preloader/Preloader';
+import axios from 'axios';
 
 class App extends React.Component {
   componentDidMount() {
     this.props.initializeApp();
+    axios.post('http://localhost:8080/users', {name: 'Пелагея404'}, {
+      headers: {'Content-Type': 'application/json'}
+    });
+    
    }
   render() {
     if(this.props.initialized) {

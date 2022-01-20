@@ -1,4 +1,5 @@
-import { usersAPI } from "../../api/api";
+import { usersAPI } from "@api/api";
+import initialState from "@redux/store/initial-state";
 
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
@@ -8,21 +9,21 @@ const SET_TOTAL_USERS_COUNT = "SET-TOTSAL-USERS-COUNT";
 const TOGGLE_IS_FETCHING = "TOGGLE-IS-FETCHING";
 const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE-IS-FOLLOWING-PROGRESS";
 
-let initialState = {
-  users: [],
-  pageSize: 5,
-  totalUsersCount: 0,
-  currentPage: 1,
-  isFetching: false,
-  followingInProgress: []
+// let initialstate = {
+//   users: [],
+//   pageSize: 5,
+//   totalUsersCount: 0,
+//   currentPage: 1,
+//   isFetching: false,
+//   followingInProgress: []
 
-  //  [ {id: 1, followed: false, fullName: "Евгения", status: "Привет! Я новичок!", location: { city: "Нижний Новгород", country: "РФ" }, photoUrl:"https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png"}, 
-  //    {id: 2, followed: true, fullName: "Лена", status: "Все хорошо", location: { city: "Донецк", country: "ДНР" }, photoUrl:"https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png"},
-  //    {id: 3, followed: true, fullName: "Ксения", status: "ахахаха", location: { city: "Донецк", country: "ДНР" }, photoUrl:"https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png"},
-  //    ]
-};
+//   //  [ {id: 1, followed: false, fullName: "Евгения", status: "Привет! Я новичок!", location: { city: "Нижний Новгород", country: "РФ" }, photoUrl:"https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png"}, 
+//   //    {id: 2, followed: true, fullName: "Лена", status: "Все хорошо", location: { city: "Донецк", country: "ДНР" }, photoUrl:"https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png"},
+//   //    {id: 3, followed: true, fullName: "Ксения", status: "ахахаха", location: { city: "Донецк", country: "ДНР" }, photoUrl:"https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png"},
+//   //    ]
+// };
 
-const usersReducer = (state = initialState, action) => {
+const usersReducer = (state = initialState.usersPage, action) => {
   switch(action.type) {
     case FOLLOW:
       return {

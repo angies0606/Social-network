@@ -1,14 +1,17 @@
 import React from 'react';
-import classes from "./MyPosts.module.css";
+import classes from "./PostsBlock.module.css";
 import Post from "./Post/Post";
 import { Field, reduxForm } from 'redux-form';
 import { maxLengthCreator, required} from "../../../utils/validators/validators"
 import { Textarea } from '../../common/FormsControls/FormsControls';
 
 
-const MyPosts = (props) => {
+const PostsBlock = (props) => {
   let postsElements = props.posts.map((post, index) => 
-    <Post message={post.message} likesCount={post.likesCount} key={index}/>
+    <Post 
+      post={post}
+      key={index}
+    />
   );
   
 
@@ -17,14 +20,14 @@ const MyPosts = (props) => {
   }
 
  return (
-    <div className={classes.postsBlock}>
-      <div>
+    <div className={classes.PostsBlock}>
+      <div className={classes.PostsBlock__Header}>
         <h3>
           Мои записи
         </h3>
       </div>
-      <AddNewPostFormRedux onSubmit={onAddPost} />
-      <div className={classes.posts}>
+      {/* <AddNewPostFormRedux onSubmit={onAddPost} /> */}
+      <div className={classes.PostsBlock_Posts}>
         {postsElements}
       </div>
     </div>
@@ -51,4 +54,4 @@ const AddNewPostFormRedux = reduxForm({
   form: "ProfileAddNewPostForm"
 })(AddNewPostForm);
 
-export default MyPosts;
+export default PostsBlock;
