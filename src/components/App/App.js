@@ -19,10 +19,16 @@ import axios from 'axios';
 class App extends React.Component {
   componentDidMount() {
     this.props.initializeApp();
-    axios.post('http://localhost:8080/users', {name: 'Пелагея404'}, {
-      headers: {'Content-Type': 'application/json'}
-    });
-    
+    // axios.post('http://localhost:8080/users', {name: 'Пелагея404'}, {
+    //   headers: {'Content-Type': 'application/json'}
+    // });
+    // axios.post('http://localhost:8080/posts', {
+    //   user: '61f43759841a34f6da91d6da',
+    //   text: 'Геральт одобряет!',
+    //   image: "https://images.stopgame.ru/uploads/users/2020/579404/r912x500/uRve2ouTkLoBIUqO9iM22g/00029.6cJvjoX.jpg"
+    // }, {
+    //   headers: {'Content-Type': 'application/json'}
+    // });
    }
   render() {
     if(this.props.initialized) {

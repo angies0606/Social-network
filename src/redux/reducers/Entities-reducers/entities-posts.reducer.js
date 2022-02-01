@@ -1,16 +1,16 @@
 import initialState from "@redux/store/initial-state";
 import {
   PUT_POSTS,
-} from '../actions.js';
+} from '@redux/actions.js';
 
-function postsReducer(state = initialState.profilePage.postsData.entities.posts, action) {
+function entitiesPostsReducer(state = initialState.entities.posts, action) {
   switch (action.type) {
     case PUT_POSTS: {
       const newState = {
         ...state
       };
       action.data.forEach(post => {
-        newState[post.id] = post;
+        newState[post._id] = post;
       });
       return newState;
     }
@@ -35,4 +35,4 @@ function postsReducer(state = initialState.profilePage.postsData.entities.posts,
   }
 }
 
-export default postsReducer;
+export default entitiesPostsReducer;

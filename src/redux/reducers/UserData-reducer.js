@@ -14,7 +14,7 @@ const SET_STATUS = "SET-STATUS";
 //   status: ""
 // };
 
-const profileReducer = (state = initialState.profilePage.userData, action) => {
+const userDataReducer = (state = initialState.userData, action) => { // TODO: добавить в редьюсер поля экшены аватара
   switch(action.type) {
 
     case SET_USER_PROFILE:
@@ -75,4 +75,4 @@ export const updateUserStatus = (status) => (dispatch) => {
 }
 
 
-export default profileReducer;
+export default userDataReducer;

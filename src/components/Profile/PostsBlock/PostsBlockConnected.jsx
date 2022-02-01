@@ -1,20 +1,19 @@
-import React from 'react';
-import {putPostsActionCreator} from "@redux/reducers/Posts-reducers/actions.js";
+
+import {putPostsActionCreator} from "@redux/actions.js";
 import PostsBlock from './PostsBlock';
 import { connect } from "react-redux";
 
 
 let mapStateToProps = (state) => {
-  const postsData = state.profilePage.postsData;
   return {
-    posts: postsData.posts.map(postId => postsData.entities.posts[postId])
+    posts: state.pages.userPage.posts.map(postId => state.entities.posts[postId])
   }
 }
 
 let mapDispatchToProps = (dispatch) => {
   return {
-    addPost: (post) => {
-      dispatch(putPostsActionCreator(post))
+    addPosts: (posts) => {
+      dispatch(putPostsActionCreator(posts))
     }
   }
 }

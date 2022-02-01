@@ -1,15 +1,17 @@
 import initialState from "@redux/store/initial-state";
 import {
   PUT_POSTS,
-} from './actions.js';
+} from '@redux/actions.js';
 
-function postsReducer(state = initialState.profilePage.postsData.posts, action) {
+function userPageReducer(state = initialState.pages.userPage, action) {
   switch (action.type) {
     case PUT_POSTS: {
-      return [
-        ...state,
-        ...action.data.map(post => post.id).filter(postId => !state.includes(postId))
-      ]
+      return {
+        posts: [
+          ...state.posts,
+          ...action.data.map(post => post._id)
+        ]
+      } 
     }
     
     // case PUT_TODO_LISTS: {
@@ -31,4 +33,4 @@ function postsReducer(state = initialState.profilePage.postsData.posts, action) 
   }
 }
 
-export default postsReducer;
+export default userPageReducer;

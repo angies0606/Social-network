@@ -12,6 +12,7 @@
   width: 100%;
   flex: 1 0 auto;
   max-height: 100%;
+  margin-bottom: 25px;
 }
 
 .Card__CardMediaBox {
