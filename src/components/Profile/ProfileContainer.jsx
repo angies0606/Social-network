@@ -1,7 +1,7 @@
 
 import React from "react";
 import { connect } from "react-redux";
-import {  getUserProfile, getUserStatus, updateUserStatus } from "@redux/reducers/Profile-reducer.js";
+import {  getUserProfile, getUserStatus, updateUserStatus } from "@redux/reducers/UserData-reducer.js";
 import Profile from "./Profile";
 import { withRouter } from "react-router-dom";
 import { withAuthRedirectComponent } from "../../hoc/withAuthRedirect";
@@ -29,9 +29,9 @@ class ProfileContainer extends React.Component {
   }
 }
 
-let mapStateToProps = (state) => ({
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
+let mapStateToProps = (state) => ({ //TODO: переписать, когда буду настраивать авторизацию
+    profile: state.userData.profile,
+    status: state.userData.status,
     authUserId: state.auth.userId,
     isAuth: state.auth.isAuth
 });

@@ -1,6 +1,6 @@
-const SEND_MESSAGE = "SEND-MESSAGE";
 import initialState from "@redux/store/initial-state";
 
+const SEND_MESSAGE = "SEND-MESSAGE";
 // let initialstate = {
 //   messagesData: [
 //     {id: 1, text: "Привет"}, 

@@ -40,7 +40,7 @@ const Post = ({
       <div className={classes.Card__CardMediaBox}>
         <CardMedia
           component="img"
-          image={post.img}
+          image={post.image}
           className={classes.Card__CardMedia}
         />
       </div>
