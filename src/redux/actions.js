@@ -8,3 +8,11 @@ export function putPostsActionCreator(posts) {
     data: posts
   };
 }
+
+export const DELETE_POST = 'DELETE_POST';
+export function deletePostActionCreator(postId) {
+  return {
+    type: DELETE_POST,
+    data: postId
+  }
+}

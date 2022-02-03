@@ -11,14 +11,10 @@ import {postsApi} from '@api/api-n';
 const PostsBlock = ({
   addPosts,
   posts,
-  authUserId
+  authUserId,
+  deletePost
 }) => {
-  let postsElements = posts.map((post, index) => 
-    <Post 
-      post={post}
-      key={index}
-    />
-  );
+ 
 // TODO: реализовать метод, который не будет задваивать посты при перехода со страницы на страницу
   useEffect(() => {
     // TODO: убрать заглушку
@@ -28,7 +24,7 @@ const PostsBlock = ({
       });
   }, [addPosts]);
 
-  let onAddPost = (newPost) => {
+  const onAddPost = (newPost) => {
     const newPostData = {
       user: authUserId,
       ...newPost
@@ -39,6 +35,23 @@ const PostsBlock = ({
       });
   }
 
+  const onDeletePost = (postId) => {
+    return postsApi.deletePost(postId)
+      .then(postId => {
+        deletePost(postId);
+      })
+  }
+  const onEditPost = () => {
+
+  }
+  let postsElements = posts.map((post, index) => 
+    <Post 
+      post={post}
+      key={index}
+      deletePost={onDeletePost}
+      editPost={onEditPost}
+    />
+  );
  return (
     <div className={classes.PostsBlock}>
       <div className={classes.PostsBlock__Header}>

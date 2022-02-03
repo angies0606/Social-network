@@ -18,7 +18,11 @@ export const postsApi = {
   },
   createPost(payload) {
     return instance.post('posts', payload)
-    .then(res => res.data);
+      .then(res => res.data);
+  },
+  deletePost(postId) {
+    return instance.delete(`posts/${postId}`)
+      .then(res => res.data._id);
   }
 }
 

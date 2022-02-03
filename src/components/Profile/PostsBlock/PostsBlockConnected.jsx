@@ -1,5 +1,5 @@
 
-import {putPostsActionCreator} from "@redux/actions.js";
+import {putPostsActionCreator, deletePostActionCreator} from "@redux/actions.js";
 import PostsBlock from './PostsBlock';
 import { connect } from "react-redux";
 
@@ -14,6 +14,9 @@ let mapDispatchToProps = (dispatch) => {
   return {
     addPosts: (posts) => {
       dispatch(putPostsActionCreator(posts))
+    },
+    deletePost: (postId) => {
+      dispatch(deletePostActionCreator(postId))
     }
   }
 }

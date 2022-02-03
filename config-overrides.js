@@ -6,7 +6,8 @@ module.exports = function override(config) {
     '@assets': 'src/assets',
     '@components': 'src/components',
     '@redux': 'src/redux',
-    '@utils': 'src/utils'
+    '@utils': 'src/utils',
+    '@ui-kit': 'src/ui-kit'
   })(config);
 
   return config;
