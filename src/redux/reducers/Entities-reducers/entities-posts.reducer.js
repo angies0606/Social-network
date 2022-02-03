@@ -1,6 +1,7 @@
 import initialState from "@redux/store/initial-state";
 import {
   PUT_POSTS,
+  DELETE_POST
 } from '@redux/actions.js';
 
 function entitiesPostsReducer(state = initialState.entities.posts, action) {
@@ -12,6 +13,14 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
       action.data.forEach(post => {
         newState[post._id] = post;
       });
+      return newState;
+    }
+    case DELETE_POST: {
+      const newState = {
+        ...state
+      };
+      const postId = action.data;
+      delete newState[postId];
       return newState;
     }
     

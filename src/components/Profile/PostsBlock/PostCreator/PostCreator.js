@@ -6,10 +6,11 @@ import FormControl, { useFormControl } from '@mui/material/FormControl';
 import classes from "./PostCreator.module.css";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+import MuiButton from "@mui/material/Button";
 import MapIcon from "@mui/icons-material/Map";
 import FormHelperText from '@mui/material/FormHelperText';
+import IconButton from '@ui-kit/IconButton/IconButton';
+import Button from "@ui-kit/Button/Button";
 
 // function MyFormHelperText() {
 //   const { focused } = useFormControl() || {};
@@ -86,17 +87,17 @@ function PostCreator ({
           <MyFormHelperText /> 
         </FormControl> */}
         <div className={classes.PostCreator__CardActions} >
-        <Button 
-          className={classes.PostCreator__Button}
-          variant="outlined"
-          onClick={addPostOnServer}
-          disabled={isDisabled()}
-        >
-          Поделиться
-        </Button>
-        <IconButton>
-          <MapIcon />
-        </IconButton>
+          <Button 
+            className={classes.PostCreator__Button}
+            variant="outlined"
+            onClick={addPostOnServer}
+            disabled={isDisabled()}
+          >
+            Поделиться
+          </Button>
+          <IconButton>
+            <MapIcon /> 
+          </IconButton>
         </div>
       </div> 
     </Card>
