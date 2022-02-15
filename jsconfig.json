@@ -9,7 +9,8 @@
       "@components/*": ["./components/*"],
       "@redux/*": ["./redux/*"],
       "@utils/*": ["./utils/*"],
-      "@ui-kit/*": ["./ui-kit/*"]
+      "@ui-kit/*": ["./ui-kit/*"],
+      "@contexts/*": ["./contexts/*"]
     }
   }
 }

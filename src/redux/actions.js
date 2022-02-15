@@ -16,3 +16,18 @@ export function deletePostActionCreator(postId) {
     data: postId
   }
 }
+export const EDIT_POST = 'EDIT_POST';
+export function editPostActionCreator(post) {
+  return {
+    type: EDIT_POST,
+    data: post
+  }
+}
+
+export const ADD_LIKE = 'ADD_LIKE';
+export function addLikeActionCreator(payload) {
+  return {
+    type: ADD_LIKE,
+    data: payload
+  }
+}

@@ -1,6 +1,5 @@
-import { ClassNames } from "@emotion/react";
-import {useState, useMemo} from 'react';
-import { TextField } from "@mui/material";
+
+import {useState, useMemo, Children, cloneElement, useEffect, useCallback} from 'react';
 import Card from "@mui/material/Card";
 import FormControl, { useFormControl } from '@mui/material/FormControl';
 import classes from "./PostCreator.module.css";
@@ -11,7 +10,14 @@ import MapIcon from "@mui/icons-material/Map";
 import FormHelperText from '@mui/material/FormHelperText';
 import IconButton from '@ui-kit/IconButton/IconButton';
 import Button from "@ui-kit/Button/Button";
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { TryRounded } from "@mui/icons-material";
+import classNames from 'classnames';
 
+
+const postTextValidator = (value) => {
+  return value?.length <= 750 && value?.length > 0;
+}
 // function MyFormHelperText() {
 //   const { focused } = useFormControl() || {};
 
@@ -26,20 +32,44 @@ import Button from "@ui-kit/Button/Button";
 // }
 
 function PostCreator ({
-  onAddPost
+  confirmed,
+  textField,
+  // isClearOnConfirm,
+  buttonContent,
+  postText = '',
+  // changeMode,
+  isShowCancelButton,
+  cancelChange
 }) {
   //TODO: возможность добавлять картинки и геолокацию
-  const [text, setText] = useState({
+  const [isProgress, setIsProgress] = useState(false);
+  const [textState, setTextState] = useState({
     value: '',
     isValid: false
-  })
+  });
+
+  const startProgress = useCallback(() => {
+    setIsProgress(true);
+  }, [setIsProgress]);
+
+  const endProgress = useCallback(() => {
+    setIsProgress(false);
+  }, [setIsProgress]);
+
+  useEffect(() => {
+   setText(postText);
+  }, [postText]);
+
+  function setText(text) {
+    setTextState({
+      value: text,
+      isValid: postTextValidator(text)
+    });
+  }
 
   const onTextChange = (e) => {
     const value = e.target.value
-    setText({
-      value: value,
-      isValid: value?.length <= 10 && value?.length > 0
-    });
+    setText(value);
   }
 
   const onKeyPress = e => {
@@ -47,60 +77,78 @@ function PostCreator ({
       if (isDisabled()) {
         return;
       }
-      addPostOnServer();
+      onConfirm();
     }
   }
 
-  const addPostOnServer = () => {
-    const newPost = {
-      text: text.value,
+  const onConfirm = () => {
+    startProgress();
+    const post = {
+      text: textState.value,
       image: null // TODO: переписать, когда буду подгружать картинки
     };
-    onAddPost(newPost)
+    confirmed(post)
     .then(() => {
-      setText({
-        value: '',
-        isValid: false
-      })
+      setText('');
+    })
+    .finally(() => {
+      endProgress();
     })
   }
 
   const isDisabled = () => {
-    return !text.isValid;
+    return !textState.isValid || isProgress;
   }
 
-  return(
-    <Card className={classes.PostCreator__Card}>
-      <div className={classes.PostCreator__CardContentBox}>
-        <TextField 
-          className={classes.PostCreator__TextField}
-          label="Добавить запись"
-          placeholder="Что у Вас нового?"
-          fullWidth
-          multiline
-          rows={4}
-          onChange={onTextChange}
-          onKeyPress={onKeyPress}
-          value={text.value}
-        />
-        {/* <FormControl sx={{ width: '100%' }}>
-          <MyFormHelperText /> 
-        </FormControl> */}
-        <div className={classes.PostCreator__CardActions} >
+  const textFieldClone = useMemo(() => {
+    return cloneElement(textField, {
+      className: classNames(textField.props.className, classes.PostCreator__TextField),
+      onChange: (e) => {
+        onTextChange(e);
+      },
+      onKeyPress: (e) => {
+        onKeyPress(e);
+      },
+      value: textState.value
+    });
+  }, [textField, textState.value]);
+
+  return (
+    <div className={classes.PostCreator__CardContentBox}>
+      {textFieldClone}
+      {/* <FormControl sx={{ width: '100%' }}>
+        <MyFormHelperText /> 
+      </FormControl> */}
+      <div className={classes.PostCreator__CardActions} >
+        <div className={classes.PostCreator__ButtonsContainer}>
           <Button 
             className={classes.PostCreator__Button}
             variant="outlined"
-            onClick={addPostOnServer}
+            onClick={onConfirm}
             disabled={isDisabled()}
           >
-            Поделиться
+            {buttonContent}
           </Button>
+          {isShowCancelButton && 
+            <Button 
+              className={classes.PostCreator__Button}
+              variant="outlined"
+              onClick={cancelChange}
+            >
+              Отмена
+            </Button>
+          }
+        </div>
+        <div className={classes.PostCreator__IconsContainer}>
+          <IconButton>
+            <AddPhotoAlternateIcon />
+          </IconButton>
           <IconButton>
             <MapIcon /> 
           </IconButton>
         </div>
-      </div> 
-    </Card>
+      </div>
+    </div> 
   )
 }
 
