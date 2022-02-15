@@ -7,7 +7,8 @@ module.exports = function override(config) {
     '@components': 'src/components',
     '@redux': 'src/redux',
     '@utils': 'src/utils',
-    '@ui-kit': 'src/ui-kit'
+    '@ui-kit': 'src/ui-kit',
+    '@contexts': 'src/contexts'
   })(config);
 
   return config;

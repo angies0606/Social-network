@@ -1,0 +1,39 @@
+.CommentsCreator_Box {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 15px;
+  box-sizing: border-box;
+  min-height: 90px;
+  /* max-height: 100px; */
+  height: auto;
+  width: 100%;
+  background-color: white;
+}
+
+.CommentsCreator_UserCommentBox {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  flex: 1 0;
+}
+
+.CommentsCreator_Avatar {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  height: 30px;
+  width: 30px;
+  margin-top: 15px;
+}
+
+.CommentsCreator_TextField.CommentsCreator_TextField {
+  flex: 1 0;
+  margin-left: 20px;
+}
+
+.CommentsCreator_Button.CommentsCreator_Button {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  margin-top: 15px;
+  margin-left: 20px;
+}

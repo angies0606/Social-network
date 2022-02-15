@@ -1,11 +1,5 @@
-import axios from "axios";
-
-const instance = axios.create({
-  baseURL: 'http://localhost:8080/',
-  headers: {
-    'Content-Type': 'application/json'
-  }
-});
+// @ts-nocheck
+import instance from "@api/axios";
 
 export const postsApi = {
   getPosts(userId) {
@@ -14,15 +8,20 @@ export const postsApi = {
         user: userId
       }
     })
-    .then(res => res.data)
   },
   createPost(payload) {
     return instance.post('posts', payload)
-      .then(res => res.data);
   },
   deletePost(postId) {
     return instance.delete(`posts/${postId}`)
-      .then(res => res.data._id);
+      .then(res => res._id);
+  },
+  editPost(post) {
+    return instance.patch(`posts/${post._id}`, post)
+  },
+  addLike(postId, userId) {
+    return instance.post(`posts/${postId}/like`, {userId})
+    
   }
 }
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import './App.css';
+import React, { useEffect } from 'react';
+import classes from './App.module.css';
 import '@assets/styles/preloader.css';
 import Navbar from '../Navbar/Navbar';
 import Music from '../Music/Music';
@@ -15,30 +15,24 @@ import { connect } from 'react-redux';
 import { initializeApp } from '@redux/reducers/app-reducer.js';
 import Preloader from '../Preloader/Preloader';
 import axios from 'axios';
+import { ProgressContext } from '@contexts/progress.context';
+import GlobalProgress from 'GlobalProgress/GlobalProgress';
+import { useProgress } from 'hooks/useProgress';
 
-class App extends React.Component {
-  componentDidMount() {
-    this.props.initializeApp();
-    // axios.post('http://localhost:8080/users', {name: 'Пелагея404'}, {
-    //   headers: {'Content-Type': 'application/json'}
-    // });
-    // axios.post('http://localhost:8080/posts', {
-    //   user: '61f43759841a34f6da91d6da',
-    //   text: 'Геральт одобряет!',
-    //   image: "https://images.stopgame.ru/uploads/users/2020/579404/r912x500/uRve2ouTkLoBIUqO9iM22g/00029.6cJvjoX.jpg"
-    // }, {
-    //   headers: {'Content-Type': 'application/json'}
-    // });
-   }
-  render() {
-    if(this.props.initialized) {
-      return Preloader
-    }
-    return (
-      <div className="app-wrapper">
+function App ({
+  initializeApp
+}) {
+  useEffect(() => {
+    initializeApp();
+  }, [])
+  const progress = useProgress();
+  return (
+    <ProgressContext.Provider value={progress}>
+      <GlobalProgress />
+      <div className={classes.App__Container}>
         <HeaderContainer />
         <Navbar />
-        <div className="app-wrapper-content">
+        <div className={classes.App_Content}>
           <Route path="/dialogs" render={ () => <DialogsContainer/>} />              
           <Route path="/profile/:userId?" render={ () => <ProfileContainer />} />
           <Route path="/users" render={ () => <UsersContainer />} />
@@ -48,11 +42,12 @@ class App extends React.Component {
           <Route path="/login" render={ () => <Login /> } />
         </div>
       </div>
-    )
-  }
+    </ProgressContext.Provider>
+  )
 }
 const mapStateToProps = (state) => ({
   initialized: state.app.initialized
 })
 
 export default connect(mapStateToProps, {initializeApp})(App);
+
