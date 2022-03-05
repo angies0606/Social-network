@@ -4,34 +4,40 @@ import Post from "./Post/Post";
 import { Field, reduxForm } from 'redux-form';
 import { maxLengthCreator, required} from "../../../utils/validators/validators"
 import { Textarea } from '../../common/FormsControls/FormsControls';
-import PostCreator from './PostCreator/PostCreator';
+import PostCreatorConnected from './PostCreator/PostCreatorConnected.js';
 import {postsApi} from '@api/api-n';
 import Card from "@mui/material/Card";
 import { Button, TextField } from '@mui/material';
 import CommentsCreator from '@components/CommentsCreator/CommentsCreator';
+import { AddComment, CommentsDisabled } from '@mui/icons-material';
+import PostConnected from './Post/PostConnected';
 
 
 const PostsBlock = ({
+  userId,
+  isForCurrentUser,
   addPosts,
   posts,
-  authUserId,
   deletePost,
   editPost,
-  addLike
+  // addLike,
+  // putComments,
+  // comments,
+  // addImage
 }) => {
  
 // TODO: реализовать метод, который не будет задваивать посты при перехода со страницы на страницу
   useEffect(() => {
     // TODO: убрать заглушку
-    postsApi.getPosts(authUserId)
+    postsApi.getPosts(userId)
       .then(posts => {
         addPosts(posts);
       });
-  }, [addPosts]);
+  }, [addPosts, userId]);
 
   const onAddPost = (newPost) => {
     const newPostData = {
-      user: authUserId,
+      user: userId,
       ...newPost
     }
     return postsApi.createPost(newPostData)
@@ -54,21 +60,13 @@ const PostsBlock = ({
       })
   }
 
-  const onAddLike = (postId, userId) => {
-    return postsApi.addLike(postId, userId)
-      .then(payload => {
-        addLike(payload);
-      })
-  }
-
   let postsElements = posts.map((post, index) => 
-    <Post 
+    <PostConnected 
       post={post}
       key={index}
       deletePost={onDeletePost}
       editPost={onEditPost}
-      onAddLike={onAddLike}
-      authUserId={authUserId}
+      userId={userId}
     />
   );
 
@@ -81,23 +79,26 @@ const PostsBlock = ({
       </div>
       {/* <AddNewPostFormRedux onSubmit={onAddPost} /> */}
       <div className={classes.PostsBlock_Posts}>
-        <Card className={classes.PostsBlock_PostsCreatorCard}>
-          <PostCreator 
-            confirmed={onAddPost}
-            buttonContent={'Поделиться'}
-            textField={
-              <TextField
-                className={classes.PostsBlock__TextField}
-                label="Добавить запись"
-                placeholder="Что у Вас нового?"
-                fullWidth
-                multiline
-                maxRows={4}
-                rows={2}
-              />
-            }
-          />
-        </Card>
+        {
+          isForCurrentUser &&
+          <Card className={classes.PostsBlock_PostsCreatorCard}>
+            <PostCreatorConnected 
+              confirmed={onAddPost}
+              buttonContent={'Поделиться'}
+              textField={
+                <TextField
+                  className={classes.PostsBlock__TextField}
+                  label="Добавить запись"
+                  placeholder="Что у Вас нового?"
+                  fullWidth
+                  multiline
+                  maxRows={4}
+                  rows={2}
+                />
+              }
+            />
+          </Card>
+        }
         {postsElements}
       </div>
     </div>

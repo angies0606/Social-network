@@ -2,7 +2,7 @@
 import {useState, useMemo, Children, cloneElement, useEffect, useCallback} from 'react';
 import Card from "@mui/material/Card";
 import FormControl, { useFormControl } from '@mui/material/FormControl';
-import classes from "./PostCreator.module.css";
+import classes from "./PostCreator.module.scss";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import MuiButton from "@mui/material/Button";
@@ -13,6 +13,9 @@ import Button from "@ui-kit/Button/Button";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { TryRounded } from "@mui/icons-material";
 import classNames from 'classnames';
+import SelectFile from '@ui-kit/SelectFile/SelectFile';
+import ImagePreview from '@ui-kit/ImagePreview/ImagePreview';
+import { postsApi } from '@api/api-n';
 
 
 const postTextValidator = (value) => {
@@ -39,14 +42,19 @@ function PostCreator ({
   postText = '',
   // changeMode,
   isShowCancelButton,
-  cancelChange
+  cancelChange,
+  // newImage,
+  // addImage
 }) {
-  //TODO: возможность добавлять картинки и геолокацию
+
   const [isProgress, setIsProgress] = useState(false);
   const [textState, setTextState] = useState({
     value: '',
     isValid: false
   });
+  const [isAddingImage, setAddingImage] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
 
   const startProgress = useCallback(() => {
     setIsProgress(true);
@@ -85,19 +93,27 @@ function PostCreator ({
     startProgress();
     const post = {
       text: textState.value,
-      image: null // TODO: переписать, когда буду подгружать картинки
+      image: imageUrl
     };
     confirmed(post)
-    .then(() => {
-      setText('');
-    })
-    .finally(() => {
-      endProgress();
-    })
+      .then(() => {
+        setText('');
+        setImageFile(null);
+        setImageUrl(null);
+      })
+        .finally(() => {
+          setAddingImage(false);
+          endProgress();
+        })
   }
 
   const isDisabled = () => {
-    return !textState.isValid || isProgress;
+    if(isAddingImage) {
+      return false;
+    }
+    if(!textState.isValid || isProgress) {
+      return true;
+    }
   }
 
   const textFieldClone = useMemo(() => {
@@ -113,9 +129,30 @@ function PostCreator ({
     });
   }, [textField, textState.value]);
 
+  const onImageSelect = (image) => {
+    startProgress();
+    setAddingImage(true);
+    setImageFile(image);
+    const formData = new FormData();
+    formData.append('img', image);
+
+    postsApi.addImage(formData)
+      .then((response) => {
+        // debugger;
+        setImageUrl(response.imageUrl);
+      })
+  }
+
   return (
     <div className={classes.PostCreator__CardContentBox}>
       {textFieldClone}
+      {
+        imageFile &&
+        <ImagePreview
+          className={classes.PostCreator__ImagePreview}
+          image={imageFile}
+        />
+      }
       {/* <FormControl sx={{ width: '100%' }}>
         <MyFormHelperText /> 
       </FormControl> */}
@@ -140,9 +177,14 @@ function PostCreator ({
           }
         </div>
         <div className={classes.PostCreator__IconsContainer}>
-          <IconButton>
-            <AddPhotoAlternateIcon />
-          </IconButton>
+          <SelectFile 
+            onFileSelect={onImageSelect}
+            isDisabled={isAddingImage}
+          >
+            <IconButton>
+              <AddPhotoAlternateIcon />
+            </IconButton>
+          </SelectFile>
           <IconButton>
             <MapIcon /> 
           </IconButton>

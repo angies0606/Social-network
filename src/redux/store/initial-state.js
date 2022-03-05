@@ -10,8 +10,9 @@ const SEND_MESSAGE = "SEND-MESSAGE";
 let initialState = {
   pages: {
     userPage: {
+      user: null,
       posts: [],
-    },
+    }
   },
   entities: { //TODO: добавить еще сущностей типа user и т.д
     posts: {
@@ -31,21 +32,24 @@ let initialState = {
       // }
     },
     comments: {
-      comment1: {
-        id: 'comment1',
-        text: ''
-      }
+      // comment1: {
+      //   id: 'comment1',
+      // user: "kfkfkfkId",
+      // post: 'hfhfhfId',
+      //   text: ''
+      // }
     }        
   },
-  app: {
-    initialized: false
-  },
-  auth: {   // переписать
-    userId: null,
-    email: null,
-    login: null,
-    isAuth: false
-  },
+  // app: {
+  //   initialized: false
+  // },
+  // auth: {  
+  //   userId: null,
+  //   email: null,
+  //   login: null,
+  //   isAuth: false,
+  //   user: null
+  // },
   userData: { //TODO: переписать
     profile: null, // убрать потом 
     id: '',

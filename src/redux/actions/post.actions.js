@@ -1,6 +1,4 @@
-//TODO: запихнуть сюда все экшены
 
-// Actions cвязанные с постами
 export const PUT_POSTS = 'PUT_POSTS';
 export function putPostsActionCreator(posts) {
   return {
@@ -25,9 +23,26 @@ export function editPostActionCreator(post) {
 }
 
 export const ADD_LIKE = 'ADD_LIKE';
-export function addLikeActionCreator(payload) {
+export function addLikeActionCreator(like) {
   return {
     type: ADD_LIKE,
-    data: payload
+    data: like
   }
 }
+
+export const PUT_COMMENTS = 'PUT_COMMENTS';
+export function putCommentsActionCreator(comments) {
+  return {
+    type: PUT_COMMENTS,
+    data: comments
+  }
+}
+
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+export function deleteCommentActionCreator(comment) {
+  return {
+    type: DELETE_COMMENT,
+    data: comment
+  }
+}
+

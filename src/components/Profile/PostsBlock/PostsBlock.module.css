@@ -26,9 +26,8 @@
 .PostsBlock_PostsCreatorCard {
   width: 100%;
   flex: 1 0 auto;
-  height: 200px;
+  /* height: 200px; */
   margin-bottom: 50px;
-  max-height: 400px;
   display: flex;
   justify-content: center;
   flex-direction: column;
