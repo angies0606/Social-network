@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react';
 
 function Likes ({
   likes,
-  authUserId,
+  userId,
   addLike
 }) {
   const [isProgress, setIsProgress] = useState(false);
@@ -12,7 +12,7 @@ function Likes ({
   
   // useEffect(() => {
   //   setIsSameUser(false);
-  // }, [authUserId]);
+  // }, [userId]);
 
   const onAddLike = () => {
     // if(isSameUser) {
@@ -20,11 +20,13 @@ function Likes ({
     // }
     // setIsSameUser(true);
     setIsProgress(true);
-    addLike(authUserId)
+    addLike(userId)
       .finally(() => {
         setIsProgress(false);
       })
   }
+
+  // TODO: дописать удаление лайков и возможность одному пользователю ставить один лайк
   return (
     <>
       <IconButton onClick={onAddLike}>

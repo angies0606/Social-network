@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
-// import commentsReducer from './entities-comments.reducer.js';
+import entitiesCommentsReducer from './entities-comments.reducer.js';
 import entitiesPostsReducer from './entities-posts.reducer.js';
 
 const entitiesReducer = combineReducers({
   posts: entitiesPostsReducer,
-  // comments: commentsReducer
+  comments: entitiesCommentsReducer
 });
 
 export default entitiesReducer;

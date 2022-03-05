@@ -1,5 +1,5 @@
-export const getUserS = (state) => {
-  return state.usersPage.users;
+export const selectUsers = (state) => {
+  return state.usersPage.user;
 } 
 export const getPageSize = (state) => {
   return state.usersPage.pageSize;

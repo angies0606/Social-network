@@ -3,8 +3,10 @@ import {
   PUT_POSTS,
   DELETE_POST,
   EDIT_POST,
-  ADD_LIKE
-} from '@redux/actions.js';
+  ADD_LIKE,
+  PUT_COMMENTS,
+  DELETE_COMMENT
+} from '@redux/actions/post.actions.js';
 
 function entitiesPostsReducer(state = initialState.entities.posts, action) {
   switch (action.type) {
@@ -47,6 +49,32 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
         ...newState[postId],
         likes: [...newState[postId].likes, newLike]
       }
+      return newState;
+    }
+    case PUT_COMMENTS: {
+      const newState = {
+        ...state
+      };
+      const comments = action.data;
+      comments.forEach(comment => {
+        if (newState[comment.post].comments.includes(comment._id)) {
+          return;
+        }
+        newState[comment.post] = {
+          ...newState[comment.post],
+          comments: [...newState[comment.post].comments, comment._id]
+        }
+      })
+      return newState;
+    }
+    case DELETE_COMMENT: {
+      const newState = {
+        ...state
+      };
+      const commentId = action.data._id;
+      const postId = action.data.post;
+      const comments = newState[postId].comments;
+      comments.splice(comments.indexOf(commentId), 1);
       return newState;
     }
     

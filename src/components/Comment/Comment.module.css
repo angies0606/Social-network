@@ -1,0 +1,44 @@
+.Comment_Box {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 15px;
+  box-sizing: border-box;
+  min-height: 70px;
+  height: auto;
+  width: 100%;
+  flex-direction: column;
+}
+
+.Comment_UserCommentBox {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  flex: 1 0;
+}
+
+.Comment_Typography.Comment_Typography {
+  margin-left: 20px;
+}
+
+.Comment_DateBar {
+  margin: 0;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-weight: 400;
+  font-size: 0.7rem;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  color: rgba(0, 0, 0, 0.6);
+  display: block;
+}
+
+.Comment_Icon.Comment_Icon {
+  display: flex;
+  align-self: flex-end;  
+  padding: 0;
+}
+
+.Comment_CloseIcon.Comment_CloseIcon {
+  width: 15px;
+  height: 15px;
+}

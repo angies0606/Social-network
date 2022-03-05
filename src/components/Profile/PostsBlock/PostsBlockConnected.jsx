@@ -3,15 +3,17 @@ import {
   putPostsActionCreator, 
   deletePostActionCreator, 
   editPostActionCreator,
-  addLikeActionCreator
-} from "@redux/actions.js";
+  addLikeActionCreator,
+  putCommentsActionCreator
+} from "@redux/actions/post.actions";
 import PostsBlock from './PostsBlock';
 import { connect } from "react-redux";
 
 
 let mapStateToProps = (state) => {
   return {
-    posts: state.pages.userPage.posts.map(postId => state.entities.posts[postId])
+    posts: state.pages.userPage.posts.map(postId => state.entities.posts[postId]),
+    comments: state.entities.comments
   }
 }
 
@@ -26,8 +28,11 @@ let mapDispatchToProps = (dispatch) => {
     editPost: (post) => {
       dispatch(editPostActionCreator(post));
     },
-    addLike: (payload) => {
-      dispatch(addLikeActionCreator(payload));
+    addLike: (like) => {
+      dispatch(addLikeActionCreator(like));
+    },
+    putComments: (comments) => {
+      dispatch(putCommentsActionCreator(comments));
     }
   }
 }

@@ -14,24 +14,37 @@ import Menu from '@ui-kit/Menu/Menu.jsx';
 import MenuItem from '@mui/material/MenuItem';
 import PostCreator from "../PostCreator/PostCreator";
 import { TextField } from "@mui/material";
-import {useState, useMemo} from 'react';
+import {useState, useMemo, useEffect, useCallback} from 'react';
 import DateBar from "@ui-kit/DateBar/DateBar";
 import Likes from "@ui-kit/Likes/Likes.jsx";
 import CommentsCreator from "@components/CommentsCreator/CommentsCreator";
 import { styled } from '@mui/material/styles';
 import Collapse from '@mui/material/Collapse';
-
-
+import Separator from "@ui-kit/Separator/Separator";
+import Comment from "@components/Comment/Comment";
+import {postsApi} from '@api/api-n';
 
 const Post = ({
   post,
   deletePost,
   editPost,
-  authUserId,
-  onAddLike
+  userId,
+  putComments,
+  addLike,
+  comments,
+  deleteComment
 }) => {
   const [changeMode, setChangeMode] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [isProgress, setIsProgress] = useState(false);
+
+  const startProgress = useCallback(() => {
+    setIsProgress(true);
+  }, [setIsProgress]);
+
+  const endProgress = useCallback(() => {
+    setIsProgress(false);
+  }, [setIsProgress]);
 
   const textField = useMemo(() => {
     return <TextField 
@@ -42,6 +55,45 @@ const Post = ({
       rows={4}
     />;
   }, []);
+
+  useEffect(() => {
+    if(expanded) {
+      onGetComments(post._id);
+    }
+  }, [expanded])
+
+  const onAddComment = (commentData) => {
+    return postsApi.addComment({
+      postId: post._id, 
+      ...commentData
+    })
+      .then(comment => {
+        putComments([comment]);
+      })
+  }
+
+  const onGetComments = (postId) => {
+    startProgress();
+    return postsApi.getComments(postId)
+      .then(comments => {
+        putComments(comments);
+      })
+        .then(() => endProgress());
+  }
+
+  const onDeleteComment = (commentId) => {
+    return postsApi.deleteComment(commentId)
+      .then(comment => {
+        deleteComment(comment);
+      })
+  }
+
+  const onAddLike = (userId) => {
+    return postsApi.addLike(post._id, userId)
+      .then(payload => {
+        addLike(payload);
+      })
+  }
   
   const onConfirmEdit = (postData) => {
     return editPost({
@@ -65,21 +117,16 @@ const Post = ({
       })
   }
 
-  const addLike = (userId) => {
-    return onAddLike(post._id, userId);
-  }
-
   const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
   })(({ theme, expand }) => ({
-    // transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
   }));
-
+     
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -114,7 +161,7 @@ const Post = ({
       </div>
       <CardContent>
         {!changeMode &&
-          <Typography variant="body1" color="text.secondary">
+          <Typography variant="body1">
             {post.text}
           </Typography> 
         }
@@ -131,10 +178,10 @@ const Post = ({
       </CardContent>
       <div className={classes.Card__CardActionsBox}>    
         <CardActions disableSpacing>
-          <Likes  
-            addLike={addLike}
+          <Likes
+            addLike={onAddLike}
             likes={post.likes}
-            authUserId={authUserId}
+            userId={userId}
           />
         </CardActions>
         <CardActions disableSpacing>
@@ -148,12 +195,29 @@ const Post = ({
         </CardActions>
       </div>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <hr />
-          <CommentsCreator authUserId={authUserId}/>
+        <CardContent
+          className={classes.Post_CommentsCreatorBlock}
+        >
+          
+          {comments.map((comment, index) => {
+            return (
+              <div key={index}>
+                <Separator />
+                <Comment 
+                  comment={comment}
+                  deleteComment={onDeleteComment}
+                />
+              </div>
+            )} 
+          )}
+          
+          <Separator />
+          <CommentsCreator 
+            userId={userId}
+            confirmed={onAddComment}
+          />
         </CardContent>
       </Collapse>
-      
     </Card>
   )
 }

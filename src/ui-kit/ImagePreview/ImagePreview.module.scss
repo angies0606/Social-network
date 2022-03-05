@@ -1,0 +1,15 @@
+.ImagePreview {
+  display: flex;
+  flex-direction: column;
+}
+
+.ImagePreview__Image {
+  max-height: 150px;
+  max-width: 100%;
+  object-fit: contain;
+  width: fit-content;
+}
+
+.ImagePreview__Text {
+  
+}

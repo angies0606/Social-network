@@ -6,11 +6,12 @@
     "paths": {
       "@api/*": ["./api/*"],
       "@assets/*": ["./assets/*"],
+      "@routes/*": ["./routes/*"],
       "@components/*": ["./components/*"],
       "@redux/*": ["./redux/*"],
       "@utils/*": ["./utils/*"],
       "@ui-kit/*": ["./ui-kit/*"],
-      "@contexts/*": ["./contexts/*"]
+      "@features/*": ["./features/*"]
     }
   }
 }

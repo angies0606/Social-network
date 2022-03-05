@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { passedTimeCalc } from './passedTimeCalc';
 
 function DateBar ({
-  creationDate
+  creationDate,
+  className = ''
 }) {
   let [currentTimeout, setCurrentTimeout] = useState(null);
   let [timeMessage, setCurrentTime] = useState('');
@@ -30,9 +31,9 @@ function DateBar ({
   }
 
   return (
-    <>
-    {timeMessage}
-    </>
+    <div className={className}>
+      {timeMessage}
+    </div>
   )
 }
 
