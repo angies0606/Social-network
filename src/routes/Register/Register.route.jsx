@@ -4,9 +4,13 @@ import { Input } from "@components/common/FormsControls/FormsControls";
 import classes from "@components/common/FormsControls/FormsControls.module.css";
 import {useAuthContext} from '@features/auth/auth.context';
 
-const LoginForm = (props) => {
+const RegisterForm = (props) => {
   return <div>
       <form onSubmit={props.handleSubmit}>
+        <div>
+          <Field name={"name"} placeholder={"Имя"} component={Input}
+            validate={[required]} />
+        </div>
         <div>
           <Field name={"nickname"} placeholder={"Логин"} component={Input}
             validate={[required]} />
@@ -15,47 +19,38 @@ const LoginForm = (props) => {
          <Field name={"password"} placeholder={"Пароль"} component={Input}
           validate={[required]} type={"password"}  />
         </div>
-        {/* <div>
-          <Field name={"rememberMe"} type={"checkbox"} component={Input}/>
-            Запомнить меня
-        </div> */}
         { props.error &&
           <div className={classes.formSummaryError}>
             {props.error}
           </div>
         }
         <div>
-          <button>Войти</button>
+          <button>Зарегистрироваться</button>
         </div>
         <div></div>
       </form>
     </div>
 }
 
-const LoginReduxForm = reduxForm({
+const RegisterReduxForm = reduxForm({
   form: "login"
-})(LoginForm);
+})(RegisterForm);
 
-const Login = () => {
-  const {login} = useAuthContext();
+
+function RegisterRoute() {
+  const {register} = useAuthContext();
 
   const onSubmit = (formData) => {
-    login(formData.nickname, formData.password);
+    register(formData.name, formData.nickname, formData.password);
   }
-
   return (
     <div>
       <h1>
-        LOGIN
+        Регистрация
       </h1>
-      <LoginReduxForm onSubmit={onSubmit}/>
+      <RegisterReduxForm onSubmit={onSubmit}/>
     </div>
   )
 }
-// const mapStateToProps = (state) => ({
-//   isAuth: state.auth.isAuth
-// }) 
-  
 
-// export default connect(mapStateToProps, {login}) (Login);
-export default Login;
+export default RegisterRoute;

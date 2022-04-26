@@ -38,8 +38,8 @@ export const postsApi = {
 }
 
 export const authApi = {
-  register(user) {
-    return instance.post('auth/register', user);
+  register(name, nickname, password) {
+    return instance.post('auth/register', {name, nickname, password});
   },
   login(nickname, password) {
     return instance.post('auth/login', {nickname, password});
