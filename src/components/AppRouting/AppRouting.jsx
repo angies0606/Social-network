@@ -1,19 +1,21 @@
-import {Route, Redirect} from 'react-router-dom';
+import {Route, Redirect, Switch} from 'react-router-dom';
 import DialogsContainer from '../Dialogs/DialogsContainer';
 import UsersContainer from '../Users/UsersContainer';
 import ProfileRoute from '@routes/ProfileRoute/ProfileRoute';
 import Login from '../Login/Login';
 import AuthedRoute from '@features/auth/AuthedRoute/AuthedRoute';
 import UnauthedRoute from '@features/auth/UnauthedRoute/UnauthedRoute';
+import RegisterRoute from '@routes/Register/Register.route';
 
 
 function AppRouting() {
   return (
     <>
-      <AuthedRoute path='/dialogs' render={ () => <DialogsContainer/>} />              
+      <AuthedRoute path='/dialogs' render={ () => <DialogsContainer/>} />
       <AuthedRoute path='/profile/:userId?' render={ () => <ProfileRoute />} />
       <AuthedRoute path='/users' render={ () => <UsersContainer />} />
       <UnauthedRoute path='/login' render={ () => <Login /> } />
+      <UnauthedRoute path='/register' render={ () => <RegisterRoute /> } />
       <AuthedRoute path='*' render={() => <Redirect to='/profile' />}/>
       <UnauthedRoute path='*' render={() => <Redirect to='/login' />}/>
     </>

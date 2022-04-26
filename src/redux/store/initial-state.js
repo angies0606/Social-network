@@ -50,12 +50,12 @@ let initialState = {
   //   isAuth: false,
   //   user: null
   // },
-  userData: { //TODO: переписать
-    profile: null, // убрать потом 
-    id: '',
-    status: '',
-    avatar: ''
-  },
+  // userData: { //TODO: переписать
+  //   profile: null, // убрать потом 
+  //   id: '',
+  //   status: '',
+  //   avatar: ''
+  // },
   dialogsPage: {
     messagesData: [
       {id: 1, text: "Привет"}, 
@@ -83,7 +83,7 @@ let initialState = {
     isFetching: false,
     followingInProgress: []
   },
-  sidebar: "",
+  // sidebar: "",
   //   getState() {
   //     return this._state;
   //   },

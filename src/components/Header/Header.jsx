@@ -19,7 +19,10 @@ const Header = () => {
                 Выйти
               </button>
             </div>
-          : <NavLink to={"/login"}>Войти</NavLink>
+          : <>
+              <NavLink to={"/login"}>Войти</NavLink>
+              <NavLink to={"/register"}>Регистрация</NavLink>
+            </>
         }
       </div>
     </header>

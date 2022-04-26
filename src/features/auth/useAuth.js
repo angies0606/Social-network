@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {useEffect, useReducer} from 'react';
+import {useEffect, useMemo, useReducer, useCallback} from 'react';
 import {authApi} from '@api/api-n';
 
 const initialState = {
@@ -45,51 +45,62 @@ function authReducer(state , action) {
 
 function useAuth() {
   const [state, dispatch] = useReducer(authReducer, initialState);
-  
+
+  const register = useCallback((name, nickname, password) => {
+    return authApi.register(name, nickname, password)
+  }, [])
+
+  const login = useCallback((nickname, password) => {
+    return authApi.login(nickname, password)
+      .then(user => {
+        if(!user) {
+          dispatch(setUnauthedActionCreator());
+        }
+        dispatch(setAuthedActionCreator(user));
+      })
+      .catch((e) => {
+        dispatch(setUnauthedActionCreator());
+      });
+  }, []);
+
+  const logout = useCallback(() => {
+    return authApi.logout()
+      .then(() => {
+        dispatch(setUnauthedActionCreator());
+      });
+  }, []);
+
+  const check = useCallback(() => {
+    return authApi.me()
+      .then(user => {
+        if(!user) {
+          dispatch(setUnauthedActionCreator());
+        }
+        dispatch(setAuthedActionCreator(user));
+      })
+      .catch((e) => {
+        dispatch(setUnauthedActionCreator());
+      });
+  }, []);
+
   //Проверяем один раз авторизирован ли пользователь
   useEffect(() => {
     check();
-  },[])
+  },[]);
 
-  function login(nickname, password) {
-    authApi.login(nickname, password)
-    .then(user => {
-      if(!user) {
-        dispatch(setUnauthedActionCreator());
-      }
-      dispatch(setAuthedActionCreator(user));
-    })
-    .catch((e) => {
-      dispatch(setUnauthedActionCreator());
-    })
-  }
-
-  function logout () {
-    authApi.logout()
-      .then(() => {
-        dispatch(setUnauthedActionCreator());
-      })
-  }
-
-  function check () {
-    authApi.me()
-    .then(user => {
-      if(!user) {
-        dispatch(setUnauthedActionCreator());
-      }
-      dispatch(setAuthedActionCreator(user));
-    })
-    .catch((e) => {
-      dispatch(setUnauthedActionCreator());
-    })
-  }
-
-  return {
+  return useMemo(() => ({
     state,
+    register,
     login,
     logout,
     check
-  }
+  }), [
+    state,
+    register,
+    login,
+    logout,
+    check
+  ]);
 }
 
 export default useAuth;

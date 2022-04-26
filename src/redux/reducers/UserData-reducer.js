@@ -2,7 +2,7 @@ import { profileAPI, usersAPI } from "@api/api.js";
 import initialState from "@redux/store/initial-state";
 
 const ADD_POST = "ADD-POST";
-// const SET_USER_PROFILE = "SET-USER-PROFILE";
+const SET_USER_PROFILE = "SET-USER-PROFILE";
 const SET_STATUS = "SET-STATUS";
 
 // let initialstate = {
