@@ -13,6 +13,7 @@ function ProfileRoute({
   const params = useParams();
   const {state: {user: {_id: authedUserId}}} = useAuthContext();
 
+  
   useEffect(() => {
     getUser(params.userId);
   }, [])
@@ -41,6 +42,15 @@ function ProfileRoute({
     </>
   )
 }
+
+{/* <Profile 
+        {...this.props} 
+        profile={this.props.profile} 
+        status={this.props.status}
+        updateStatus={this.props.updateUserStatus}
+      />
+    </>
+  ) */}
 
 // let mapStateToProps = (state) => ({ //TODO: переписать, когда буду настраивать авторизацию
 //     profile: state.userData.profile,

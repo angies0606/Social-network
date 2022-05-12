@@ -10,4 +10,11 @@ let mapStateToProps = (state) => ({ //TODO: переписать, когда б�
   // isAuth: state.auth.isAuth
 });
 
+// let mapStateToProps = (state) => ({ //TODO: переписать, когда буду настраивать авторизацию
+//   profile: state.userData.profile,
+//   status: state.userData.status,
+//   // authUserId: state.auth.userId,
+//   // isAuth: state.auth.isAuth
+// });
+
 export default connect(mapStateToProps, {getUser});

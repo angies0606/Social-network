@@ -32,7 +32,7 @@ function authReducer(state , action) {
         isAuthed: true,
         isInitialized: true
       }
-    case SET_UNAUTHED: 
+    case SET_UNAUTHED:
       return {
         user: null,
         isAuthed: false,

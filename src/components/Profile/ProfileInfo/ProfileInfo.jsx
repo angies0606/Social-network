@@ -3,6 +3,7 @@ import classes from "./ProfileInfo.module.css";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 const ProfileInfo = (props) => {
+  //TODO: сделать аву и статус - это будут отдельные сущности 
   if (!props.profile) {
   return Preloader;
  } 
