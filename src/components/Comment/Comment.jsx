@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
+import Avatar from "@ui-kit/Avatar/Avatar";
 import DateBar from '@ui-kit/DateBar/DateBar';
 import IconButton from '@ui-kit/IconButton/IconButton';
 import classes from './Comment.module.css';
@@ -38,11 +38,16 @@ function Comment ({
         className={classes.Comment_CloseIcon}
       />
     </IconButton>
+    <div>
+      Имя юзера создавшего коммент
+    {/* {comment.user.nickname} */}
+    </div>
     <div className={classes.Comment_UserCommentBox}>
       <Avatar
         className={classes.Comment_Avatar}
-        src="https://www.meme-arsenal.com/memes/50569ac974c29121ff9075e45a334942.jpg" // TODO: аватар юзера, который оставил коммент
-        sx={{ width: 30, height: 30 }}
+        userAvatar="https://www.meme-arsenal.com/memes/50569ac974c29121ff9075e45a334942.jpg" // TODO: аватар юзера, который оставил коммент, переписать когда у comments будет инфа по юзеру
+        avatarHeight={30}
+        avatarWidth={30}
       />
       <Typography className={classes.Comment_Typography}>
         {comment.text}

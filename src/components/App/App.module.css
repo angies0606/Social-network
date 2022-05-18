@@ -11,7 +11,7 @@
 }
 .App_Content {
   grid-area: c;
-  background-color:rgb(253, 255, 127);
+  background-color: rgb(241, 249, 216);
 }
 
 /* .App__GlobalProgress.App__GlobalProgrees {

@@ -1,18 +1,19 @@
 
 import {useState, useCallback} from 'react';
-import Avatar from '@mui/material/Avatar';
 import classes from './CommentsCreator.module.css';
 import { FormControl } from '@mui/material';
 import FilledInput from '@mui/material/FilledInput';
 import Button from '@ui-kit/Button/Button';
+import Avatar from "@ui-kit/Avatar/Avatar";
 
 const commentTextValidator = (value) => {
   return value?.length <= 750 && value?.length > 0;
 }
 
 function CommentsCreator ({
-  userId,
+  authedUser,
   confirmed
+
 }) {
   const [isProgress, setIsProgress] = useState(false);
   const [textState, setTextState] = useState({
@@ -43,7 +44,7 @@ function CommentsCreator ({
   const onConfirm = () => {
     startProgress();
     const comment = {
-      userId: userId,
+      userId: authedUser._id,
       text: textState.value
     };
     confirmed(comment)
@@ -64,8 +65,9 @@ function CommentsCreator ({
       <div className={classes.CommentsCreator_UserCommentBox}>
         <Avatar
           className={classes.CommentsCreator_Avatar}
-          src="https://www.meme-arsenal.com/memes/50569ac974c29121ff9075e45a334942.jpg"
-          sx={{ width: 30, height: 30 }}
+          userAvatar={authedUser.avatar}
+          avatarHeight={30}
+          avatarWidth={30}
         />
         <FormControl
           className={classes.CommentsCreator_TextField}

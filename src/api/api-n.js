@@ -1,6 +1,35 @@
 // @ts-nocheck
 import instance from "@api/axios";
 
+export const authApi = {
+  register(name, nickname, password) {
+    return instance.post('auth/register', {name, nickname, password});
+  },
+  login(nickname, password) {
+    return instance.post('auth/login', {nickname, password});
+  },
+  logout() {
+    return instance.post('auth/logout');
+  },
+  me() {
+    return instance.post('auth/me');
+  }
+}
+export const imagesApi = {
+  addImage(imageData) {
+    return instance.post('images', imageData);
+  },
+  deleteImage(imageUrl) {
+    return instance.delete('images', imageUrl);
+  }
+}
+
+export const usersApi = {
+  getUser(userId) {
+    return instance.get(`users/${userId}`);
+  }
+}
+
 export const postsApi = {
   getPosts(userId) {
     return instance.get('posts', {
@@ -31,32 +60,12 @@ export const postsApi = {
   },
   deleteComment(commentId) {
     return instance.delete(`comments/${commentId}`);
-  },
-  addImage(imageData) {
-    return instance.post('images', imageData);
   }
 }
 
-export const authApi = {
-  register(name, nickname, password) {
-    return instance.post('auth/register', {name, nickname, password});
-  },
-  login(nickname, password) {
-    return instance.post('auth/login', {nickname, password});
-  },
-  logout() {
-    return instance.post('auth/logout');
-  },
-  me() {
-    return instance.post('auth/me');
-  }
-}
 
-export const usersApi = {
-  getUser(userId) {
-    return instance.get(`users/${userId}`);
-  }
-}
+
+
 
 // export const profileAPI = {
 //   getProfile(userId) {

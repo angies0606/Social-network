@@ -1,50 +1,58 @@
 
 import classes from "./Post.module.css";
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@ui-kit/IconButton/IconButton';
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import Avatar from "@ui-kit/Avatar/Avatar";
+import IconButton from "@ui-kit/IconButton/IconButton";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CardActions from "@mui/material/CardActions";
-import CommentIcon from '@mui/icons-material/Comment';
-import Menu from '@ui-kit/Menu/Menu.jsx';
-import MenuItem from '@mui/material/MenuItem';
+import CommentIcon from "@mui/icons-material/Comment";
+import Menu from "@ui-kit/Menu/Menu.jsx";
+import MenuItem from "@mui/material/MenuItem";
 import PostCreator from "../PostCreator/PostCreator";
 import { TextField } from "@mui/material";
-import {useState, useMemo, useEffect, useCallback} from 'react';
+import {useState, useMemo, useEffect, useCallback} from "react";
 import DateBar from "@ui-kit/DateBar/DateBar";
 import Likes from "@ui-kit/Likes/Likes.jsx";
 import CommentsCreator from "@components/CommentsCreator/CommentsCreator";
-import { styled } from '@mui/material/styles';
-import Collapse from '@mui/material/Collapse';
+import { styled } from "@mui/material/styles";
+import Collapse from "@mui/material/Collapse";
 import Separator from "@ui-kit/Separator/Separator";
 import Comment from "@components/Comment/Comment";
-import {postsApi} from '@api/api-n';
+import {postsApi, usersApi} from "@api/api-n";
 
 const Post = ({
   post,
   deletePost,
   editPost,
+  user,
   userId,
   putComments,
   addLike,
   comments,
-  deleteComment
+  deleteComment,
+  authedUser
 }) => {
+ 
   const [changeMode, setChangeMode] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [isProgress, setIsProgress] = useState(false);
 
+  // Получаем данные о владельце поста и комментов
+  // useEffect(() => {
+  //   usersApi.getUser
+  // }, [post])
   const startProgress = useCallback(() => {
     setIsProgress(true);
   }, [setIsProgress]);
 
   const endProgress = useCallback(() => {
     setIsProgress(false);
-  }, [setIsProgress]);
+  }, [setIsProgress]); 
+  
 
   const textField = useMemo(() => {
     return <TextField 
@@ -61,6 +69,8 @@ const Post = ({
       onGetComments(post._id);
     }
   }, [expanded])
+
+  if(!post) return null;
 
   const onAddComment = (commentData) => {
     return postsApi.addComment({
@@ -130,7 +140,7 @@ const Post = ({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  
   return (
     <Card 
       className = {classes.Post__Card}
@@ -139,9 +149,10 @@ const Post = ({
        <CardHeader
         avatar={
           <Avatar 
-            src="https://www.meme-arsenal.com/memes/50569ac974c29121ff9075e45a334942.jpg"
-          >
-          </Avatar>
+            userAvatar={user.avatar}
+            // avatarHeight={} 
+            // avatarWidth={}
+          />
         }
         action={
           <Menu changeMode={changeMode}> 
@@ -149,7 +160,7 @@ const Post = ({
             <MenuItem onClick={onPostDelete}>Удалить</MenuItem>
           </Menu>
         }
-        title="Jane Chaus"
+        title={user.nickname}
         subheader={<DateBar creationDate={post.createdAt}/>}
       />
       <div className={classes.Card__CardMediaBox}>
@@ -213,7 +224,7 @@ const Post = ({
           
           <Separator />
           <CommentsCreator 
-            userId={userId}
+            authedUser={authedUser}
             confirmed={onAddComment}
           />
         </CardContent>

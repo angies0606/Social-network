@@ -16,6 +16,7 @@ const Profile = ({
           // updateStatus={props.updateStatus}
         />
         <PostsBlockConnected
+          user={user}
           userId={user._id}
           isForCurrentUser={isForCurrentUser}
         />
