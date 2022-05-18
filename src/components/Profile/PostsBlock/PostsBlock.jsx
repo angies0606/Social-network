@@ -1,19 +1,21 @@
-import {useEffect} from 'react';
+import {useEffect} from "react";
 import classes from "./PostsBlock.module.css";
 import Post from "./Post/Post";
 import { Field, reduxForm } from 'redux-form';
 import { maxLengthCreator, required} from "../../../utils/validators/validators"
 import { Textarea } from '../../common/FormsControls/FormsControls';
-import PostCreatorConnected from './PostCreator/PostCreatorConnected.js';
-import {postsApi} from '@api/api-n';
+import PostCreatorConnected from "./PostCreator/PostCreatorConnected.js";
+import {postsApi} from "@api/api-n";
 import Card from "@mui/material/Card";
-import { Button, TextField } from '@mui/material';
-import CommentsCreator from '@components/CommentsCreator/CommentsCreator';
-import { AddComment, CommentsDisabled } from '@mui/icons-material';
-import PostConnected from './Post/PostConnected';
+import { Button, TextField } from "@mui/material";
+import CommentsCreator from "@components/CommentsCreator/CommentsCreator";
+import { AddComment, CommentsDisabled } from "@mui/icons-material";
+import PostConnected from "./Post/PostConnected";
+import { useAuthContext } from "@features/auth/auth.context";
 
 
 const PostsBlock = ({
+  user,
   userId,
   isForCurrentUser,
   addPosts,
@@ -27,8 +29,11 @@ const PostsBlock = ({
 }) => {
  
 // TODO: реализовать метод, который не будет задваивать посты при перехода со страницы на страницу
+//TODO: user userId в пропсах заменить на user?
+
+const {state: {user: authedUser}} = useAuthContext();
+
   useEffect(() => {
-    // TODO: убрать заглушку
     postsApi.getPosts(userId)
       .then(posts => {
         addPosts(posts);
@@ -66,7 +71,10 @@ const PostsBlock = ({
       key={index}
       deletePost={onDeletePost}
       editPost={onEditPost}
+      user={user}
       userId={userId}
+      isForCurrentUser={isForCurrentUser}
+      authedUser={authedUser}
     />
   );
 

@@ -15,7 +15,7 @@ import { TryRounded } from "@mui/icons-material";
 import classNames from 'classnames';
 import SelectFile from '@ui-kit/SelectFile/SelectFile';
 import ImagePreview from '@ui-kit/ImagePreview/ImagePreview';
-import { postsApi } from '@api/api-n';
+import { imagesApi } from '@api/api-n';
 
 
 const postTextValidator = (value) => {
@@ -136,7 +136,7 @@ function PostCreator ({
     const formData = new FormData();
     formData.append('img', image);
 
-    postsApi.addImage(formData)
+   imagesApi.addImage(formData)
       .then((response) => {
         // debugger;
         setImageUrl(response.imageUrl);
@@ -185,9 +185,9 @@ function PostCreator ({
               <AddPhotoAlternateIcon />
             </IconButton>
           </SelectFile>
-          <IconButton>
+          {/* <IconButton>
             <MapIcon /> 
-          </IconButton>
+          </IconButton> */}
         </div>
       </div>
     </div> 

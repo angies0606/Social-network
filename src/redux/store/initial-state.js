@@ -12,6 +12,8 @@ let initialState = {
     userPage: {
       user: null,
       posts: [],
+      // status: '',
+      // avatar: ''
     }
   },
   entities: { //TODO: добавить еще сущностей типа user и т.д
@@ -38,43 +40,8 @@ let initialState = {
       // post: 'hfhfhfId',
       //   text: ''
       // }
-    }        
+    },
   },
-  // app: {
-  //   initialized: false
-  // },
-  // auth: {  
-  //   userId: null,
-  //   email: null,
-  //   login: null,
-  //   isAuth: false,
-  //   user: null
-  // },
-  // userData: { //TODO: переписать
-  //   profile: null, // убрать потом 
-  //   id: '',
-  //   status: '',
-  //   avatar: ''
-  // },
-  // dialogsPage: {
-  //   messagesData: [
-  //     {id: 1, text: "Привет"}, 
-  //     {id: 2, text: "Как дела?"},
-  //     {id: 3, text: "Кодишь?"},
-  //     {id: 4, text: "Учу реакт"},
-  //     {id: 5, text: "Молодец"},
-  //     {id: 6, text: "Учись"}
-  //   ], 
-  //   dialogsData: [
-  //     {id: 1, name: "Женя"}, 
-  //     {id: 2, name: "Виталя"},
-  //     {id: 3, name: "Ксюша"},
-  //     {id: 4, name: "Лена"},
-  //     {id: 5, name: "Аня"},
-  //     {id: 6, name: "Вова"}
-  //   ],
-  //   newMessageBody: ""
-  // },
   usersPage: {
     users: [],
     pageSize: 5,
