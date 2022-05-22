@@ -27,6 +27,12 @@ export const imagesApi = {
 export const usersApi = {
   getUser(userId) {
     return instance.get(`users/${userId}`);
+  },
+  changeUserAvatar(imageData, userId) {
+    return instance.post(`user/${userId}/avatar`, imageData);
+  },
+  changeUserBanner(imageData, userId) {
+    return instance.post(`user/${userId}/banner`, imageData);
   }
 }
 

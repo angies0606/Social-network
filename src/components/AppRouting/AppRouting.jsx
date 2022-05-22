@@ -7,7 +7,7 @@ import RegisterRoute from "@routes/Register/Register.route";
 import UsersContainer from "../Users/UsersContainer";
 import ProfileRoute from "@routes/ProfileRoute/ProfileRoute";
 import Login from "../Login/Login";
-import Settings from "@components/Settings/Settings";
+import SettingsConnected from "@components/Settings/SettingsConnected.js";
 
 
 function AppRouting() {
@@ -15,7 +15,7 @@ function AppRouting() {
 
   return (
     <>
-      <AuthedRoute path='/settings' render={ () => <Settings user={authedUser}/>} />
+      <AuthedRoute path='/settings' render={ () => <SettingsConnected authedUser={authedUser}/>} />
       {/* TODO: УБРАТЬ ЗНАК "?". Почему? */}
       <AuthedRoute path='/profile/:userId' render={ () => <ProfileRoute />} />
       {/* TODO: дописать список users */}

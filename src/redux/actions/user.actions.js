@@ -5,3 +5,4 @@ export const setUserActionCreator = (user) => {
     data: user
   }
 }
+
