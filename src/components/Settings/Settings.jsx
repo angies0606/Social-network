@@ -5,63 +5,112 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { useProgressContext } from "@features/progress/progress.context";
 import Dialog from "@ui-kit/Dialog/Dialog";
 import classes from "./Settings.module.scss";
+import { imagesApi, usersApi } from '@api/api-n';
+import { useAuthContext } from "@features/auth/auth.context";
+import ImageChanger from "@ui-kit/ImageChanger/ImageChanger";
 
-const avatar = 'аватар';
-const banner = 'баннер';
+const TITLES = {
+  AVATAR: 'Изменить аватар',
+  BANNER: 'Изменить баннер'
+}
 
 const Settings = ({
-  user
+  authedUser,
+  userProfileId,
+  changeProfileImage
 }) => {
   //TODO: сделать стили в Настройках
+  const {changeUserData} = useAuthContext();
   const {isProgress} = useProgressContext();
-  const [isDialogOpened, setIsDialogOpened] = useState({ item: '', show: false});
+  // const [isDialogOpened, setIsDialogOpened] = useState(false);
 
-  const onButtonClick = (item) => {
-    setIsDialogOpened({ item, show: true});
+  const isTheSameUser = authedUser._id === userProfileId;
+
+  const onBannerChange = (formData) => {
+    return usersApi.changeUserBanner(formData, authedUser._id)
+      .then(user => {
+        onChangeUserImages(user);
+       
+      })
   }
- 
+
+  const onAvatarChange = (formData) => {
+    return usersApi.changeUserAvatar(formData, authedUser._id)
+    .then(user => {
+      onChangeUserImages(user);
+    })
+  }
+
+  const onChangeUserImages = (data) => {
+    console.log(data);
+    changeUserData(data);
+    if(isTheSameUser) {
+      changeProfileImage(data);
+    }
+  }
+
   return (
     <>
-    <div>
-      Изменить аватар 
-    </div>
-    <Avatar
+      <div>
+        Изменить аватар 
+      </div>
+      <Avatar
         // className={classes.ProfileInfo__Avatar}
-        userAvatar={user.avatar}
+        userAvatar={authedUser.avatar}
         avatarHeight={150}
         avatarWidth={150}
       />
-    <Button 
-      startIcon={<AddPhotoAlternateIcon />}
-      onClick={() => {onButtonClick(avatar)}}
-    >
-      Изменить
-    </Button>
-    <div>
-      Изменить баннер
-    </div>
-    <div className={classes.Settings__BannerBox}>
-      <img 
-        className={classes.Settings__Banner}
-        src={user.banner} 
-      />
-    </div>
-    
-    <Button 
-      startIcon={<AddPhotoAlternateIcon />}
-      onClick={() => {onButtonClick(banner)}}
-    >
-      Изменить
-    </Button>
-    {/* <div>
-      <img src={user.banner} />
-    </div> */}
-    <Dialog 
-      isShown={isDialogOpened.show}
-      item={isDialogOpened.item}
-      closeDialog={() => setIsDialogOpened({ item: '', show: false})}
-    />
+      <ImageChanger
+        //  isDialogShown={isDialogOpened}
+        title={TITLES.AVATAR}
+        //  onImageConfirm={onImageConfirm}
+        onImageChange={onAvatarChange}
+        isProgress={isProgress}
+      >
+        <Button 
+          startIcon={<AddPhotoAlternateIcon />}
+          disabled={isProgress}
+        >
+          Изменить
+        </Button>
+      </ImageChanger>
+   
+      <div>
+        Изменить баннер
+      </div>
+      <div className={classes.Settings__BannerBox}>
+        <img 
+          className={classes.Settings__Banner}
+          src={authedUser.banner} 
+        />
+      </div>
+
+      <ImageChanger
+        //  isDialogShown={isDialogOpened}
+        title={TITLES.BANNER}
+        //  onImageConfirm={onImageConfirm}
+        onImageChange={onBannerChange}
+        isProgress={isProgress}
+        >
+        <Button 
+          startIcon={<AddPhotoAlternateIcon />}
+          disabled={isProgress}
+          >
+          Изменить
+        </Button>
+      </ImageChanger>
+      {/* <div>
+        <img src={user.banner} />
+      </div> */}
+      {/* <Dialog 
+        isShown={isDialogOpened.show}
+        item={isDialogOpened.item}
+        closeDialog={() => setIsDialogOpened({ item: '', show: false})}
+        onImageConfirm={onImageConfirm}
+        isProgress={isProgress}
+      /> */}
     </>
+    
   )
 }
 

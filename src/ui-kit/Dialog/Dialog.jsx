@@ -8,37 +8,35 @@ import Button from "@ui-kit/Button/Button";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import SelectFile from "@ui-kit/SelectFile/SelectFile";
 import { useProgressContext } from "@features/progress/progress.context";
-import { imagesApi } from '@api/api-n';
+import { imagesApi, usersApi } from '@api/api-n';
 import ImagePreview from "@ui-kit/ImagePreview/ImagePreview";
 
 function Dialog({
   isShown,
-  item,
-  closeDialog
+  title,
+  closeDialog,
+  onImageConfirm,
+  isProgress
 }) {
   //TODO: навесить стили на Dialog
-  const {isProgress} = useProgressContext();
+  // const {isProgress} = useProgressContext();
   const [imageFile, setImageFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
+  // const [imageUrl, setImageUrl] = useState(null);
 
   const onImageSelect = (image) => {
     setImageFile(image);
-    const formData = new FormData();
-    formData.append('img', image);
+  }
 
-    imagesApi.addImage(formData)
-      .then((response) => {
-        setImageUrl(response.imageUrl);
-      })
+  const onConfirm = () => {
+    onImageConfirm(imageFile)
+    .then(() => {
+      onCloseDialog();
+    })
   }
 
   const onCloseDialog = () => {
-    if(imageFile && imageUrl) {
-      // imagesApi.deleteImage(imageUrl)
-      //   .then(() => {
-      //     setImageFile(null);
-      //     setImageUrl(null);
-      //   })
+    if(imageFile) {
+      setImageFile(null);
     }
     closeDialog();
   }
@@ -50,7 +48,7 @@ function Dialog({
         onClose={onCloseDialog}
       >
         <MUIDialogTitle>
-          Изменить {item}
+          {title}
         </MUIDialogTitle>
         <MUIDialogContent>
           {
@@ -68,12 +66,23 @@ function Dialog({
           >
             <Button 
               startIcon={<AddPhotoAlternateIcon />}
+              disabled={isProgress}
             >
-              Изменить
+              Выбрать
             </Button>
           </SelectFile>
-          
-          <Button onClick={onCloseDialog}>
+          {imageFile && 
+            <Button 
+              onClick={onConfirm}
+              disabled={isProgress}
+            >
+              Подтвердить
+            </Button>
+          }
+          <Button 
+            onClick={onCloseDialog}
+            disabled={isProgress}
+          >
             Отмена
           </Button>
         </MUIDialogActions>

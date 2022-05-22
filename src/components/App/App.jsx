@@ -11,11 +11,11 @@ function App () {
     <Auth>
     <Progress>
       <div className={classes.App__Container}>
-        <Header />
-        <Navbar />
         <div className={classes.App_Content}>
           <AppRouting />
         </div>
+        <Header />
+        <Navbar />
       </div>
     </Progress>
     </Auth>

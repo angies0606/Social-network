@@ -2,6 +2,8 @@
 import { NavLink } from 'react-router-dom';
 import classes from './Header.module.css';
 import {useAuthContext} from '@features/auth/auth.context';
+import Avatar from '@ui-kit/Avatar/Avatar';
+
 
 const backgroundImage = "https://www.pinclipart.com/picdir/big/526-5262236_transparent-falling-png-phoenix-egg-png-clipart.png";
 
@@ -14,6 +16,12 @@ const Header = () => {
       <div className={classes.loginBlock}>
         {isAuthed
           ? <div>
+              <Avatar 
+                userAvatar = {user.avatar}
+                avatarHeight = {30}
+                avatarWidth = {30}
+                className={''}
+              />
               {user.nickname}
               <button onClick={logout}>
                 Выйти

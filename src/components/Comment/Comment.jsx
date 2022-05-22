@@ -45,7 +45,7 @@ function Comment ({
     <div className={classes.Comment_UserCommentBox}>
       <Avatar
         className={classes.Comment_Avatar}
-        userAvatar="https://www.meme-arsenal.com/memes/50569ac974c29121ff9075e45a334942.jpg" // TODO: аватар юзера, который оставил коммент, переписать когда у comments будет инфа по юзеру
+        userAvatar={comment.userAvatar} // TODO: аватар юзера, который оставил коммент, переписать когда у comments будет инфа по юзеру
         avatarHeight={30}
         avatarWidth={30}
       />

@@ -13,7 +13,7 @@ function Progress({children}) {
           progress.isProgress &&
           <LinearProgress
             className={classes.Progress__Bar}
-            variant="determinate"
+            variant="indeterminate"
             color='warning'
           />
         }

@@ -24,14 +24,24 @@ function setUnauthedActionCreator() {
   }
 }
 
+// const CHANGE_AVATAR = 'CHANGE_AVATAR';
+// export function changeAvatarActionCreator(imageUrl) {
+//   return {
+//     type: CHANGE_AVATAR,
+//     data: imageUrl
+//   }
+// }
+
 function authReducer(state , action) {
   switch(action.type) {
     case SET_AUTHED:
-      return {
+      let obj = {
         user: action.data,
         isAuthed: true,
         isInitialized: true
       }
+      console.log(obj);
+    return obj;
     case SET_UNAUTHED:
       return {
         user: null,
@@ -40,6 +50,7 @@ function authReducer(state , action) {
       }
     default: return state;
   }
+  
 }
 
 
@@ -83,23 +94,29 @@ function useAuth() {
       });
   }, []);
 
+  const changeUserData = useCallback(user => {
+    return dispatch(setAuthedActionCreator(user));
+  }, []);
+
   //Проверяем один раз авторизирован ли пользователь
   useEffect(() => {
     check();
   },[]);
-
-  return useMemo(() => ({
+ 
+  return  useMemo(() => ({
     state,
     register,
     login,
     logout,
-    check
+    check,
+    changeUserData
   }), [
     state,
     register,
     login,
     logout,
-    check
+    check,
+    changeUserData
   ]);
 }
 
