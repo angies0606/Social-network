@@ -23,35 +23,39 @@ import Collapse from "@mui/material/Collapse";
 import Separator from "@ui-kit/Separator/Separator";
 import Comment from "@components/Comment/Comment";
 import {postsApi, usersApi} from "@api/api-n";
+import classNames from "classnames";
 
 const Post = ({
   post,
   deletePost,
   editPost,
-  user,
-  userId,
+  profileUser,
+  profileUserId,
   putComments,
-  addLike,
+  setLike,
+  // addLike,
+  // removeLike,
   comments,
   deleteComment,
-  authedUser
+  authedUser,
+  isProgress
 }) => {
- 
   const [changeMode, setChangeMode] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const [isProgress, setIsProgress] = useState(false);
-
+  const [isPostReady, setIsPostReady] = useState(false);
+  const [isCommentsReady, setCommentsReady] = useState(false);
+  
   // Получаем данные о владельце поста и комментов
   // useEffect(() => {
   //   usersApi.getUser
   // }, [post])
-  const startProgress = useCallback(() => {
-    setIsProgress(true);
-  }, [setIsProgress]);
+  // const startProgress = useCallback(() => {
+  //   setIsProgress(true);
+  // }, [setIsProgress]);
 
-  const endProgress = useCallback(() => {
-    setIsProgress(false);
-  }, [setIsProgress]); 
+  // const endProgress = useCallback(() => {
+  //   setIsProgress(false);
+  // }, [setIsProgress]); 
   
 
   const textField = useMemo(() => {
@@ -77,18 +81,19 @@ const Post = ({
       postId: post._id, 
       ...commentData
     })
-      .then(comment => {
-        putComments([comment]);
+      .then(data => {
+        putComments(data);
       })
   }
 
   const onGetComments = (postId) => {
-    startProgress();
+    setCommentsReady(false);
     return postsApi.getComments(postId)
-      .then(comments => {
-        putComments(comments);
+      .then(data => {
+        putComments(data);
+        setCommentsReady(true);
       })
-        .then(() => endProgress());
+        // .then(() => {});
   }
 
   const onDeleteComment = (commentId) => {
@@ -98,11 +103,18 @@ const Post = ({
       })
   }
 
-  const onAddLike = (userId) => {
-    return postsApi.addLike(post._id, userId)
+  const onAddLike = () => {
+    return postsApi.addLike(post._id)
       .then(payload => {
-        addLike(payload);
+        setLike(payload);
       })
+  }
+
+  const onRemoveLike = () => {
+    return postsApi.removeLike(post._id)
+    .then(payload => {
+      setLike(payload);
+    })
   }
   
   const onConfirmEdit = (postData) => {
@@ -120,10 +132,10 @@ const Post = ({
   }
 
   const onPostDelete = () => {
-    setChangeMode(true);
+    // setChangeMode(true);
     deletePost(post._id).
       then(() => {
-        setChangeMode(false);
+        // setChangeMode(false);
       })
   }
 
@@ -140,96 +152,115 @@ const Post = ({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const isShownData = isPostReady && !post;
   
   return (
-    <Card 
-      className = {classes.Post__Card}
-      sx={{}}
-    >
-       <CardHeader
-        avatar={
-          <Avatar 
-            userAvatar={user.avatar}
-            // avatarHeight={} 
-            // avatarWidth={}
-          />
-        }
-        action={
-          <Menu changeMode={changeMode}> 
-            <MenuItem onClick={onPostEdit}>Редактировать</MenuItem>
-            <MenuItem onClick={onPostDelete}>Удалить</MenuItem>
-          </Menu>
-        }
-        title={user.nickname}
-        subheader={<DateBar creationDate={post.createdAt}/>}
-      />
-      <div className={classes.Card__CardMediaBox}>
-        <CardMedia
-          component="img"
-          image={post.image}
-          className={classes.Card__CardMedia}
+    <>
+      {/* {isShownData &&  */}
+        <Card 
+        className = {classes.Post__Card}
+        sx={{}}
+      >
+        <CardHeader
+          avatar={
+            <Avatar 
+              userAvatar={profileUser.avatar}
+              // avatarHeight={} 
+              // avatarWidth={}
+            />
+          }
+          action={
+            post.user === authedUser._id ? 
+              <Menu changeMode={changeMode}> 
+                <MenuItem onClick={onPostEdit}>Редактировать</MenuItem>
+                <MenuItem onClick={onPostDelete}>Удалить</MenuItem>
+              </Menu>
+            : null
+          }
+          title={profileUser.nickname}
+          subheader={<DateBar creationDate={post.createdAt}/>}
         />
-      </div>
-      <CardContent>
-        {!changeMode &&
-          <Typography variant="body1">
-            {post.text}
-          </Typography> 
-        }
-        {changeMode &&
-          <PostCreator
-            confirmed={onConfirmEdit}
-            postText={post.text}
-            cancelChange={() => setChangeMode(false)}
-            isShowCancelButton
-            buttonContent={'Изменить'}
-            textField={textField}
+        <div className={classes.Card__CardMediaBox}>
+          <CardMedia
+            component="img"
+            image={post.image}
+            className={classes.Card__CardMedia}
           />
-        }
-      </CardContent>
-      <div className={classes.Card__CardActionsBox}>    
-        <CardActions disableSpacing>
-          <Likes
-            addLike={onAddLike}
-            likes={post.likes}
-            userId={userId}
-          />
-        </CardActions>
-        <CardActions disableSpacing>
-          <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-            >
-              <CommentIcon /> 
-          </ExpandMore>
-        </CardActions>
-      </div>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent
-          className={classes.Post_CommentsCreatorBlock}
-        >
-          
-          {comments.map((comment, index) => {
-            return (
-              <div key={index}>
-                <Separator />
-                <Comment 
-                  comment={comment}
-                  deleteComment={onDeleteComment}
-                />
-              </div>
-            )} 
-          )}
-          
-          <Separator />
-          <CommentsCreator 
-            authedUser={authedUser}
-            confirmed={onAddComment}
-          />
+        </div>
+        <CardContent className={classes.Post__CardContent} >
+          {!changeMode &&
+            <Typography variant="body1" className={classes.Post__PostText}>
+              {post.text}
+            </Typography> 
+          }
+          {changeMode &&
+            <PostCreator
+              confirmed={onConfirmEdit}
+              postText={post.text}
+              cancelChange={() => setChangeMode(false)}
+              isShowCancelButton
+              buttonContent={'Изменить'}
+              textField={textField}
+            />
+          }
         </CardContent>
-      </Collapse>
-    </Card>
+        <div className={classes.Card__CardActionsBox}>    
+          <CardActions disableSpacing>
+            <Likes
+              addLike={onAddLike}
+              likes={post.nLikes}
+              profileUserId={profileUserId}
+              isLiked={post.isLiked}
+              authedUserId={authedUser._id}
+              removeLike={onRemoveLike}
+              isProgress={isProgress}
+            />
+          </CardActions>
+          <CardActions disableSpacing>
+                <div>
+                  {post.nComments || ''} 
+                </div> 
+                <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+              >
+              
+                <CommentIcon className={classNames(classes.Post__CommentIcon, {
+                  [classes['Post__CommentIcon--expanded']]: expanded
+                })}/> 
+            </ExpandMore>
+          </CardActions>
+        </div>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent
+            className={classes.Post_CommentsCreatorBlock}
+          >
+            {isCommentsReady && comments.map((comment, index) => {
+              return (
+                <div key={index}>
+                  <Separator />
+                  <Comment 
+                    comment={comment}
+                    deleteComment={onDeleteComment}
+                    isProgress={isProgress}
+                    authedUserId={authedUser._id}
+                  />
+                </div>
+              )} 
+            )}
+          
+            <Separator />
+            <CommentsCreator 
+              authedUser={authedUser}
+              confirmed={onAddComment}
+            />
+          </CardContent>
+        </Collapse>
+      </Card>
+      {/* } */}
+    </>
   )
 }
 

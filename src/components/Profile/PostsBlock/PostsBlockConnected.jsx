@@ -3,8 +3,8 @@ import {
   putPostsActionCreator, 
   deletePostActionCreator, 
   editPostActionCreator,
-  addLikeActionCreator,
-  putCommentsActionCreator
+  putCommentsActionCreator,
+  setPostsActionCreator
 } from "@redux/actions/post.actions";
 import PostsBlock from './PostsBlock';
 import { connect } from "react-redux";
@@ -22,14 +22,14 @@ let mapDispatchToProps = (dispatch) => {
     addPosts: (posts) => {
       dispatch(putPostsActionCreator(posts));
     },
+    setPosts: (posts) => {
+      dispatch(setPostsActionCreator(posts));
+    },
     deletePost: (postId) => {
       dispatch(deletePostActionCreator(postId));
     },
     editPost: (post) => {
       dispatch(editPostActionCreator(post));
-    },
-    addLike: (like) => {
-      dispatch(addLikeActionCreator(like));
     },
     putComments: (comments) => {
       dispatch(putCommentsActionCreator(comments));

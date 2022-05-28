@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Settings from "./Settings.jsx";
-import { setUserActionCreator } from "@redux/actions/user.actions";
+import { setUserActionCreator } from "@redux/actions/users.actions";
 
 //TODO: упразднить компонент?
 let mapStateToProps = (state, ownProps) => {

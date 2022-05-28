@@ -2,7 +2,7 @@ import initialState from "@redux/store/initial-state";
 import {
   PUT_COMMENTS,
   DELETE_COMMENT
-} from '@redux/actions/post.actions.js'
+} from "@redux/actions/post.actions.js";
 
 function entitiesCommentsReducer(state = initialState.entities.comments, action) {
   switch (action.type) {
@@ -10,7 +10,7 @@ function entitiesCommentsReducer(state = initialState.entities.comments, action)
       const newState = {
         ...state
       };
-      const comments = action.data;
+      const comments = action.data.commentsData;
       comments.forEach(comment => {
         newState[comment._id] = comment
       })
@@ -21,7 +21,7 @@ function entitiesCommentsReducer(state = initialState.entities.comments, action)
       const newState = {
         ...state
       };
-      const commentId = action.data._id;
+      const commentId = action.data.deletedComment._id;
       delete newState[commentId];
       return newState;
     }

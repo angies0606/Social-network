@@ -14,7 +14,7 @@ let reducers = combineReducers({
   entities: entitiesReducer,
   // dialogsPage: dialogsReducer,
   sidebarPage: sidebarReducer,
-  usersPage: usersReducer,
+  // usersPage: usersReducer,
   // auth: authReducer,
   form: formReducer
 });

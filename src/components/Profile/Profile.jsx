@@ -5,19 +5,19 @@ import PostsBlockConnected from "./PostsBlock/PostsBlockConnected";
 
 const Profile = ({
   isForCurrentUser,
-  user
+  profileUser
 }) => {
  
   return (
     <div>
         <ProfileInfo 
-          profile={user} 
+          profileUser={profileUser} 
           // status={props.status}
           // updateStatus={props.updateStatus}
         />
         <PostsBlockConnected
-          user={user}
-          userId={user._id}
+          profileUser={profileUser}
+          profileUserId={profileUser._id}
           isForCurrentUser={isForCurrentUser}
         />
       </div>

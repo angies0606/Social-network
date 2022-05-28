@@ -1,5 +1,5 @@
 import { usersApi } from "@api/api-n";
-import { setUserActionCreator } from "@redux/actions/user.actions";
+import { setUserActionCreator } from "@redux/actions/users.actions";
 
 export const getUser = (userId) => (dispatch) => {
   usersApi.getUser(userId)

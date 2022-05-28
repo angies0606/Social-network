@@ -7,6 +7,14 @@ export function putPostsActionCreator(posts) {
   };
 }
 
+export const SET_POSTS = 'SET_POSTS';
+export function setPostsActionCreator(posts) {
+  return {
+    type: SET_POSTS,
+    data: posts
+  }
+}
+
 export const DELETE_POST = 'DELETE_POST';
 export function deletePostActionCreator(postId) {
   return {
@@ -22,27 +30,27 @@ export function editPostActionCreator(post) {
   }
 }
 
-export const ADD_LIKE = 'ADD_LIKE';
-export function addLikeActionCreator(like) {
+export const SET_LIKE = 'SET_LIKE';
+export function setLikeActionCreator(data) {
   return {
-    type: ADD_LIKE,
-    data: like
+    type: SET_LIKE,
+    data
   }
 }
 
 export const PUT_COMMENTS = 'PUT_COMMENTS';
-export function putCommentsActionCreator(comments) {
+export function putCommentsActionCreator(data) {
   return {
     type: PUT_COMMENTS,
-    data: comments
+    data
   }
 }
 
 export const DELETE_COMMENT = 'DELETE_COMMENT';
-export function deleteCommentActionCreator(comment) {
+export function deleteCommentActionCreator(data) {
   return {
     type: DELETE_COMMENT,
-    data: comment
+    data
   }
 }
 

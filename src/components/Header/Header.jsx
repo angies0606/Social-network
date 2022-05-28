@@ -27,10 +27,16 @@ const Header = () => {
                 Выйти
               </button>
             </div>
-          : <>
-              <NavLink to={"/login"}>Войти</NavLink>
-              <NavLink to={"/register"}>Регистрация</NavLink>
-            </>
+          : <div>
+              <Avatar 
+                userAvatar = {''}
+                avatarHeight = {30}
+                avatarWidth = {30}
+                className={''}
+              />
+              <NavLink className={classes.Header__Navlink} to={"/login"}>Войти</NavLink>
+              <NavLink className={classes.Header__Navlink} to={"/register"}>Регистрация</NavLink>
+            </div>
         }
       </div>
     </header>

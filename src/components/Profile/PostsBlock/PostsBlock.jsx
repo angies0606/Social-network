@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import classes from "./PostsBlock.module.css";
 import Post from "./Post/Post";
 import { Field, reduxForm } from 'redux-form';
@@ -12,16 +12,18 @@ import CommentsCreator from "@components/CommentsCreator/CommentsCreator";
 import { AddComment, CommentsDisabled } from "@mui/icons-material";
 import PostConnected from "./Post/PostConnected";
 import { useAuthContext } from "@features/auth/auth.context";
+import { useProgressContext } from "@features/progress/progress.context";
 
 
 const PostsBlock = ({
-  user,
-  userId,
+  profileUser,
+  profileUserId,
   isForCurrentUser,
   addPosts,
   posts,
   deletePost,
   editPost,
+  setPosts
   // addLike,
   // putComments,
   // comments,
@@ -32,17 +34,29 @@ const PostsBlock = ({
 //TODO: user userId в пропсах заменить на user?
 
 const {state: {user: authedUser}} = useAuthContext();
+const {isProgress} = useProgressContext();
+const [isPostsReady, setPostsIsReady] = useState(false);
+
+
+  // useEffect(() => {
+  //   postsApi.getPosts(profileUserId)
+  //     .then(posts => {
+  //       setPostsIsReady(true);
+  //       addPosts(posts);
+  //     });
+  // }, []);
 
   useEffect(() => {
-    postsApi.getPosts(userId)
+    postsApi.getPosts(profileUserId, authedUser._id)
       .then(posts => {
-        addPosts(posts);
+        setPostsIsReady(true);
+        setPosts(posts);
       });
-  }, [addPosts, userId]);
+  }, [profileUserId]);
 
   const onAddPost = (newPost) => {
     const newPostData = {
-      user: userId,
+      user: profileUserId,
       ...newPost
     }
     return postsApi.createPost(newPostData)
@@ -65,14 +79,16 @@ const {state: {user: authedUser}} = useAuthContext();
       })
   }
 
+  const isPostShown = posts?.length > 0 && isPostsReady;
+
   let postsElements = posts.map((post, index) => 
     <PostConnected 
       post={post}
       key={index}
       deletePost={onDeletePost}
       editPost={onEditPost}
-      user={user}
-      userId={userId}
+      profileUser={profileUser}
+      profileUserId={profileUserId}
       isForCurrentUser={isForCurrentUser}
       authedUser={authedUser}
     />
@@ -107,7 +123,10 @@ const {state: {user: authedUser}} = useAuthContext();
             />
           </Card>
         }
-        {postsElements}
+        {
+        //  isPostShown &&
+          postsElements
+        }
       </div>
     </div>
   )

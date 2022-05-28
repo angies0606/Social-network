@@ -3,14 +3,16 @@ import {
   PUT_POSTS,
   DELETE_POST,
   EDIT_POST,
-  ADD_LIKE,
+  SET_LIKE,
   PUT_COMMENTS,
-  DELETE_COMMENT
-} from '@redux/actions/post.actions.js';
+  DELETE_COMMENT,
+  SET_POSTS
+} from "@redux/actions/post.actions.js";
 
 function entitiesPostsReducer(state = initialState.entities.posts, action) {
   switch (action.type) {
-    case PUT_POSTS: {
+    case PUT_POSTS:
+    case SET_POSTS:  {
       const newState = {
         ...state
       };
@@ -39,30 +41,30 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
       }
       return newState;
     }
-    case ADD_LIKE: {
+    case SET_LIKE: {
       const newState = {
         ...state
       };
-      const postId = action.data.post._id;
-      const newLike = action.data.like._id;
+      const postId = action.data._id;
       newState[postId] = {
-        ...newState[postId],
-        likes: [...newState[postId].likes, newLike]
+        ...action.data
       }
       return newState;
     }
+    
     case PUT_COMMENTS: {
       const newState = {
         ...state
       };
-      const comments = action.data;
+      const comments = action.data.commentsData;
       comments.forEach(comment => {
         if (newState[comment.post].comments.includes(comment._id)) {
           return;
         }
         newState[comment.post] = {
           ...newState[comment.post],
-          comments: [...newState[comment.post].comments, comment._id]
+          comments: [...newState[comment.post].comments, comment._id],
+          nComments: action.data.nComments
         }
       })
       return newState;
@@ -71,10 +73,14 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
       const newState = {
         ...state
       };
-      const commentId = action.data._id;
-      const postId = action.data.post;
+      const commentId = action.data.deletedComment._id;
+      const postId = action.data.deletedComment.post;
       const comments = newState[postId].comments;
       comments.splice(comments.indexOf(commentId), 1);
+      newState[postId] = {
+        ...newState[postId],
+        nComments: action.data.nComments
+      }
       return newState;
     }
     

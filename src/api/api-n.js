@@ -28,6 +28,9 @@ export const usersApi = {
   getUser(userId) {
     return instance.get(`users/${userId}`);
   },
+  getUsers() {
+    return instance.get('/users');
+  },
   changeUserAvatar(imageData, userId) {
     return instance.post(`user/${userId}/avatar`, imageData);
   },
@@ -37,12 +40,8 @@ export const usersApi = {
 }
 
 export const postsApi = {
-  getPosts(userId) {
-    return instance.get('posts', {
-      params: {
-        user: userId
-      }
-    });
+  getPosts(userId, authedUserId) {
+    return instance.get(`posts/${userId}`, {params: {authedUserId}});
   },
   createPost(payload) {
     return instance.post('posts', payload);
@@ -54,9 +53,11 @@ export const postsApi = {
   editPost(post) {
     return instance.patch(`posts/${post._id}`, post);
   },
-  addLike(postId, userId) {
-    return instance.post(`posts/${postId}/like`, {userId});
-    
+  addLike(postId) {
+    return instance.post(`posts/${postId}/like`);
+  },
+  removeLike(postId) {
+    return instance.delete(`posts/${postId}/like`);
   },
   addComment(comment) {
     return instance.post(`posts/${comment.postId}/comment`, comment);
