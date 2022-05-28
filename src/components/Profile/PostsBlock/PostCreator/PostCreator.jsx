@@ -1,5 +1,6 @@
 
-import {useState, useMemo, Children, cloneElement, useEffect, useCallback} from 'react';
+import {useState, useMemo, Children, cloneElement, useEffect, useCallback} from "react";
+import { useProgressContext } from "@features/progress/progress.context";
 import Card from "@mui/material/Card";
 import FormControl, { useFormControl } from '@mui/material/FormControl';
 import classes from "./PostCreator.module.scss";
@@ -8,14 +9,14 @@ import CardActions from "@mui/material/CardActions";
 import MuiButton from "@mui/material/Button";
 import MapIcon from "@mui/icons-material/Map";
 import FormHelperText from '@mui/material/FormHelperText';
-import IconButton from '@ui-kit/IconButton/IconButton';
+import IconButton from "@ui-kit/IconButton/IconButton";
 import Button from "@ui-kit/Button/Button";
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { TryRounded } from "@mui/icons-material";
-import classNames from 'classnames';
-import SelectFile from '@ui-kit/SelectFile/SelectFile';
-import ImagePreview from '@ui-kit/ImagePreview/ImagePreview';
-import { imagesApi } from '@api/api-n';
+import classNames from "classnames";
+import SelectFile from "@ui-kit/SelectFile/SelectFile";
+import ImagePreview from "@ui-kit/ImagePreview/ImagePreview";
+import { imagesApi } from "@api/api-n";
 
 
 const postTextValidator = (value) => {
@@ -46,23 +47,21 @@ function PostCreator ({
   // newImage,
   // addImage
 }) {
-
-  const [isProgress, setIsProgress] = useState(false);
+  const {isProgress} = useProgressContext();
   const [textState, setTextState] = useState({
     value: '',
     isValid: false
   });
   const [isAddingImage, setAddingImage] = useState(false);
   const [imageFile, setImageFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
 
-  const startProgress = useCallback(() => {
-    setIsProgress(true);
-  }, [setIsProgress]);
+  // const startProgress = useCallback(() => {
+  //   setIsProgress(true);
+  // }, [setIsProgress]);
 
-  const endProgress = useCallback(() => {
-    setIsProgress(false);
-  }, [setIsProgress]);
+  // const endProgress = useCallback(() => {
+  //   setIsProgress(false);
+  // }, [setIsProgress]);
 
   useEffect(() => {
    setText(postText);
@@ -80,33 +79,47 @@ function PostCreator ({
     setText(value);
   }
 
-  const onKeyPress = e => {
-    if (e.which === 13) {
-      if (isDisabled()) {
-        return;
-      }
-      onConfirm();
-    }
+  // const onKeyPress = e => {
+  //   if (e.which === 13) {
+  //     if (isDisabled()) {
+  //       return;
+  //     }
+  //     onConfirm();
+  //   }
+  // }
+
+  const uploadImage = () => {
+    const formData = new FormData();
+    formData.append('img', imageFile);
+    return imagesApi.addImage(formData)
+      .then(response => {
+        return response.imageUrl
+      })
   }
 
   const onConfirm = () => {
-    startProgress();
-    const post = {
-      text: textState.value,
-      image: imageUrl
+    let post = {
+      text: textState.value
     };
-    confirmed(post)
-      .then(() => {
-        setText('');
-        setImageFile(null);
-        setImageUrl(null);
-      })
+    
+    return Promise.resolve(imageFile 
+      ? uploadImage()
+          .then(imageUrl => {
+            post.image = imageUrl
+          })
+      : null
+    ).then(() => {
+      return confirmed(post)
+        .then(() => {
+          setText('');
+          setImageFile(null);
+        })
         .finally(() => {
           setAddingImage(false);
-          endProgress();
         })
+    })
   }
-
+    
   const isDisabled = () => {
     if(isAddingImage) {
       return false;
@@ -122,25 +135,26 @@ function PostCreator ({
       onChange: (e) => {
         onTextChange(e);
       },
-      onKeyPress: (e) => {
-        onKeyPress(e);
-      },
+      // onKeyPress: (e) => {
+      //   onKeyPress(e);
+      // },
       value: textState.value
     });
   }, [textField, textState.value]);
 
   const onImageSelect = (image) => {
-    startProgress();
     setAddingImage(true);
-    setImageFile(image);
-    const formData = new FormData();
-    formData.append('img', image);
+      setImageFile(image);
+  }
 
-   imagesApi.addImage(formData)
-      .then((response) => {
-        // debugger;
-        setImageUrl(response.imageUrl);
-      })
+  const onCancel = () => {
+    if(imageFile) {
+      setImageFile(null);
+      setAddingImage(false);
+    }
+    if(isShowCancelButton) {
+      cancelChange();
+    }
   }
 
   return (
@@ -166,14 +180,16 @@ function PostCreator ({
           >
             {buttonContent}
           </Button>
-          {isShowCancelButton && 
+          {isShowCancelButton || imageFile ?
             <Button 
               className={classes.PostCreator__Button}
               variant="outlined"
-              onClick={cancelChange}
+              onClick={onCancel}
+              disabled={isProgress}
             >
               Отмена
-            </Button>
+            </Button> :
+            null
           }
         </div>
         <div className={classes.PostCreator__IconsContainer}>

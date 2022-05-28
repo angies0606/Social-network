@@ -1,14 +1,14 @@
 import { connect } from "react-redux";
 import {
-  addLikeActionCreator,
+  setLikeActionCreator,
   putCommentsActionCreator,
-  deleteCommentActionCreator
+  deleteCommentActionCreator,
 } from "@redux/actions/post.actions";
 import Post from "./Post";
 
 
 let mapStateToProps = (state, ownProps) => {
-  if(!ownProps.post) return null;
+  // if(!ownProps.post) return null;
   const {post: {_id: postId}} = ownProps;
   return {
     comments: state.entities.posts[postId].comments
@@ -20,11 +20,11 @@ let mapStateToProps = (state, ownProps) => {
 
 let mapDispatchToProps = (dispatch) => {
   return {
-    addLike: (like) => {
-      dispatch(addLikeActionCreator(like));
+    setLike: (data) => {
+      dispatch(setLikeActionCreator(data));
     },
-    putComments: (comments) => {
-      dispatch(putCommentsActionCreator(comments));
+    putComments: (data) => {
+      dispatch(putCommentsActionCreator(data));
     },
     deleteComment: (comment) => {
       dispatch(deleteCommentActionCreator(comment));

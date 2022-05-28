@@ -35,3 +35,17 @@
 .Post_CommentsCreatorBlock.Post_CommentsCreatorBlock {
   padding-top: 0px;
 }
+
+.Post__CommentIcon--expanded {
+  color: rgb(255, 158, 32);
+}
+
+.Post__PostText {
+  overflow-wrap: break-word;
+  flex: 1 0;
+  overflow: hidden;
+}
+
+.Post__CardContent.Post__CardContent {
+  padding: 30px;
+}

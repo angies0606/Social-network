@@ -7,15 +7,17 @@ import {useAuthContext} from "@features/auth/auth.context";
 
 
 function ProfileRoute({
-  user,
+  profileUser,
   getUser
 }) {
-  const params = useParams();
+  const paramsUserId = useParams().userId;
   const {state: {user: {_id: authedUserId}}} = useAuthContext();
+  const params = useParams()
 
   
   useEffect(() => {
-    getUser(params.userId);
+    getUser(paramsUserId);
+    console.log(params);
   }, [])
   
   // componentDidMount() {
@@ -26,20 +28,19 @@ function ProfileRoute({
   //   this.props.getUserProfile(userId);
   //   this.props.getUserStatus(userId);
   // }
-  if (!user) return null;
+  if (!profileUser) return null;
   
   return (
     <>
       <Profile
         // {...props}
-        user={user}
-        isForCurrentUser={authedUserId === user._id}
+        profileUser={profileUser}
+        isForCurrentUser={authedUserId === profileUser._id}
         // status={this.props.status}
         status=''
         // updateStatus={this.props.updateUserStatus}
         updateStatus={() => {}}
       />
-      {console.log(authedUserId, user._id)}
     </>
   )
 }

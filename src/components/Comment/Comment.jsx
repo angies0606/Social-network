@@ -9,43 +9,49 @@ import {useCallback, useState} from 'react';
 
 function Comment ({
   comment,
-  deleteComment
+  deleteComment,
+  authedUserId,
+  isProgress
 }) {
-  const [isProgress, setIsProgress] = useState(false);
+  // const [isProgress, setIsProgress] = useState(false);
 
-  const startProgress = useCallback(() => {
-    setIsProgress(true);
-  }, [setIsProgress]);
+  // const startProgress = useCallback(() => {
+  //   setIsProgress(true);
+  // }, [setIsProgress]);
 
-  const endProgress = useCallback(() => {
-    setIsProgress(false);
-  }, [setIsProgress]);
+  // const endProgress = useCallback(() => {
+  //   setIsProgress(false);
+  // }, [setIsProgress]);
 
   const onDeleteComment = () => {
-    startProgress();
-    deleteComment(comment._id)
-      .finally(() => endProgress());
+    if(authedUserId === comment.user) {
+         deleteComment(comment._id)
+      .finally(() => {});
+    } else return;
   }
   
   return (
   <div className={classes.Comment_Box}>
-    <IconButton 
-      className={classes.Comment_Icon}
-      onClick={onDeleteComment}
-    >
-      <CloseIcon 
-        sx={{ width: 15, height: 15, padding: 0 }} 
-        className={classes.Comment_CloseIcon}
-      />
-    </IconButton>
+    {authedUserId === comment.user ? 
+      <IconButton 
+        className={classes.Comment_Icon}
+        onClick={onDeleteComment}
+      >
+        <CloseIcon 
+          sx={{ width: 15, height: 15, padding: 0 }} 
+          className={classes.Comment_CloseIcon}
+        />
+      </IconButton>
+      : null
+    }
+    
     <div>
-      Имя юзера создавшего коммент
-    {/* {comment.user.nickname} */}
+      {comment.userNickname}
     </div>
     <div className={classes.Comment_UserCommentBox}>
       <Avatar
         className={classes.Comment_Avatar}
-        userAvatar={comment.userAvatar} // TODO: аватар юзера, который оставил коммент, переписать когда у comments будет инфа по юзеру
+        userAvatar={comment.userAvatar}
         avatarHeight={30}
         avatarWidth={30}
       />

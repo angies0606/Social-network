@@ -1,39 +1,49 @@
-import IconButton from '@ui-kit/IconButton/IconButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import {useState, useEffect} from 'react';
+import {useState, useEffect} from "react";
+import IconButton from "@ui-kit/IconButton/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import classNames from "classnames";
+import classes from "./Likes.module.scss";
 
 function Likes ({
   likes,
-  userId,
-  addLike
+  profileUserId,
+  addLike,
+  removeLike,
+  isLiked = false,
+  authedUserId,
+  isProgress
 }) {
-  const [isProgress, setIsProgress] = useState(false);
-  // const [isSameUser, setIsSameUser] = useState(false);
-  
+ 
   // useEffect(() => {
   //   setIsSameUser(false);
   // }, [userId]);
 
-  const onAddLike = () => {
-    // if(isSameUser) {
-    //   return;
-    // }
-    // setIsSameUser(true);
-    setIsProgress(true);
-    addLike(userId)
+  const onClick = () => {
+    if(isLiked) {
+      removeLike()
       .finally(() => {
-        setIsProgress(false);
       })
+    }
+    else {
+      addLike()
+      .finally(() => {
+      })
+    }
+    
   }
 
-  // TODO: дописать удаление лайков и возможность одному пользователю ставить один лайк
   return (
     <>
-      <IconButton onClick={onAddLike}>
-        <FavoriteIcon />
+      <IconButton 
+        onClick={onClick}
+        disabled={!authedUserId || isProgress}
+      >
+        <FavoriteIcon className={classNames(classes.Likes__FavouriteIcon, {
+          [classes['Likes__FavouriteIcon--liked']]: isLiked
+        })}/>
       </IconButton> 
       <div>
-        {likes.length || ''} 
+        {likes || ''} 
       </div>
     </>
   )

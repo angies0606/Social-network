@@ -14,6 +14,9 @@ let initialState = {
       posts: [],
       // status: '',
       // avatar: ''
+    },
+    usersPage: {
+      users: []
     }
   },
   entities: { //TODO: добавить еще сущностей типа user и т.д
@@ -41,15 +44,18 @@ let initialState = {
       //   text: ''
       // }
     },
+    users: {
+      
+    }
   },
-  usersPage: {
-    users: [],
-    pageSize: 5,
-    totalUsersCount: 0,
-    currentPage: 1,
-    isFetching: false,
-    followingInProgress: []
-  },
+  // usersPage: {
+  //   users: [],
+  //   pageSize: 5,
+  //   totalUsersCount: 0,
+  //   currentPage: 1,
+  //   isFetching: false,
+  //   followingInProgress: []
+  // },
   // sidebar: "",
   //   getState() {
   //     return this._state;

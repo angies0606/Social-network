@@ -4,26 +4,26 @@ import classes from "./ProfileInfo.module.scss";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 const ProfileInfo = ({
-  profile
+  profileUser
 }) => {
   //TODO: сделать аву и статус - 
-  if (!profile) {
+  if (!profileUser) {
   return Preloader;
  } 
    return (
    <div>
       
       <img 
-        src={profile.banner} 
+        src={profileUser.banner} 
         className={classes.profileImg}
       />
       <div>
-        {profile.nickname}
+        {profileUser.nickname}
       </div>
       <div className={classes.descriptionBlock}>
        <Avatar
         // className={classes.ProfileInfo__Avatar}
-        userAvatar={profile.avatar}
+        userAvatar={profileUser.avatar}
         avatarHeight={200}
         avatarWidth={200}
       />
