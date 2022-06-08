@@ -1,4 +1,4 @@
-import Dialog from '@ui-kit/Dialog/Dialog';
+import ImageDialog from '@ui-kit/ImageDialog/ImageDialog';
 import { useState, Children, cloneElement, useCallback, useEffect } from 'react';
 
 function ImageChanger ({
@@ -22,6 +22,7 @@ function ImageChanger ({
   const onCloseDialog = () => {
     setIsDialogOpened(false);
   }
+  
   return (
     <>
       {Children.map(children, (child) => {
@@ -32,7 +33,7 @@ function ImageChanger ({
               }
             });
           })}
-      <Dialog 
+      <ImageDialog 
         isShown={isDialogOpened}
         title={title}
         closeDialog={onCloseDialog}

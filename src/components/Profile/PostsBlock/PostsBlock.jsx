@@ -19,7 +19,7 @@ const PostsBlock = ({
   profileUser,
   profileUserId,
   isForCurrentUser,
-  addPosts,
+  addPost,
   posts,
   deletePost,
   editPost,
@@ -50,7 +50,12 @@ const [isPostsReady, setPostsIsReady] = useState(false);
     postsApi.getPosts(profileUserId, authedUser._id)
       .then(posts => {
         setPostsIsReady(true);
-        setPosts(posts);
+        setPosts(posts.map(post => {
+          return {
+            ...post,
+            comments: []
+          }
+        }));
       });
   }, [profileUserId]);
 
@@ -61,7 +66,7 @@ const [isPostsReady, setPostsIsReady] = useState(false);
     }
     return postsApi.createPost(newPostData)
       .then(post => {
-        addPosts([post]);
+        addPost([post]);
       });
   }
 
@@ -87,6 +92,7 @@ const [isPostsReady, setPostsIsReady] = useState(false);
       key={index}
       deletePost={onDeletePost}
       editPost={onEditPost}
+      editPostImage={editPost}
       profileUser={profileUser}
       profileUserId={profileUserId}
       isForCurrentUser={isForCurrentUser}
@@ -107,7 +113,7 @@ const [isPostsReady, setPostsIsReady] = useState(false);
           isForCurrentUser &&
           <Card className={classes.PostsBlock_PostsCreatorCard}>
             <PostCreatorConnected 
-              confirmed={onAddPost}
+              onPostConfirm={onAddPost}
               buttonContent={'Поделиться'}
               textField={
                 <TextField
@@ -117,7 +123,7 @@ const [isPostsReady, setPostsIsReady] = useState(false);
                   fullWidth
                   multiline
                   maxRows={4}
-                  rows={2}
+                  minRows={2}
                 />
               }
             />

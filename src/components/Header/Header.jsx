@@ -16,12 +16,14 @@ const Header = () => {
       <div className={classes.loginBlock}>
         {isAuthed
           ? <div>
-              <Avatar 
-                userAvatar = {user.avatar}
-                avatarHeight = {30}
-                avatarWidth = {30}
-                className={''}
-              />
+              <NavLink to={`/profile/${user._id}`}>
+                <Avatar 
+                  userAvatar = {user.avatar}
+                  avatarHeight = {30}
+                  avatarWidth = {30}
+                  className={''}
+                />
+              </NavLink>
               {user.nickname}
               <button onClick={logout}>
                 Выйти

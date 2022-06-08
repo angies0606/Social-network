@@ -11,10 +11,9 @@ let mapStateToProps = (state, ownProps) => {
   // if(!ownProps.post) return null;
   const {post: {_id: postId}} = ownProps;
   return {
-    comments: state.entities.posts[postId].comments
-    .map(commentId => {
-      return state.entities.comments[commentId]
-    } )
+    comments: state.entities.posts[postId].comments?.map(commentId => {
+      return state.entities.comments[commentId];
+    })
   }
 }
 

@@ -4,21 +4,22 @@ import Profile from "@components/Profile/Profile";
 import { useParams } from "react-router-dom";
 import ProfileRouteConnect from "./ProfileRoute.connect";
 import {useAuthContext} from "@features/auth/auth.context";
+import Preloader from "@components/Preloader/Preloader";
 
 
 function ProfileRoute({
   profileUser,
   getUser
 }) {
-  const paramsUserId = useParams().userId;
+  const params = useParams();
+  const paramsUserId = params.userId;
   const {state: {user: {_id: authedUserId}}} = useAuthContext();
-  const params = useParams()
 
   
   useEffect(() => {
     getUser(paramsUserId);
     console.log(params);
-  }, [])
+  }, [paramsUserId])
   
   // componentDidMount() {
   //   let userId = this.props.match.params.userId

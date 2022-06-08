@@ -18,12 +18,13 @@ function setAuthedActionCreator(user) {
 }
 
 const SET_UNAUTHED = 'SET_UNAUTHED';
-function setUnauthedActionCreator() {
+export function setUnauthedActionCreator() {
   return {
     type: SET_UNAUTHED
   }
 }
 
+let _dispatch;
 // const CHANGE_AVATAR = 'CHANGE_AVATAR';
 // export function changeAvatarActionCreator(imageUrl) {
 //   return {
@@ -102,8 +103,8 @@ function useAuth() {
   useEffect(() => {
     check();
   },[]);
- 
-  return  useMemo(() => ({
+
+  const result = useMemo(() => ({
     state,
     register,
     login,
@@ -118,6 +119,15 @@ function useAuth() {
     check,
     changeUserData
   ]);
+
+  _dispatch = dispatch;
+ 
+  return result;
 }
 
 export default useAuth;
+
+export function getDispatch() {
+  return _dispatch;
+}
+

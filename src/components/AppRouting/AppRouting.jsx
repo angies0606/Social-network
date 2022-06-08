@@ -21,7 +21,7 @@ function AppRouting() {
       <AuthedRoute path='/profile/:userId' render={ () => <ProfileRoute  />} />
       {/* TODO: дописать список users */}
       <AuthedRoute path='/users' render={ () => <UsersConnected />} />
-      <UnauthedRoute path='/users' render={ () => <UsersConnected />} />
+      {/* <UnauthedRoute path='/users' render={ () => <UsersConnected />} /> */}
       <UnauthedRoute path='/login' render={ () => <Login />} />
       <UnauthedRoute path='/register' render={ () => <RegisterRoute />} />
       <AuthedRoute path='*' render={() => <Redirect to={`/profile/${authedUser._id}`} />}/>

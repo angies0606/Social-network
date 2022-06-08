@@ -1,0 +1,21 @@
+.DeleteImage__OuterContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.DeleteImage__ImageBox {
+  position: relative;
+  height: fit-content;
+  width: fit-content;
+}
+
+.DeleteImage__Image {
+  outline: 2px solid rgb(97, 95, 95);
+}
+
+.DeleteImage__XButton.DeleteImage__XButton {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  color: rgba(255,255,255,0.5);
+}

@@ -1,17 +1,17 @@
 import initialState from "@redux/store/initial-state";
 import {
-  PUT_POSTS,
   DELETE_POST,
   EDIT_POST,
   SET_LIKE,
   PUT_COMMENTS,
   DELETE_COMMENT,
-  SET_POSTS
+  SET_POSTS,
+  ADD_POST
 } from "@redux/actions/post.actions.js";
 
 function entitiesPostsReducer(state = initialState.entities.posts, action) {
   switch (action.type) {
-    case PUT_POSTS:
+    case ADD_POST:
     case SET_POSTS:  {
       const newState = {
         ...state
@@ -36,8 +36,7 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
       const post = action.data;
       newState[post._id] = {
         ...newState[post._id],
-        text: post.text,
-        image: post.image
+        ...post
       }
       return newState;
     }
@@ -47,8 +46,9 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
       };
       const postId = action.data._id;
       newState[postId] = {
+        ...newState[postId],
         ...action.data
-      }
+      };
       return newState;
     }
     
@@ -57,13 +57,14 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
         ...state
       };
       const comments = action.data.commentsData;
+
       comments.forEach(comment => {
-        if (newState[comment.post].comments.includes(comment._id)) {
+        if (newState[comment.post].comments?.includes(comment._id)) {
           return;
         }
         newState[comment.post] = {
           ...newState[comment.post],
-          comments: [...newState[comment.post].comments, comment._id],
+          comments: [...(newState[comment.post].comments || []), comment._id, ],
           nComments: action.data.nComments
         }
       })

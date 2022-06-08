@@ -1,6 +1,6 @@
 
 import {
-  putPostsActionCreator, 
+  addPostActionCreator, 
   deletePostActionCreator, 
   editPostActionCreator,
   putCommentsActionCreator,
@@ -19,8 +19,8 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
   return {
-    addPosts: (posts) => {
-      dispatch(putPostsActionCreator(posts));
+    addPost: (post) => {
+      dispatch(addPostActionCreator(post));
     },
     setPosts: (posts) => {
       dispatch(setPostsActionCreator(posts));
