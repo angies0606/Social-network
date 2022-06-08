@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios from "axios";
+import { getDispatch, setUnauthedActionCreator } from "@features/auth/useAuth";
 
 const instance = axios.create({
   baseURL: 'http://localhost:8080/',
@@ -42,7 +43,12 @@ instance.interceptors.response.use(
 
       try {
         if (!refreshPromise) {
-          refreshPromise = instance.post(refreshURL)
+          refreshPromise = instance.post(refreshURL).catch((e) => {
+            if(e.response?.status === 401) {
+              const dispatch = getDispatch();
+              dispatch(setUnauthedActionCreator());
+            }
+          })
         }
 
         await refreshPromise

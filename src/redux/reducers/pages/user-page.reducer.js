@@ -1,6 +1,6 @@
 import initialState from "@redux/store/initial-state";
 import {
-  PUT_POSTS,
+  ADD_POST,
   DELETE_POST,
   SET_POSTS
 } from "@redux/actions/post.actions.js";
@@ -10,15 +10,26 @@ import {
 
 function userPageReducer(state = initialState.pages.userPage, action) {
   switch (action.type) {
-    case PUT_POSTS: {
+    case ADD_POST: {
+      const [{_id: newPostId}] = action.data;
       return {
         ...state,
         posts: [
-          ...state.posts,
-          ...action.data.map(post => post._id).filter(postId => !state.posts.includes(postId))
+          newPostId,
+          ...state.posts
         ]
       }
     }
+    
+    // case ADD_POST: {
+    //   return {
+    //     ...state,
+    //     posts: [
+    //       ...state.posts,
+    //       ...action.data.map(post => post._id).filter(postId => !state.posts.includes(postId))
+    //     ]
+    //   }
+    // }
     case SET_POSTS: {
       return {
         ...state,

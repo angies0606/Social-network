@@ -15,8 +15,12 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { TryRounded } from "@mui/icons-material";
 import classNames from "classnames";
 import SelectFile from "@ui-kit/SelectFile/SelectFile";
-import ImagePreview from "@ui-kit/ImagePreview/ImagePreview";
+import ImagePreview from "@ui-kit/ImagePreview/ImageFilePreview";
 import { imagesApi } from "@api/api-n";
+import DeleteImage from "@ui-kit/DeleteImage/DeleteImage";
+import Dialog from "@ui-kit/ImageDialog/ImageDialog";
+import ImageConvertor from "@features/ImageConverter/ImageConverter";
+import ImageFilePreview from "@ui-kit/ImagePreview/ImageFilePreview";
 
 
 const postTextValidator = (value) => {
@@ -36,7 +40,7 @@ const postTextValidator = (value) => {
 // }
 
 function PostCreator ({
-  confirmed,
+  onPostConfirm,
   textField,
   // isClearOnConfirm,
   buttonContent,
@@ -44,6 +48,12 @@ function PostCreator ({
   // changeMode,
   isShowCancelButton,
   cancelChange,
+  isImageInPost = false,
+  // onPostImageChange,
+  openImageDialog = null,
+  editingImageUrl = null,
+  post = null,
+  wasPostImageChanged = false
   // newImage,
   // addImage
 }) {
@@ -54,6 +64,7 @@ function PostCreator ({
   });
   const [isAddingImage, setAddingImage] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  // const [isImageDialogOpened, setIsImageDialogOpened] = useState(false);
 
   // const startProgress = useCallback(() => {
   //   setIsProgress(true);
@@ -66,6 +77,10 @@ function PostCreator ({
   useEffect(() => {
    setText(postText);
   }, [postText]);
+
+  // useEffect(() => {
+  //   setImageFile(postImage);
+  // }, [postImage]);
 
   function setText(text) {
     setTextState({
@@ -109,7 +124,7 @@ function PostCreator ({
           })
       : null
     ).then(() => {
-      return confirmed(post)
+      return onPostConfirm(post)
         .then(() => {
           setText('');
           setImageFile(null);
@@ -122,6 +137,9 @@ function PostCreator ({
     
   const isDisabled = () => {
     if(isAddingImage) {
+      return false;
+    }
+    if(wasPostImageChanged) {
       return false;
     }
     if(!textState.isValid || isProgress) {
@@ -144,7 +162,13 @@ function PostCreator ({
 
   const onImageSelect = (image) => {
     setAddingImage(true);
-      setImageFile(image);
+    setImageFile(image);
+  }
+
+  const onClickAddPhotoButton = () => {
+    if(post) {
+      openImageDialog();
+    }
   }
 
   const onCancel = () => {
@@ -162,10 +186,12 @@ function PostCreator ({
       {textFieldClone}
       {
         imageFile &&
-        <ImagePreview
-          className={classes.PostCreator__ImagePreview}
-          image={imageFile}
-        />
+          <ImageFilePreview
+            imageFile={imageFile}
+            isDeleteShown={true}
+            className={classes.PostCreator__ImagePreview}
+            deleteImage={onCancel}
+          />
       }
       {/* <FormControl sx={{ width: '100%' }}>
         <MyFormHelperText /> 
@@ -196,15 +222,20 @@ function PostCreator ({
           <SelectFile 
             onFileSelect={onImageSelect}
             isDisabled={isAddingImage}
+            post={post}
           >
-            <IconButton>
+            <IconButton onClick={onClickAddPhotoButton}>
               <AddPhotoAlternateIcon />
             </IconButton>
           </SelectFile>
-          {/* <IconButton>
-            <MapIcon /> 
-          </IconButton> */}
         </div>
+        {/* <Dialog 
+          isShown={isImageDialogOpened}
+          title={'Вы хотите изменить изображение?'}
+          closeDialog={onCloseImageDialog}
+          isProgress={isProgress}
+          onImageConfirm={onImageChange}
+        /> */}
       </div>
     </div> 
   )

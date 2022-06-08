@@ -5,7 +5,9 @@ import classes from './SelectFile.module.scss';
 function SelectFile ({
   children,
   onFileSelect = null,
-  isDisabled = false
+  isDisabled = false,
+  isImageInPost = false,
+  post = null
 }) {
   // const [isProgress, setIsProgress] = useState(false);
   
@@ -43,7 +45,9 @@ function SelectFile ({
       // className: classNames(textField.props.className, classes.PostCreator__TextField),
       onClick: (e) => {
         children.props?.onClick?.(e);
-        onButtonClick(e);
+        if(!post) {
+          onButtonClick(e);
+        }
       },
       disabled: isDisabled
     });

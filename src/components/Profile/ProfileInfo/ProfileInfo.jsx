@@ -6,17 +6,19 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 const ProfileInfo = ({
   profileUser
 }) => {
-  //TODO: сделать аву и статус - 
+  //TODO: сделать статус - 
   if (!profileUser) {
   return Preloader;
  } 
    return (
    <div>
       
-      <img 
-        src={profileUser.banner} 
-        className={classes.profileImg}
-      />
+      {profileUser.banner && 
+        <img 
+          src={profileUser.banner} 
+          className={classes.profileImg}
+        />
+      }
       <div>
         {profileUser.nickname}
       </div>

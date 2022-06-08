@@ -10,6 +10,20 @@
   width: fit-content;
 }
 
+.ImagePreview__DeleteImage {
+  justify-content: flex-start;
+}
+
 .ImagePreview__Text {
   
 }
+
+.ImagePreview__Image--post {
+  max-height: 300px;
+  max-width: 100%;
+  object-fit: contain;
+  width: fit-content;
+}
+// .ImagePreview__ImageBox {
+//   height: 100%;
+// }

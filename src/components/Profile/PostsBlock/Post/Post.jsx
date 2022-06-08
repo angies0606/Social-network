@@ -22,13 +22,25 @@ import { styled } from "@mui/material/styles";
 import Collapse from "@mui/material/Collapse";
 import Separator from "@ui-kit/Separator/Separator";
 import Comment from "@components/Comment/Comment";
-import {postsApi, usersApi} from "@api/api-n";
+import {postsApi, usersApi, imagesApi} from "@api/api-n";
 import classNames from "classnames";
+import { XCircleFill } from "react-bootstrap-icons";
+import DeleteImage from "@ui-kit/DeleteImage/DeleteImage";
+import ImageDialog from "@ui-kit/ImageDialog/ImageDialog";
+import ImageUrlPreview from "@ui-kit/ImagePreview/ImageUrlPreview";
+import Expander from "@features/Expander/Expander";
+import Dialog from "@ui-kit/Dialog/Dialog";
+
+const imageDialogTitles = {
+  add: 'Вы хотите добавить изображение?',
+  change: 'Вы хотите изменить изображение?'
+}
 
 const Post = ({
   post,
   deletePost,
   editPost,
+  editPostImage,
   profileUser,
   profileUserId,
   putComments,
@@ -44,7 +56,15 @@ const Post = ({
   const [expanded, setExpanded] = useState(false);
   const [isPostReady, setIsPostReady] = useState(false);
   const [isCommentsReady, setCommentsReady] = useState(false);
-  
+  const [isImageInPost, setIsImageInPost] = useState(false);
+  const [editingImageUrl, setEditingImageUrl] = useState(null);
+  const [editingImageFile, setEditingImageFile] = useState(null); 
+  const [imageNeedsDeleting, setImageNeedsDeleting] = useState(null);
+  const [wasPostImageChanged, setWasPostImageChanged] = useState(false);
+  // const [imageFileThatNeedDeleting, setImageFileThatNeedDeleting] = useState(null);
+  const [imageDialogTitle, setImageDialogTitle] = useState(null);
+  const [isImageDialogOpened, setIsImageDialogOpened] = useState(false);
+  const [isMessageDialogOpened, setIsMessageDialogOpened] = useState(false);
   // Получаем данные о владельце поста и комментов
   // useEffect(() => {
   //   usersApi.getUser
@@ -57,6 +77,13 @@ const Post = ({
   //   setIsProgress(false);
   // }, [setIsProgress]); 
   
+  useEffect(() => {
+    if(isImageInPost) {
+      setImageDialogTitle(imageDialogTitles.change);
+    } else {
+      setImageDialogTitle(imageDialogTitles.add);
+    }
+  }, [isImageInPost])
 
   const textField = useMemo(() => {
     return <TextField 
@@ -75,6 +102,14 @@ const Post = ({
   }, [expanded])
 
   if(!post) return null;
+
+  const onPostEdit = () => {
+    setChangeMode(true);
+    if(post.image) {
+      setIsImageInPost(true);
+      setEditingImageUrl(post.image);
+    }
+  }
 
   const onAddComment = (commentData) => {
     return postsApi.addComment({
@@ -117,41 +152,100 @@ const Post = ({
     })
   }
   
-  const onConfirmEdit = (postData) => {
-    return editPost({
-      _id: post._id,
-      ...postData
-    }).
-      then(() => {
-        setChangeMode(false);
+  const uploadImage = () => {
+    const formData = new FormData();
+    formData.append('img', editingImageFile);
+    return imagesApi.addImage(formData)
+      .then(response => {
+        return response.imageUrl
       })
   }
 
-  const onPostEdit = () => {
-    setChangeMode(true);
+  const deletePostImage = () => {
+    return postsApi.deleteImage(post._id)
+      .then(newPost => {
+        return newPost;
+      })
+  }
+  
+  const onConfirmEdit = (postData) => {
+    let editedPost = {
+      ...postData,
+      _id: post._id,
+    };
+
+    return Promise.resolve((post.image !== editingImageUrl) && !imageNeedsDeleting && editingImageUrl
+            ? uploadImage()
+                .then(imageUrl => {
+                  editedPost.image = imageUrl
+                })
+            : (post.image !== editingImageUrl) && imageNeedsDeleting && post.image && !editingImageUrl
+            ? deletePostImage()
+                .then(newPost => {
+                  editedPost = {
+                    ...newPost
+                  }
+                })
+            : (post.image !== editingImageUrl) && imageNeedsDeleting && post.image && editingImageUrl
+            ? deletePostImage()
+                .then(() => {
+                  return uploadImage()
+                    .then(imageUrl => {
+                      editedPost.image = imageUrl
+                    })
+                })
+            : null
+            ).then(() => {
+              return editPost(editedPost)
+                .then(() => {
+                  setEditingImageUrl(null);
+                  setEditingImageFile(null);
+                  setImageNeedsDeleting(null);
+                  setWasPostImageChanged(false);
+                  setIsImageInPost(false);
+                  setChangeMode(false);
+                })
+            })
   }
 
-  const onPostDelete = () => {
+  const onPostDeleteConfirm = () => {
     // setChangeMode(true);
     deletePost(post._id).
       then(() => {
-        // setChangeMode(false);
+        setIsMessageDialogOpened(false);
       })
   }
 
-  const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-  })(({ theme, expand }) => ({
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  }));
-     
+  const onDeleteImage = () => {
+    if(editingImageUrl === post.image) {
+      setImageNeedsDeleting(editingImageUrl);
+    }
+    setWasPostImageChanged(true);
+    setIsImageInPost(false);
+    setEditingImageFile(null);
+    setEditingImageUrl(null);
+  }
+
+  const onPostImageChange = (image) => {
+    const imageUrl = window.URL.createObjectURL(image);
+    setEditingImageFile(image);
+    setEditingImageUrl(imageUrl);
+    setIsImageInPost(true); 
+    setWasPostImageChanged(true);
+    return Promise.resolve();
+  }
+
+  const onImageDialogOpen = () => {
+    setIsImageDialogOpened(true);
+  }
+
+  const onCloseImageDialog = () => {
+    setIsImageDialogOpened(false);
+  }
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
-  };
+  }
 
   const isShownData = isPostReady && !post;
   
@@ -174,20 +268,34 @@ const Post = ({
             post.user === authedUser._id ? 
               <Menu changeMode={changeMode}> 
                 <MenuItem onClick={onPostEdit}>Редактировать</MenuItem>
-                <MenuItem onClick={onPostDelete}>Удалить</MenuItem>
+                <MenuItem onClick={() => (setIsMessageDialogOpened(true))}>Удалить</MenuItem>
               </Menu>
             : null
           }
           title={profileUser.nickname}
-          subheader={<DateBar creationDate={post.createdAt}/>}
+          subheader={<DateBar creationDate={post.createdAt} updateDate={post.updatedAt}/>}
         />
-        <div className={classes.Card__CardMediaBox}>
-          <CardMedia
-            component="img"
-            image={post.image}
-            className={classes.Card__CardMedia}
-          />
-        </div>
+          
+          {changeMode && isImageInPost ? 
+              <ImageUrlPreview
+                imageUrl={editingImageUrl}
+                deleteImage={onDeleteImage}
+                className={classes.Card__CardMediaBox}
+                isDeleteShown={true}
+                isPostImage={true}
+              />: null
+          }
+          
+          {!changeMode && post.image ?
+            <div className={classes.Card__CardMediaBox}>
+              <CardMedia
+                component="img"
+                image={post.image}
+                className={classes.Card__CardMedia}
+              />
+            </div> : null
+          }
+         
         <CardContent className={classes.Post__CardContent} >
           {!changeMode &&
             <Typography variant="body1" className={classes.Post__PostText}>
@@ -196,12 +304,18 @@ const Post = ({
           }
           {changeMode &&
             <PostCreator
-              confirmed={onConfirmEdit}
+              onPostConfirm={onConfirmEdit}
               postText={post.text}
               cancelChange={() => setChangeMode(false)}
               isShowCancelButton
               buttonContent={'Изменить'}
               textField={textField}
+              isImageInPost={isImageInPost}
+              // onPostImageChange={onPostImageChange}
+              openImageDialog={onImageDialogOpen}
+              wasPostImageChanged={wasPostImageChanged}
+              editingImageUrl={editingImageUrl}
+              post={post}
             />
           }
         </CardContent>
@@ -218,26 +332,25 @@ const Post = ({
             />
           </CardActions>
           <CardActions disableSpacing>
-                <div>
-                  {post.nComments || ''} 
-                </div> 
-                <ExpandMore
-                expand={expanded}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-              >
-              
-                <CommentIcon className={classNames(classes.Post__CommentIcon, {
-                  [classes['Post__CommentIcon--expanded']]: expanded
-                })}/> 
-            </ExpandMore>
+            <div>
+              {post.nComments || ''} 
+            </div> 
+            <Expander
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+            >
+              <CommentIcon className={classNames(classes.Post__CommentIcon, {
+                [classes['Post__CommentIcon--expanded']]: expanded
+              })}/> 
+            </Expander>
           </CardActions>
         </div>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent
             className={classes.Post_CommentsCreatorBlock}
           >
-            {isCommentsReady && comments.map((comment, index) => {
+            {isCommentsReady && comments?.map((comment, index) => {
               return (
                 <div key={index}>
                   <Separator />
@@ -252,6 +365,7 @@ const Post = ({
             )}
           
             <Separator />
+
             <CommentsCreator 
               authedUser={authedUser}
               confirmed={onAddComment}
@@ -259,7 +373,21 @@ const Post = ({
           </CardContent>
         </Collapse>
       </Card>
-      {/* } */}
+      <ImageDialog 
+        isShown={isImageDialogOpened}
+        title={imageDialogTitle}
+        closeDialog={onCloseImageDialog}
+        isProgress={isProgress}
+        onImageConfirm={onPostImageChange}
+      />
+      <Dialog
+        isShown={isMessageDialogOpened}
+        title={"Удаление поста"}
+        message={"Вы действительно хотите удалить этот пост?"}
+        isProgress={isProgress}
+        onCancel={() => {setIsMessageDialogOpened(false)}}
+        onConfirm={onPostDeleteConfirm}
+      />
     </>
   )
 }

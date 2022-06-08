@@ -1,7 +1,8 @@
 import initialState from "@redux/store/initial-state";
 import {
   PUT_COMMENTS,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  DELETE_POST
 } from "@redux/actions/post.actions.js";
 
 function entitiesCommentsReducer(state = initialState.entities.comments, action) {
@@ -23,6 +24,19 @@ function entitiesCommentsReducer(state = initialState.entities.comments, action)
       };
       const commentId = action.data.deletedComment._id;
       delete newState[commentId];
+      return newState;
+    }
+
+    case DELETE_POST: {
+      const newState = {
+        ...state
+      };
+      const postId = action.data;
+      for (let comment in newState) {
+        if(newState[comment].post === postId) {
+          delete newState[comment];
+        }
+      }
       return newState;
     }
 

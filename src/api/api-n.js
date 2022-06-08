@@ -21,7 +21,8 @@ export const imagesApi = {
   },
   deleteImage(imageUrl) {
     return instance.delete('images', imageUrl);
-  }
+  },
+
 }
 
 export const usersApi = {
@@ -36,6 +37,12 @@ export const usersApi = {
   },
   changeUserBanner(imageData, userId) {
     return instance.post(`user/${userId}/banner`, imageData);
+  },
+  deleteUserAvatar(avatar) {
+    return instance.delete('user/avatar', {data: {avatar}});
+  },
+  deleteUserBanner(banner) {
+    return instance.delete('user/banner', {data: {banner}});
   }
 }
 
@@ -48,7 +55,6 @@ export const postsApi = {
   },
   deletePost(postId) {
     return instance.delete(`posts/${postId}`)
-      .then(res => res._id);
   },
   editPost(post) {
     return instance.patch(`posts/${post._id}`, post);
@@ -67,6 +73,9 @@ export const postsApi = {
   },
   deleteComment(commentId) {
     return instance.delete(`comments/${commentId}`);
+  },
+  deleteImage(postId) {
+    return instance.delete(`posts/${postId}/image`);
   }
 }
 
