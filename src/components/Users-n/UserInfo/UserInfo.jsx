@@ -1,5 +1,4 @@
 import Avatar from "@ui-kit/Avatar/Avatar";
-import Button from "@ui-kit/Button/Button";
 import { NavLink } from "react-router-dom";
 
 function UserInfo ({
@@ -20,9 +19,6 @@ function UserInfo ({
           avatarWidth={150} 
         />
       </NavLink>
-     
-     
-      
     </div>
   )
 }

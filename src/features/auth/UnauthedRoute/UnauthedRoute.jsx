@@ -1,5 +1,5 @@
-import {useAuthContext} from '@features/auth/auth.context';
-import { Route } from 'react-router-dom';
+import { useAuthContext } from "@features/auth/auth.context";
+import { Route } from "react-router-dom";
 
 function UnauthedRoute ({...props}) {
   const {state: {isAuthed}} = useAuthContext();

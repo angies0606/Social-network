@@ -1,16 +1,11 @@
-import {useState} from "react";
+import { useState } from "react";
 import MUIDialog from "@mui/material/Dialog";
 import MUIDialogActions from "@mui/material/DialogActions";
 import MUIDialogContent from "@mui/material/DialogContent";
-import MUIDialogContentText from "@mui/material/DialogContentText";
 import MUIDialogTitle from "@mui/material/DialogTitle";
 import Button from "@ui-kit/Button/Button";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import SelectFile from "@ui-kit/SelectFile/SelectFile";
-import { useProgressContext } from "@features/progress/progress.context";
-import { imagesApi, usersApi } from '@api/api-n';
-import ImagePreview from "@ui-kit/ImagePreview/ImageFilePreview";
-import ImageConvertor from "@features/ImageConverter/ImageConverter";
 import ImageFilePreview from "@ui-kit/ImagePreview/ImageFilePreview";
 
 function ImageDialog({
@@ -21,27 +16,25 @@ function ImageDialog({
   isProgress
 }) {
   //TODO: навесить стили на Dialog
-  // const {isProgress} = useProgressContext();
   const [imageFile, setImageFile] = useState(null);
-  // const [imageUrl, setImageUrl] = useState(null);
-
-  const onImageSelect = (image) => {
-    setImageFile(image);
-  }
 
   const onConfirm = () => {
     onImageConfirm(imageFile)
     .then(() => {
       onCloseDialog();
     })
-  }
+  };
+
+  const onImageSelect = (image) => {
+    setImageFile(image);
+  };
 
   const onCloseDialog = () => {
     if(imageFile) {
       setImageFile(null);
     }
     closeDialog();
-  }
+  };
 
   return (
     <div>
@@ -59,16 +52,6 @@ function ImageDialog({
                 imageFile={imageFile}
                 isDeleteShown={false}
               />
-                
-
-            
-            // <ImageConvertor imageData={imageFile}>
-            //   <ImagePreview
-            //     // className={classes.PostCreator__ImagePreview}
-            //     isImageInfoShown={true}
-            //     isDeleteShown={false}
-            //   />
-            // </ImageConvertor>
           }
         </MUIDialogContent>
         <MUIDialogActions>

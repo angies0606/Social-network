@@ -1,40 +1,17 @@
 import classes from "./ImagePreview.module.scss";
 import classNames from "classnames";
 import DeleteImage from "@ui-kit/DeleteImage/DeleteImage";
-import {useEffect, useState} from "react";
 
 function ImageUrlPreview ({
   imageUrl = '',
   className = '',
   deleteImage = null,
-  // isImageInfoShown = false,
   isDeleteShown = false,
   isPostImage = false
 }) {
-  // const [imageData, setImageData] = useState(null);
-
-  // useEffect(() => {
-  //   if(editingImageUrl) {
-  //     setImageData(editingImageUrl);
-  //   }
-  // }, [editingImageUrl])
-  
-  // useEffect(() => {
-  //   if(image) {
-  //     const imageUrl = window.URL.createObjectURL(image);
-  //     setImageData(imageUrl);
-  //   }
-  // }, [image])
-
   if (!imageUrl) {
     return null;
   }
-
-  // const onDeleteImage = () => {
-  //   deleteImage()
-  // }
-  
-  // const imageUrl = window.URL.createObjectURL(image);
 
   return (
     <>

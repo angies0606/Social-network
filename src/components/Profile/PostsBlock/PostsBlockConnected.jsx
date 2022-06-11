@@ -9,13 +9,12 @@ import {
 import PostsBlock from './PostsBlock';
 import { connect } from "react-redux";
 
-
 let mapStateToProps = (state) => {
   return {
     posts: state.pages.userPage.posts.map(postId => state.entities.posts[postId]),
     comments: state.entities.comments
   }
-}
+};
 
 let mapDispatchToProps = (dispatch) => {
   return {
@@ -35,7 +34,7 @@ let mapDispatchToProps = (dispatch) => {
       dispatch(putCommentsActionCreator(comments));
     }
   }
-}
+};
 
 const PostsBlockConnected = connect(mapStateToProps, mapDispatchToProps)(PostsBlock);
 export default PostsBlockConnected;

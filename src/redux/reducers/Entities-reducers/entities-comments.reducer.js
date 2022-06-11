@@ -26,7 +26,7 @@ function entitiesCommentsReducer(state = initialState.entities.comments, action)
       delete newState[commentId];
       return newState;
     }
-
+    
     case DELETE_POST: {
       const newState = {
         ...state

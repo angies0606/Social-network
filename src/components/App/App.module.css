@@ -9,6 +9,7 @@
   grid-template-columns: 170px 1fr;
   /* grid-gap: 10px; */
 }
+
 .App_Content {
   grid-area: c;
   background-color: rgb(241, 249, 216);

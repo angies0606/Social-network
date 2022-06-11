@@ -1,7 +1,7 @@
-import LinearProgress from '@mui/material/LinearProgress';
-import classes from './Progress.module.css';
-import {ProgressContext} from './progress.context';
-import {useProgress} from './useProgress';
+import classes from "./Progress.module.css";
+import { useProgress } from "./useProgress";
+import { ProgressContext } from "./progress.context";
+import LinearProgress from "@mui/material/LinearProgress";
 
 function Progress({children}) {
   const progress = useProgress();
@@ -13,7 +13,7 @@ function Progress({children}) {
           progress.isProgress &&
           <LinearProgress
             className={classes.Progress__Bar}
-            variant="indeterminate"
+            variant='indeterminate'
             color='warning'
           />
         }

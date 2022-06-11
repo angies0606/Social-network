@@ -1,12 +1,11 @@
-import { usersApi } from "@api/api-n";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { usersApi } from "@api/api";
 import UserInfo from "./UserInfo/UserInfo";
 
 function Users ({
   addUsers,
   users
 }) {
-  
   const [isUsersListReady, setIsUsersListReady] = useState(false);
 
   useEffect(() => {
@@ -31,7 +30,7 @@ function Users ({
                       nickname={user.nickname} 
                       avatar={user.avatar} />
           })}
-      </div>
+        </div>
       }
     </>
  )

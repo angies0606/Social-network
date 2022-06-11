@@ -1,11 +1,9 @@
-// import React from 'react';
-import { NavLink } from 'react-router-dom';
-import classes from './Header.module.css';
-import {useAuthContext} from '@features/auth/auth.context';
-import Avatar from '@ui-kit/Avatar/Avatar';
+import classes from "./Header.module.css";
+import {useAuthContext} from "@features/auth/auth.context";
+import { NavLink } from "react-router-dom";
+import Avatar from "@ui-kit/Avatar/Avatar";
 
-
-const backgroundImage = "https://www.pinclipart.com/picdir/big/526-5262236_transparent-falling-png-phoenix-egg-png-clipart.png";
+const backgroundImage = 'https://www.pinclipart.com/picdir/big/526-5262236_transparent-falling-png-phoenix-egg-png-clipart.png';
 
 const Header = () => {
   const {state: {isAuthed, user}, logout} = useAuthContext();
@@ -36,8 +34,8 @@ const Header = () => {
                 avatarWidth = {30}
                 className={''}
               />
-              <NavLink className={classes.Header__Navlink} to={"/login"}>Войти</NavLink>
-              <NavLink className={classes.Header__Navlink} to={"/register"}>Регистрация</NavLink>
+              <NavLink className={classes.Header__Navlink} to={'/login'}>Войти</NavLink>
+              <NavLink className={classes.Header__Navlink} to={'/register'}>Регистрация</NavLink>
             </div>
         }
       </div>

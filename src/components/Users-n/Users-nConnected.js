@@ -4,12 +4,11 @@ import {
 import { connect } from "react-redux";
 import Users from "./Users-n";
 
-
 let mapStateToProps = (state) => {
   return {
     users: state.pages.usersPage.users.map(userId => state.entities.users[userId])
   }
-}
+};
 
 let mapDispatchToProps = (dispatch) => {
   return {
@@ -17,7 +16,7 @@ let mapDispatchToProps = (dispatch) => {
       dispatch(addUsersActionCreator(users));
     }
   }
-}
+};
 
 const UsersConnected = connect(mapStateToProps, mapDispatchToProps)(Users);
 export default UsersConnected;

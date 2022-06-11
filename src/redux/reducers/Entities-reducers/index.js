@@ -1,4 +1,4 @@
-import {combineReducers} from "redux";
+import { combineReducers } from "redux";
 import entitiesCommentsReducer from "./entities-comments.reducer.js";
 import entitiesPostsReducer from "./entities-posts.reducer.js";
 import entitiesUsersReducer from "./entities-users.reducer.js";

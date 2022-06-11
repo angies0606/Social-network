@@ -1,5 +1,5 @@
-import useAuth from './useAuth';
-import {AuthContext} from './auth.context';
+import useAuth from "./useAuth";
+import { AuthContext } from "./auth.context";
 
 function Auth ({
   children

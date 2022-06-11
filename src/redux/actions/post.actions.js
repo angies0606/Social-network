@@ -22,6 +22,7 @@ export function deletePostActionCreator(postId) {
     data: postId
   }
 }
+
 export const EDIT_POST = 'EDIT_POST';
 export function editPostActionCreator(post) {
   return {

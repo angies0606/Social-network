@@ -20,21 +20,12 @@ function userPageReducer(state = initialState.pages.userPage, action) {
         ]
       }
     }
-    
-    // case ADD_POST: {
-    //   return {
-    //     ...state,
-    //     posts: [
-    //       ...state.posts,
-    //       ...action.data.map(post => post._id).filter(postId => !state.posts.includes(postId))
-    //     ]
-    //   }
-    // }
+
     case SET_POSTS: {
       return {
         ...state,
         posts: [
-          ...action.data.map(post => post._id)//.filter(postId => !state.posts.includes(postId))
+          ...action.data.map(post => post._id)
         ]
       }
     }
@@ -47,7 +38,8 @@ function userPageReducer(state = initialState.pages.userPage, action) {
         ...state,
         posts
       };
-    }
+    } 
+    
     case SET_USER: {
       const user = action.data;
       return {

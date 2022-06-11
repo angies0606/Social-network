@@ -1,9 +1,9 @@
 
-import {useState, useCallback} from 'react';
-import classes from './CommentsCreator.module.css';
-import { FormControl } from '@mui/material';
-import FilledInput from '@mui/material/FilledInput';
-import Button from '@ui-kit/Button/Button';
+import classes from "./CommentsCreator.module.css";
+import { useState, useCallback } from "react";
+import { FormControl } from "@mui/material";
+import FilledInput from "@mui/material/FilledInput";
+import Button from "@ui-kit/Button/Button";
 import Avatar from "@ui-kit/Avatar/Avatar";
 
 const commentTextValidator = (value) => {
@@ -12,53 +12,40 @@ const commentTextValidator = (value) => {
 
 function CommentsCreator ({
   authedUser,
-  confirmed
-
+  confirmed,
+  isProgress
 }) {
-  const [isProgress, setIsProgress] = useState(false);
   const [textState, setTextState] = useState({
     value: '',
     isValid: false
   });
 
-  const startProgress = useCallback(() => {
-    setIsProgress(true);
-  }, [setIsProgress]);
-
-  const endProgress = useCallback(() => {
-    setIsProgress(false);
-  }, [setIsProgress]);
-
-  function setText(text) {
+  const setText = (text) => {
     setTextState({
       value: text,
       isValid: commentTextValidator(text)
     });
-  }
+  };
 
   const onTextChange = (e) => {
     const value = e.target.value
     setText(value);
-  }
+  };
 
   const onConfirm = () => {
-    startProgress();
     const comment = {
-      userId: authedUser._id,
       text: textState.value
     };
+
     confirmed(comment)
     .then(() => {
       setText('');
     })
-    .finally(() => {
-      endProgress();
-    })
-  }
+  };
 
   const isDisabled = () => {
     return !textState.isValid || isProgress;
-  }
+  };
 
   return (
     <div className={classes.CommentsCreator_Box}>
@@ -88,7 +75,7 @@ function CommentsCreator ({
       </div>
       <Button
         className={classes.CommentsCreator_Button}
-        variant="outlined"
+        variant='outlined'
         sx={{ height: 30 }}
         onClick={onConfirm}
         disabled={isDisabled()}

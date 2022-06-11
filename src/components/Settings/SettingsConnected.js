@@ -1,13 +1,12 @@
 import { connect } from "react-redux";
-import Settings from "./Settings.jsx";
 import { setUserActionCreator } from "@redux/actions/users.actions";
+import Settings from "./Settings.jsx";
 
-//TODO: упразднить компонент?
 let mapStateToProps = (state, ownProps) => {
   return {
    userProfileId: state.pages.userPage.user._id
   }
-}
+};
 
 let mapDispatchToProps = (dispatch) => {
   return {
@@ -15,7 +14,7 @@ let mapDispatchToProps = (dispatch) => {
       dispatch(setUserActionCreator(user));
     } 
   }
-}
+};
 
 const SettingsConnected = connect(mapStateToProps, mapDispatchToProps)(Settings);
 export default SettingsConnected;

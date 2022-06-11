@@ -1,19 +1,19 @@
+import classes from "@components/common/FormsControls/FormsControls.module.css";
+import {useAuthContext} from "@features/auth/auth.context";
 import { Field, reduxForm } from "redux-form";
 import { required } from "@utils/validators/validators";
 import { Input } from "@components/common/FormsControls/FormsControls";
-import classes from "@components/common/FormsControls/FormsControls.module.css";
-import {useAuthContext} from '@features/auth/auth.context';
 
 const LoginForm = (props) => {
   return <div>
       <form onSubmit={props.handleSubmit}>
         <div>
-          <Field name={"nickname"} placeholder={"Логин"} component={Input}
+          <Field name={'nickname'} placeholder={'Логин'} component={Input}
             validate={[required]} />
         </div>
         <div>
-         <Field name={"password"} placeholder={"Пароль"} component={Input}
-          validate={[required]} type={"password"}  />
+         <Field name={'password'} placeholder={'Пароль'} component={Input}
+          validate={[required]} type={'password'}  />
         </div>
         {/* <div>
           <Field name={"rememberMe"} type={"checkbox"} component={Input}/>
@@ -30,7 +30,7 @@ const LoginForm = (props) => {
         <div></div>
       </form>
     </div>
-}
+};
 
 const LoginReduxForm = reduxForm({
   form: "login"
@@ -52,10 +52,5 @@ const Login = () => {
     </div>
   )
 }
-// const mapStateToProps = (state) => ({
-//   isAuth: state.auth.isAuth
-// }) 
-  
 
-// export default connect(mapStateToProps, {login}) (Login);
 export default Login;

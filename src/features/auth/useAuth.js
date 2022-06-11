@@ -1,13 +1,12 @@
 // @ts-nocheck
-
-import {useEffect, useMemo, useReducer, useCallback} from 'react';
-import {authApi} from '@api/api-n';
+import { useEffect, useMemo, useReducer, useCallback } from "react";
+import { authApi } from "@api/api";
 
 const initialState = {
   user: null,
   isAuthed: false,
   isInitialized: false
-}
+};
 
 const SET_AUTHED = 'SET_AUTHED';
 function setAuthedActionCreator(user) {
@@ -15,23 +14,16 @@ function setAuthedActionCreator(user) {
     type: SET_AUTHED,
     data: user
   }
-}
+};
 
 const SET_UNAUTHED = 'SET_UNAUTHED';
 export function setUnauthedActionCreator() {
   return {
     type: SET_UNAUTHED
   }
-}
+};
 
 let _dispatch;
-// const CHANGE_AVATAR = 'CHANGE_AVATAR';
-// export function changeAvatarActionCreator(imageUrl) {
-//   return {
-//     type: CHANGE_AVATAR,
-//     data: imageUrl
-//   }
-// }
 
 function authReducer(state , action) {
   switch(action.type) {
@@ -51,16 +43,14 @@ function authReducer(state , action) {
       }
     default: return state;
   }
-  
 }
-
 
 function useAuth() {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   const register = useCallback((name, nickname, password) => {
     return authApi.register(name, nickname, password)
-  }, [])
+  }, []);
 
   const login = useCallback((nickname, password) => {
     return authApi.login(nickname, password)
