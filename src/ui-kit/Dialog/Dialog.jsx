@@ -3,7 +3,6 @@ import MUIDialogActions from "@mui/material/DialogActions";
 import MUIDialogContent from "@mui/material/DialogContent";
 import MUIDialogTitle from "@mui/material/DialogTitle";
 import Button from "@ui-kit/Button/Button";
-import MUIDialogContentText from "@mui/material/DialogContentText";
 
 function Dialog ({
   isShown,

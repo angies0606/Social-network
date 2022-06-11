@@ -1,12 +1,12 @@
 
-import React from 'react';
-import reportWebVitals from './reportWebVitals';
-import store from '@redux/store/redux-store.js';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from '@components/App/App';
-import {BrowserRouter} from 'react-router-dom';
-import { Provider } from 'react-redux';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import store from "@redux/store/redux-store.js";
+import App from "@components/App/App";
+import {BrowserRouter} from "react-router-dom";
+import { Provider } from "react-redux";
 
   ReactDOM.render(
     <React.StrictMode>

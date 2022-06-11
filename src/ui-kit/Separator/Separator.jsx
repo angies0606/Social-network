@@ -1,4 +1,4 @@
-import classes from './Separator.module.css';
+import classes from "./Separator.module.css";
 
 function Separator () {
   return (

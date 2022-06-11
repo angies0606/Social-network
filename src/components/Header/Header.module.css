@@ -2,16 +2,15 @@
   grid-area: h;
   background-color:  rgb(12, 114, 80);
 }
+
 .header img {
   width: 60px;
 }
+
 .loginBlock {
   float: right;
 }
+
 .loginBlock a {
   color:rgb(7, 8, 8);
-}
-
-.Header__Navlink {
-  
 }

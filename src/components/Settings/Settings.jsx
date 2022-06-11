@@ -1,18 +1,18 @@
-import {useState} from "react";
+import classes from "./Settings.module.scss";
+import { useState } from "react";
+import { usersApi } from '@api/api';
+import { useProgressContext } from "@features/progress/progress.context";
+import { useAuthContext } from "@features/auth/auth.context";
 import Avatar from "@ui-kit/Avatar/Avatar";
 import Button from "@ui-kit/Button/Button";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { useProgressContext } from "@features/progress/progress.context";
-import classes from "./Settings.module.scss";
-import { imagesApi, usersApi } from '@api/api-n';
-import { useAuthContext } from "@features/auth/auth.context";
 import ImageChanger from "@ui-kit/ImageChanger/ImageChanger";
 import Dialog from "ui-kit/Dialog/Dialog.jsx";
 
 const TITLES = {
   AVATAR: 'Изменить аватар',
   BANNER: 'Изменить баннер'
-}
+};
 
 const defaultBanner = "http://localhost:8080/images/629f63fd77541380b6d7935e/25738.jpg";
 
@@ -34,22 +34,21 @@ const Settings = ({
       .then(user => {
         onChangeUserImages(user);
       })
-  }
+  };
 
   const onAvatarChange = (formData) => {
-    return usersApi.changeUserAvatar(formData, authedUser._id)
+    return usersApi.changeUserAvatar(formData)
     .then(user => {
       onChangeUserImages(user);
     })
-  }
+  };
 
   const onChangeUserImages = (data) => {
-    console.log(data);
     changeUserData(data);
     if(isTheSameUser) {
       changeProfileImage(data);
     }
-  }
+  };
 
   const onBannerDeleteConfirm = () => {
     return usersApi.deleteUserBanner(authedUser.banner)
@@ -57,7 +56,7 @@ const Settings = ({
       onChangeUserImages(user);
       setIsBannerDialogOpened(false);
     })
-  }
+  };
 
   const onAvatarDeleteConfirm = () => {
     return usersApi.deleteUserAvatar(authedUser.avatar)
@@ -65,7 +64,7 @@ const Settings = ({
       onChangeUserImages(user);
       setIsAvatarDialogOpened(false);
     })
-  }
+  };
 
   return (
     <>
@@ -79,9 +78,7 @@ const Settings = ({
         avatarWidth={150}
       />
       <ImageChanger
-        //  isDialogShown={isDialogOpened}
         title={TITLES.AVATAR}
-        //  onImageConfirm={onImageConfirm}
         onImageChange={onAvatarChange}
         isProgress={isProgress}
       >
@@ -110,9 +107,7 @@ const Settings = ({
       </div>
 
       <ImageChanger
-        //  isDialogShown={isDialogOpened}
         title={TITLES.BANNER}
-        //  onImageConfirm={onImageConfirm}
         onImageChange={onBannerChange}
         isProgress={isProgress}
         >

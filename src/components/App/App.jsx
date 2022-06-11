@@ -1,10 +1,10 @@
-import classes from './App.module.css';
-import '@assets/styles/preloader.css';
-import Navbar from '../Navbar/Navbar';
-import Header from '@components/Header/Header';
-import Progress from '@features/progress/Progress';
-import Auth from '@features/auth/Auth';
-import AppRouting from '@components/AppRouting/AppRouting';
+import "@assets/styles/preloader.css";
+import classes from "./App.module.css";
+import Auth from "@features/auth/Auth";
+import Progress from "@features/progress/Progress";
+import AppRouting from "@components/AppRouting/AppRouting";
+import Navbar from "../Navbar/Navbar";
+import Header from "@components/Header/Header";
 
 function App () {
   return (

@@ -1,31 +1,29 @@
-import MuiMenu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { useState, Children, cloneElement, useCallback, useEffect } from 'react';
-import IconButton from '@ui-kit/IconButton/IconButton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-
-
+import { useState, Children, cloneElement, useCallback, useEffect } from "react";
+import MuiMenu from "@mui/material/Menu";
+import IconButton from "@ui-kit/IconButton/IconButton";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 function Menu({
   children,
   changeMode
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isProgress, setIsProgress] = useState(false);
-  
+  const [isMenuInProgress, setIsMenuInProgress] = useState(false);
+  //TODO: можно ли переписать на общий прогресс?
   useEffect(() => {
     if(changeMode) {
       startProgress();
     }
     else endProgress();
   },[changeMode])
+
   const startProgress = useCallback(() => {
-    setIsProgress(true);
-  }, [setIsProgress]);
+    setIsMenuInProgress(true);
+  }, [setIsMenuInProgress]);
 
   const endProgress = useCallback(() => {
-    setIsProgress(false);
-  }, [setIsProgress]);
+    setIsMenuInProgress(false);
+  }, [setIsMenuInProgress]);
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -41,20 +39,20 @@ function Menu({
   };
 
   const isDisabled = () => {
-    return isProgress;
-  }
+    return isMenuInProgress;
+  };
 
   return (
     <div>
       <IconButton
-        id="basic-button"
+        id='basic-button'
         onClick={handleClick}
         disabled={isDisabled()}
       >
         <MoreVertIcon />
       </IconButton>
       <MuiMenu
-        id="basic-menu"
+        id='basic-menu'
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}

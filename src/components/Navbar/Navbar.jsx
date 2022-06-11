@@ -1,11 +1,9 @@
-import {useState, useEffect} from "react";
+import classes from "./Navbar.module.css";
 import { useAuthContext } from "@features/auth/auth.context";
 import { NavLink } from "react-router-dom";
-import classes from "./Navbar.module.css";
 
 const Navbar = () => {
-  
-  const {state: {user, isAuthed}} = useAuthContext();
+  const {state: {user}} = useAuthContext();
 
   return (
     <nav className={classes.nav}>

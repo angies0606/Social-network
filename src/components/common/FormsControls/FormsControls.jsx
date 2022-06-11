@@ -1,4 +1,3 @@
-import React from "react";
 import classes from "./FormsControls.module.css";
 
 const FormControl = ({input, meta, child, ...props}) => {
@@ -15,7 +14,7 @@ const FormControl = ({input, meta, child, ...props}) => {
       }
     </div>
   )
-}
+};
 
 export const Textarea = (props) => {
  const {input, meta, child, ...restProps} = props;
@@ -24,7 +23,7 @@ export const Textarea = (props) => {
       <textarea {...input} {...restProps} />
     </FormControl>
   )
-}
+};
 
 export const Input = (props) => {
   const {input, meta, child, ...restProps} = props;
@@ -33,4 +32,4 @@ export const Input = (props) => {
       <input {...input} {...restProps} />
     </FormControl>
   )
-}
+};

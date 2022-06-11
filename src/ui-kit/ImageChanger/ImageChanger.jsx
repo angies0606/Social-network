@@ -1,5 +1,5 @@
-import ImageDialog from '@ui-kit/ImageDialog/ImageDialog';
-import { useState, Children, cloneElement, useCallback, useEffect } from 'react';
+import { useState, Children, cloneElement, useCallback } from "react";
+import ImageDialog from "@ui-kit/ImageDialog/ImageDialog";
 
 function ImageChanger ({
   children,
@@ -7,7 +7,6 @@ function ImageChanger ({
   title,
   isProgress
 }) {
-  
   const [isDialogOpened, setIsDialogOpened] = useState(false);
 
   const onImageDataFormed = (image) => {
@@ -17,16 +16,15 @@ function ImageChanger ({
       .then(() => {
         onCloseDialog();
       })
-  }
+  };
 
   const onCloseDialog = () => {
     setIsDialogOpened(false);
-  }
+  };
   
   return (
     <>
       {Children.map(children, (child) => {
-            //переопределяем у каждого child пропс onClick и добавляем обработку закрытия меню
             return cloneElement(child, {
               onClick: () => {
                 setIsDialogOpened(true);

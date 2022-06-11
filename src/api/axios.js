@@ -9,18 +9,13 @@ const instance = axios.create({
   withCredentials: true
 });
 
-// instance.interceptors.response.use(res => {
-//   return res.data;
-// });
-
-
-const refreshURL = 'auth/refresh'
+const refreshURL = 'auth/refresh';
 const ignoreUnauthorizedResponseFromURLs = [
   refreshURL,
   'auth/login'
-]
+];
 
-let refreshPromise
+let refreshPromise;
 
 instance.interceptors.response.use(
   /**
@@ -51,22 +46,22 @@ instance.interceptors.response.use(
           })
         }
 
-        await refreshPromise
+        await refreshPromise;
 
-        refreshPromise = null
+        refreshPromise = null;
 
-        const result = await instance.request(error.config)
-        return result
+        const result = await instance.request(error.config);
+        return result;
       } catch (e) {
-        refreshPromise = null
+        refreshPromise = null;
 
-        return Promise.reject(error)
+        return Promise.reject(error);
       } finally {
-        refreshPromise = null
+        refreshPromise = null;
       }
     }
 
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
 )
 

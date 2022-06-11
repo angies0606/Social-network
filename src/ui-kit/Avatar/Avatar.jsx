@@ -11,8 +11,7 @@ function Avatar ({
       src={userAvatar}
       // className={className}
       sx={{ width: avatarWidth, height: avatarHeight}}
-    >
-    </MUIAvatar>
+    />
   )
 }
 

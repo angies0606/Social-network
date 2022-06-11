@@ -1,23 +1,16 @@
-import {useState, useEffect} from "react";
+import classes from "./Likes.module.scss";
+import classNames from "classnames";
 import IconButton from "@ui-kit/IconButton/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import classNames from "classnames";
-import classes from "./Likes.module.scss";
 
 function Likes ({
   likes,
-  profileUserId,
   addLike,
   removeLike,
   isLiked = false,
   authedUserId,
   isProgress
 }) {
- 
-  // useEffect(() => {
-  //   setIsSameUser(false);
-  // }, [userId]);
-
   const onClick = () => {
     if(isLiked) {
       removeLike()
@@ -29,8 +22,7 @@ function Likes ({
       .finally(() => {
       })
     }
-    
-  }
+  };
 
   return (
     <>

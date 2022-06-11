@@ -1,4 +1,4 @@
-import { usersApi } from "@api/api-n";
+import { usersApi } from "@api/api";
 import { setUserActionCreator } from "@redux/actions/users.actions";
 
 export const getUser = (userId) => (dispatch) => {
@@ -6,4 +6,4 @@ export const getUser = (userId) => (dispatch) => {
     .then(response => {
       dispatch(setUserActionCreator(response));
     });
-}
+};

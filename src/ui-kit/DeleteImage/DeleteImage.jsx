@@ -1,19 +1,18 @@
-import IconButton from "@ui-kit/IconButton/IconButton";
-import classNames from "classnames";
-import { XCircleFill } from "react-bootstrap-icons";
 import classes from "./DeleteImage.module.scss"
-import {Children, cloneElement} from "react";
-
+import classNames from "classnames";
+import { Children, cloneElement } from "react";
+import IconButton from "@ui-kit/IconButton/IconButton";
+import { XCircleFill } from "react-bootstrap-icons";
 
 function DeleteImage ({
   children,
   className = '',
   deleteImage
 }) {
-  
   const onClick = () => {
-    deleteImage()
-  }
+    deleteImage();
+  };
+
   return (
     <>
       <div className={classNames(classes.DeleteImage__OuterContainer, className)}>

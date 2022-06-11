@@ -1,6 +1,6 @@
-import Avatar from "@ui-kit/Avatar/Avatar";
-import Preloader from "../../Preloader/Preloader";
 import classes from "./ProfileInfo.module.scss";
+import Avatar from "@ui-kit/Avatar/Avatar";
+import Preloader from "../../../ui-kit/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 const ProfileInfo = ({
@@ -12,7 +12,6 @@ const ProfileInfo = ({
  } 
    return (
    <div>
-      
       {profileUser.banner && 
         <img 
           src={profileUser.banner} 

@@ -1,4 +1,4 @@
-import {useAuthContext} from '@features/auth/auth.context';
+import { useAuthContext } from "@features/auth/auth.context";
 import { Route } from 'react-router-dom';
 
 function AuthedRoute ({...props}) {

@@ -21,6 +21,7 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
       });
       return newState;
     }
+
     case DELETE_POST: {
       const newState = {
         ...state
@@ -40,6 +41,7 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
       }
       return newState;
     }
+
     case SET_LIKE: {
       const newState = {
         ...state
@@ -51,7 +53,7 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
       };
       return newState;
     }
-    
+
     case PUT_COMMENTS: {
       const newState = {
         ...state
@@ -70,6 +72,7 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
       })
       return newState;
     }
+    
     case DELETE_COMMENT: {
       const newState = {
         ...state
@@ -84,21 +87,6 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
       }
       return newState;
     }
-    
-    
-    // case PUT_TODO_LISTS: {
-    //   return [
-    //     ...state,
-    //     ...action.data.map(todoList => todoList.id).filter(todoListId => !state.includes(todoListId))
-    //   ]
-    // }
-
-    // case DELETE_TODO_LIST: {
-    //   const {todoListId} = action.data;
-    //   const newState = [...state];
-    //   newState.splice(newState.indexOf(todoListId), 1);
-    //   return newState;
-    // }
     
     default:
       return state;

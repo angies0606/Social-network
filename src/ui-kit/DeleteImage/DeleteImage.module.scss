@@ -1,12 +1,12 @@
-.DeleteImage__OuterContainer {
-  display: flex;
-  justify-content: center;
-}
-
 .DeleteImage__ImageBox {
   position: relative;
   height: fit-content;
   width: fit-content;
+}
+
+.DeleteImage__OuterContainer {
+  display: flex;
+  justify-content: center;
 }
 
 .DeleteImage__Image {

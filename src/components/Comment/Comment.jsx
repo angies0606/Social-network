@@ -1,5 +1,5 @@
-import {useCallback, useState} from "react";
 import classes from "./Comment.module.css";
+import {useState} from "react";
 import Avatar from "@ui-kit/Avatar/Avatar";
 import { Typography } from "@mui/material";
 import DateBar from "@ui-kit/DateBar/DateBar";
@@ -15,14 +15,6 @@ function Comment ({
 }) {
   const [isDialogOpened, setIsDialogOpened] = useState(false);
 
-  // const startProgress = useCallback(() => {
-  //   setIsProgress(true);
-  // }, [setIsProgress]);
-
-  // const endProgress = useCallback(() => {
-  //   setIsProgress(false);
-  // }, [setIsProgress]);
-
   const onDeleteComment = () => {
     if(authedUserId === comment.user) {
       deleteComment(comment._id)
@@ -30,7 +22,7 @@ function Comment ({
         setIsDialogOpened(false);
       });
     } else return;
-  }
+  };
   
   return (
     <>
@@ -65,6 +57,7 @@ function Comment ({
         <DateBar
           creationDate={comment.createdAt}
           className={classes.Comment_DateBar}
+          updateDate={comment.updatedAt}
         />
       </div>
       <Dialog

@@ -1,54 +1,94 @@
-import axios from "axios";
+// @ts-nocheck
+import instance from "@api/axios";
 
-
-const instance = axios.create({
-  withCredentials: true, // - разрешение прицепить куки при запросе на ceрвер
-  baseURL: `https://social-network.samuraijs.com/api/1.0/`,
-  headers: {
-    "API-KEY": "70f4bfee-9d8e-4a05-ad99-d34f716a608f"
-  }
-});
-export const usersAPI = {
-  getUsers (currentPage = 1, pageSize = 10) {
-    return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-    .then(response => {
-      return  response.data;
-    });
+export const authApi = {
+  register(name, nickname, password) {
+    return instance.post('auth/register', {name, nickname, password});
   },
-  follow(userId) {
-    return instance.post(`follow/${userId}`);
-  },
-  unfollow(userId) {
-    return instance.delete(`follow/${userId}`); // y delete запроса 2 параметра 
-  },
-  getProfile(userId) {
-    return profileAPI.getProfile(userId);
-  }
-}
-
-export const profileAPI = {
-  getProfile(userId) {
-    return instance.get(`profile/${userId}`);
-  },
-  getStatus(userId) {
-    return instance.get(`profile/status/${userId}`);
-  },
-  updateStatus(status) {
-    return instance.put(`profile/status/`, {status: status});
-  }
-}
-
-export const authAPI = {
-  me() {
-    return instance.get(`auth/me`);
-  },
-  login(email, password, rememberMe = false) {
-    return instance.post(`auth/login`, {email, password, rememberMe});
+  login(nickname, password) {
+    return instance.post('auth/login', {nickname, password});
   },
   logout() {
-    return instance.delete(`auth/login`);
+    return instance.post('auth/logout');
+  },
+  me() {
+    return instance.post('auth/me');
   }
-}
-    
+};
 
+export const usersApi = {
+  getUser(userId) {
+    return instance.get(`users/${userId}`);
+  },
+  getUsers() {
+    return instance.get('/users');
+  },
+  changeUserAvatar(imageData) {
+    return instance.post(`user/avatar`, imageData);
+  },
+  changeUserBanner(imageData) {
+    return instance.post(`user/banner`, imageData);
+  },
+  deleteUserAvatar(avatar) {
+    return instance.delete('user/avatar', {data: {avatar}});
+  },
+  deleteUserBanner(banner) {
+    return instance.delete('user/banner', {data: {banner}});
+  },
+  // getStatus(userId) {
+  //   return instance.get(`profile/status/${userId}`);
+  // },
+  // updateStatus(status) {
+  //   return instance.put(`profile/status/`, {status: status}); //TODO: доделать статус?
+  // }
+};
+
+export const postsApi = {
+  getPosts(userId) {
+    return instance.get(`posts/${userId}`);
+  },
+  createPost(payload) {
+    return instance.post('posts', payload);
+  },
+  deletePost(postId) {
+    return instance.delete(`posts/${postId}`)
+  },
+  editPost(post) {
+    return instance.patch(`posts/${post._id}`, post);
+  },
+  addLike(postId) {
+    return instance.post(`posts/${postId}/like`);
+  },
+  removeLike(postId) {
+    return instance.delete(`posts/${postId}/like`);
+  },
+  addComment(comment) {
+    return instance.post(`posts/${comment.postId}/comment`, comment);
+  },
+  getComments(postId) {
+    return instance.get(`posts/${postId}/comments`);
+  },
+  deleteComment(commentId) {
+    return instance.delete(`comments/${commentId}`);
+  },
+  deleteImage(postId) {
+    return instance.delete(`posts/${postId}/image`);
+  }
+};
+
+export const imagesApi = {
+  addImage(imageData) {
+    return instance.post('images', imageData);
+  },
+  deleteImage(imageUrl) {
+    return instance.delete('images', imageUrl);
+  }
+};
+
+// getUsers (currentPage = 1, pageSize = 10) {
+//   return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+//   .then(response => {
+//     return  response.data;
+//   });
+// },
 
