@@ -41,15 +41,17 @@
   color: rgb(255, 158, 32);
 }
 
-.item {
-  color: rgb(12, 114, 80);
+.Card__PostImage {
+  max-height: 300px;
+  max-width: 100%;
+  object-fit: contain;
+  width: fit-content;
 }
 
-.item img {
-  height: 50px;
-  width: 50px;
-  border-radius: 30%;
-}
+// .Post__CommentContainer {
+//   display: flex;
+//   flex-direction: column;
+// }
 
 
 

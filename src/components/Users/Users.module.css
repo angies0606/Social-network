@@ -1,0 +1,25 @@
+.Users__Container {
+  display: flex;
+  margin: 50px auto 50px auto;
+  width: 400px;
+  flex-direction: column;
+  height: fit-content;
+  padding: 20px;
+}
+
+.Users__NoDataCard {
+  width: 100%;
+  flex: 1 0 auto;
+  max-height: 100%;
+  /* margin-top: 30px; */
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+}
+
+.Users__NoDataText {
+  color: rgb(151, 147, 147);
+}

@@ -7,14 +7,13 @@ import Avatar from "@ui-kit/Avatar/Avatar";
 import Button from "@ui-kit/Button/Button";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import ImageChanger from "@ui-kit/ImageChanger/ImageChanger";
-import Dialog from "ui-kit/Dialog/Dialog.jsx";
+import ConfirmDialog from "@ui-kit/ConfirmDialog/ConfirmDialog.jsx";
+import DefaultBanner from "@assets/images/defaultBanner.jpg";
 
 const TITLES = {
-  AVATAR: 'Изменить аватар',
-  BANNER: 'Изменить баннер'
+  AVATAR: ['Изменить аватар'],
+  BANNER: ['Изменить баннер']
 };
-
-const defaultBanner = "http://localhost:8080/images/629f63fd77541380b6d7935e/25738.jpg";
 
 const Settings = ({
   authedUser,
@@ -30,7 +29,7 @@ const Settings = ({
   const isTheSameUser = authedUser._id === userProfileId;
 
   const onBannerChange = (formData) => {
-    return usersApi.changeUserBanner(formData, authedUser._id)
+    return usersApi.changeUserBanner(formData)
       .then(user => {
         onChangeUserImages(user);
       })
@@ -67,66 +66,84 @@ const Settings = ({
   };
 
   return (
-    <>
-      <div>
+    <div className={classes.Settings__Container}>
+      <div className={classes.Settings__Header}>
         Изменить аватар 
       </div>
-      <Avatar
-        // className={classes.ProfileInfo__Avatar}
-        userAvatar={authedUser.avatar}
-        avatarHeight={150}
-        avatarWidth={150}
-      />
-      <ImageChanger
-        title={TITLES.AVATAR}
-        onImageChange={onAvatarChange}
-        isProgress={isProgress}
-      >
-        <Button 
-          startIcon={<AddPhotoAlternateIcon />}
-          disabled={isProgress}
+      <div className={classes.Settings__Avatar}>
+        <Avatar
+          // className={classes.ProfileInfo__Avatar}
+          userAvatar={authedUser.avatar}
+          avatarHeight={150}
+          avatarWidth={150}
+        />
+      </div>
+      <div className={classes.Settings__ButtonBox}>
+        <ImageChanger
+          title={TITLES.AVATAR}
+          onImageChange={onAvatarChange}
+          isProgress={isProgress}
         >
-          Изменить
-        </Button>
-      </ImageChanger>
-      {authedUser.avatar && 
-      <Button 
-        disabled={isProgress}
-        onClick={() => setIsAvatarDialogOpened(true)}
-      >
-        Удалить
-      </Button>}
-      <div>
+          <Button 
+            startIcon={<AddPhotoAlternateIcon />}
+            disabled={isProgress}
+            color='success'
+            variant='outlined'
+            className={classes.Settings__Button}
+          >
+            Изменить
+          </Button>
+        </ImageChanger>
+        {authedUser.avatar && 
+          <Button 
+            disabled={isProgress}
+            onClick={() => setIsAvatarDialogOpened(true)}
+            color='success'
+            variant='outlined'
+            className={classes.Settings__DeleteButton}
+          >
+            Удалить
+          </Button>
+        }
+      </div>
+      <div className={classes.Settings__Header}>
         Изменить баннер
       </div>
       <div className={classes.Settings__BannerBox}>
         <img 
           className={classes.Settings__Banner}
-          src={authedUser.banner || defaultBanner} 
+          src={authedUser.banner || DefaultBanner} 
         />
       </div>
-
-      <ImageChanger
-        title={TITLES.BANNER}
-        onImageChange={onBannerChange}
-        isProgress={isProgress}
+      <div className={classes.Settings__ButtonBox}>
+        <ImageChanger
+          title={TITLES.BANNER}
+          onImageChange={onBannerChange}
+          isProgress={isProgress}
         >
-        <Button 
-          startIcon={<AddPhotoAlternateIcon />}
-          disabled={isProgress}
-        >
-          Изменить
-        </Button>
-      </ImageChanger>
-      {authedUser.banner && 
-        <Button 
-        disabled={isProgress}
-        onClick={() => setIsBannerDialogOpened(true)}
-      >
-        Удалить
-      </Button>
-      }
-      <Dialog
+          <Button 
+            startIcon={<AddPhotoAlternateIcon />}
+            disabled={isProgress}
+            color='success'
+            variant='outlined'
+            className={classes.Settings__Button}
+          >
+            Изменить
+          </Button>
+        </ImageChanger>
+        {authedUser.banner && 
+          <Button 
+            disabled={isProgress}
+            onClick={() => setIsBannerDialogOpened(true)}
+            color='success'
+            variant='outlined'
+            className={classes.Settings__DeleteButton}
+          >
+            Удалить
+          </Button>
+        }
+      </div>
+      <ConfirmDialog
         isShown={isAvatarDialogOpened}
         title={"Удаление аватара"}
         message={"Вы действительно хотите удалить аватар?"}
@@ -134,7 +151,7 @@ const Settings = ({
         onCancel={() => {setIsAvatarDialogOpened(false)}}
         onConfirm={onAvatarDeleteConfirm}
       />
-      <Dialog
+      <ConfirmDialog
         isShown={isBannerDialogOpened}
         title={"Удаление баннера"}
         message={"Вы действительно хотите удалить баннер?"}
@@ -142,7 +159,7 @@ const Settings = ({
         onCancel={() => {setIsBannerDialogOpened(false)}}
         onConfirm={onBannerDeleteConfirm}
       />
-    </>
+    </div>
   )
 }
 

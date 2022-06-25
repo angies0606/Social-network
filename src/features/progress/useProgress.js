@@ -30,8 +30,6 @@ export function useProgress() {
     dispatch({type: 'decrement'})
   }, [dispatch]);
 
-  useProgressInAxiosInterceptors(increment, decrement);
-
   return {
     increment,
     decrement,
@@ -40,7 +38,7 @@ export function useProgress() {
   };
 }
 
-function useProgressInAxiosInterceptors(increment, decrement) {
+export function useProgressInAxiosInterceptors(increment, decrement) {
   useEffect(() => {
     const requestInterceptorId = axios.interceptors.request.use(function (req) {
       increment();

@@ -1,9 +1,16 @@
-
-export const ADD_POST = 'ADD_POST';
-export function addPostActionCreator(post) {
+export const NEW_POST = 'NEW_POST';
+export function newPostActionCreator(post) {
   return {
-    type: ADD_POST,
+    type: NEW_POST,
     data: post
+  };
+}
+
+export const ADD_POSTS = 'ADD_POSTS';
+export function addPostsActionCreator(posts) {
+  return {
+    type: ADD_POSTS,
+    data: posts
   };
 }
 

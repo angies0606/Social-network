@@ -2,11 +2,11 @@
 import instance from "@api/axios";
 
 export const authApi = {
-  register(name, nickname, password) {
-    return instance.post('auth/register', {name, nickname, password});
+  register(email, nickname, password) {
+    return instance.post('auth/register', {email, nickname, password});
   },
-  login(nickname, password) {
-    return instance.post('auth/login', {nickname, password});
+  login(login, password) {
+    return instance.post('auth/login', {login, password});
   },
   logout() {
     return instance.post('auth/logout');
@@ -20,8 +20,10 @@ export const usersApi = {
   getUser(userId) {
     return instance.get(`users/${userId}`);
   },
-  getUsers() {
-    return instance.get('/users');
+  getUsers(params) {
+    return instance.get('/users', {
+      params
+    });
   },
   changeUserAvatar(imageData) {
     return instance.post(`user/avatar`, imageData);
@@ -44,8 +46,10 @@ export const usersApi = {
 };
 
 export const postsApi = {
-  getPosts(userId) {
-    return instance.get(`posts/${userId}`);
+  getPosts(userId, params) {
+    return instance.get(`posts/${userId}`, {
+      params
+    });
   },
   createPost(payload) {
     return instance.post('posts', payload);

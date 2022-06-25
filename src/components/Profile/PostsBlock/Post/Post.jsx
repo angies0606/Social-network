@@ -1,5 +1,5 @@
 
-import classes from "./Post.module.css";
+import classes from "./Post.module.scss";
 import classNames from "classnames";
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { postsApi, imagesApi } from "@api/api";
@@ -20,8 +20,8 @@ import Menu from "@ui-kit/Menu/Menu.jsx";
 import MenuItem from "@mui/material/MenuItem";
 import { TextField } from "@mui/material";
 import ImageDialog from "@ui-kit/ImageDialog/ImageDialog";
-import Dialog from "@ui-kit/Dialog/Dialog";
-import ImageUrlPreview from "@ui-kit/ImagePreview/ImageUrlPreview";
+import ConfirmDialog from "@ui-kit/ConfirmDialog/ConfirmDialog";
+import ImageUrlPreview from "@ui-kit/ImageUrlPreview/ImageUrlPreview";
 import Collapse from "@mui/material/Collapse";
 import Expander from "@features/Expander/Expander";
 import Separator from "@ui-kit/Separator/Separator";
@@ -36,7 +36,6 @@ const Post = ({
   deletePost,
   editPost,
   profileUser,
-  profileUserId,
   putComments,
   setLike,
   comments,
@@ -48,6 +47,7 @@ const Post = ({
   const [expanded, setExpanded] = useState(false);
   // const [isPostReady, setIsPostReady] = useState(false);
   const [isCommentsReady, setCommentsReady] = useState(false);
+  const [wasImageInPost, setWasImageInPost] = useState(false);
   const [isImageInPost, setIsImageInPost] = useState(false);
   const [editingImageUrl, setEditingImageUrl] = useState(null);
   const [editingImageFile, setEditingImageFile] = useState(null); 
@@ -70,6 +70,7 @@ const Post = ({
       // className={classes.PostCreator__TextField}
       // placeholder="Что у Вас нового?"
       fullWidth
+      color='success'
       multiline
       rows={4}
     />;
@@ -86,6 +87,7 @@ const Post = ({
   const onPostEdit = () => {
     setChangeMode(true);
     if(post.image) {
+      setWasImageInPost(true);
       setIsImageInPost(true);
       setEditingImageUrl(post.image);
     }
@@ -98,21 +100,21 @@ const Post = ({
     };
 
     return Promise.resolve((post.image !== editingImageUrl) && !imageNeedsDeleting && editingImageUrl
-            ? uploadImage()
+            ? uploadImageRequest()
                 .then(imageUrl => {
                   editedPost.image = imageUrl
                 })
             : (post.image !== editingImageUrl) && imageNeedsDeleting && post.image && !editingImageUrl
-            ? deletePostImage()
+            ? deletePostImageRequest()
                 .then(newPost => {
                   editedPost = {
                     ...newPost
                   }
                 })
             : (post.image !== editingImageUrl) && imageNeedsDeleting && post.image && editingImageUrl
-            ? deletePostImage()
+            ? deletePostImageRequest()
                 .then(() => {
-                  return uploadImage()
+                  return uploadImageRequest()
                     .then(imageUrl => {
                       editedPost.image = imageUrl
                     })
@@ -125,6 +127,7 @@ const Post = ({
                   setEditingImageFile(null);
                   setImageNeedsDeleting(null);
                   setWasPostImageChanged(false);
+                  setWasImageInPost(false);
                   setIsImageInPost(false);
                   setChangeMode(false);
                 })
@@ -178,15 +181,6 @@ const Post = ({
     })
   };
   
-  const uploadImage = () => {
-    const formData = new FormData();
-    formData.append('img', editingImageFile);
-    return imagesApi.addImage(formData)
-      .then(response => {
-        return response.imageUrl
-      })
-  };
-
   const onPostImageChange = (image) => {
     const imageUrl = window.URL.createObjectURL(image);
     setEditingImageFile(image);
@@ -196,13 +190,6 @@ const Post = ({
     return Promise.resolve();
   };
 
-  const deletePostImage = () => {
-    return postsApi.deleteImage(post._id)
-      .then(newPost => {
-        return newPost;
-      })
-  };
-  
   const onDeleteImage = () => {
     if(editingImageUrl === post.image) {
       setImageNeedsDeleting(editingImageUrl);
@@ -224,6 +211,32 @@ const Post = ({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const uploadImageRequest = () => {
+    const formData = new FormData();
+    formData.append('img', editingImageFile);
+    return imagesApi.addImage(formData)
+      .then(response => {
+        return response.imageUrl
+      })
+  };
+
+  const deletePostImageRequest = () => {
+    return postsApi.deleteImage(post._id)
+      .then(newPost => {
+        return newPost;
+      })
+  };
+
+  const onCancelEdit = () => {
+    setEditingImageUrl(null);
+    setEditingImageFile(null);
+    setImageNeedsDeleting(null);
+    setWasPostImageChanged(false);
+    setWasImageInPost(false);
+    setIsImageInPost(false);
+    setChangeMode(false);
+  }
 
   return (
     <>
@@ -254,10 +267,10 @@ const Post = ({
           {changeMode && isImageInPost ? 
               <ImageUrlPreview
                 imageUrl={editingImageUrl}
-                deleteImage={onDeleteImage}
+                onDeleteImage={onDeleteImage}
                 className={classes.Card__CardMediaBox}
                 isDeleteShown={true}
-                isPostImage={true}
+                imageClassName={classes.Card__PostImage}
               />: null
           }
           
@@ -281,12 +294,14 @@ const Post = ({
             <PostCreator
               onPostConfirm={onConfirmEdit}
               postText={post.text}
-              cancelChange={() => setChangeMode(false)}
-              isShowCancelButton
+              cancelChange={onCancelEdit}
+              isShowCancelButton={true}
               buttonContent={'Изменить'}
               textField={textField}
               openImageDialog={onImageDialogOpen}
+              isImageInPost={isImageInPost}
               wasPostImageChanged={wasPostImageChanged}
+              wasImageInPost={wasImageInPost}
               post={post}
             />
           }
@@ -296,7 +311,6 @@ const Post = ({
             <Likes
               addLike={onAddLike}
               likes={post.nLikes}
-              // profileUserId={profileUserId}
               isLiked={post.isLiked}
               authedUserId={authedUser._id}
               removeLike={onRemoveLike}
@@ -324,7 +338,7 @@ const Post = ({
           >
             {isCommentsReady && comments?.map((comment, index) => {
               return (
-                <div key={index}>
+                <div key={index} className={classes.Post__CommentContainer}>
                   <Separator />
                   <Comment 
                     comment={comment}
@@ -353,7 +367,7 @@ const Post = ({
         isProgress={isProgress}
         onImageConfirm={onPostImageChange}
       />
-      <Dialog
+      <ConfirmDialog
         isShown={isMessageDialogOpened}
         title={'Удаление поста'}
         message={'Вы действительно хотите удалить этот пост?'}

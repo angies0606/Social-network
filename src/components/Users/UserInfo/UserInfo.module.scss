@@ -1,0 +1,28 @@
+.UserInfo__Container {
+  display: flex;
+  min-height: 200px;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  height: fit-content;
+  margin: 10px;
+}
+
+.UserInfo__NavLink {
+  text-decoration: none;
+  color: black;
+}
+
+.UserInfo__Avatar {
+  margin: 0 20px 0 20px;
+}
+
+.UserInfo__Nickname {
+  margin: 0 30px 0 30px;
+  font-weight: bolder;
+  font-size: 18px;
+  overflow-wrap: break-word;
+  flex: 1 0;
+  overflow: hidden;
+  white-space: pre-line;
+}

@@ -2,11 +2,11 @@ import { connect } from "react-redux";
 import { setUserActionCreator } from "@redux/actions/users.actions";
 import Settings from "./Settings.jsx";
 
-let mapStateToProps = (state, ownProps) => {
-  return {
-   userProfileId: state.pages.userPage.user._id
-  }
-};
+// let mapStateToProps = (state, ownProps) => {
+//   return {
+//     userProfileId: state.pages.userPage.user._id
+//   }
+// };
 
 let mapDispatchToProps = (dispatch) => {
   return {
@@ -16,5 +16,5 @@ let mapDispatchToProps = (dispatch) => {
   }
 };
 
-const SettingsConnected = connect(mapStateToProps, mapDispatchToProps)(Settings);
+const SettingsConnected = connect(null, mapDispatchToProps)(Settings);
 export default SettingsConnected;

@@ -48,8 +48,8 @@ function authReducer(state , action) {
 function useAuth() {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  const register = useCallback((name, nickname, password) => {
-    return authApi.register(name, nickname, password)
+  const register = useCallback((email, nickname, password) => {
+    return authApi.register(email, nickname, password)
   }, []);
 
   const login = useCallback((nickname, password) => {

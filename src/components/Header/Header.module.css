@@ -1,16 +1,66 @@
-.header {
-  grid-area: h;
-  background-color:  rgb(12, 114, 80);
+.Header__LoginBlock {
+  display: flex;
+  justify-content: space-between;
+  width: fit-content;
+  max-height: 60px;
 }
 
-.header img {
-  width: 60px;
+.Header__UserInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0 10px 0;
 }
 
-.loginBlock {
-  float: right;
+.Header__NavLink {
+  color: white;
+  font-weight: bolder;
+  font-size: 18px;
+  text-decoration: none;
 }
 
-.loginBlock a {
-  color:rgb(7, 8, 8);
+.Header__NavLink {
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.Header__Navlink {
+  margin-right: 10px;
+  display: block;
+}
+
+.Header__LoginLink {
+  margin-right: 15px;
+}
+
+.Header__Options {
+  padding: 10px;
+  margin-right: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Header__Nickname {
+  margin: 0 10px 0 10px;
+}
+
+.Header__Label {
+  min-width: 60px;
+  max-height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-left: 60px;
+}
+
+.Header__Label img {
+  width: 55px;
+  height: 55px;
+}
+
+.Header__LogoutIcon {
+  color: white;
 }

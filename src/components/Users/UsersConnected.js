@@ -2,7 +2,7 @@ import {
   addUsersActionCreator
 } from "@redux/actions/users.actions";
 import { connect } from "react-redux";
-import Users from "./Users-n";
+import Users from "./Users";
 
 let mapStateToProps = (state) => {
   return {

@@ -1,14 +1,35 @@
-.nav {
+/* .nav {
   grid-area: n ;
   background-color:rgb(243, 161, 53);
   padding:20px;
+} */
+
+.Navbar__Box {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  width: 190px;
+  align-items: center;
+  min-width: 181px;
+  padding: 20px 10px 20px 10px;
+  background-color: rgb(243, 161, 53);
+  box-sizing: border-box;
+}
+.Navbar__Link {
+  margin: 10px 0 10px 0;
+  flex-wrap: nowrap;
+  flex-basis: content;
+  flex-shrink: 1;
 }
 
-.item a {
+.Navbar__Link a {
   color: white;
   text-decoration: none;
+  font-weight: bolder;
+  font-size: 16px;
 }
 
-.item a.active {
+.Navbar__Link a.active {
   color:  rgb(12, 114, 80);
 }
+

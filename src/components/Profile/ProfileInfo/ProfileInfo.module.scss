@@ -1,13 +1,23 @@
-.descriptionBlock {
-  padding: 10px;
-}
-
-.profileImg {
-  height: 200px;
+.ProfileInfo__Banner {
+  height: 160px;
   width: 100%;
 }
 
-.ProfileInfo__Avatar.ProfileInfo__Avatar {
-  height: 200px;
-  width: 200px;
+.ProfileInfo__UserInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.ProfileInfo__Avatar {
+  margin: 30px auto 15px auto;
+}
+
+.ProfileInfo__Nickname {
+  font-weight: bolder;
+  font-size: 20px;
+  margin: 0 0;
+  display: flex;
+  align-items: center;
 }

@@ -7,7 +7,8 @@ import ProfileRouteConnect from "./ProfileRoute.connect";
 
 function ProfileRoute({
   profileUser,
-  getUser
+  getUser,
+  clearUser
 }) {
   const params = useParams();
   const paramsUserId = params.userId;
@@ -17,9 +18,15 @@ function ProfileRoute({
     getUser(paramsUserId);
     console.log(params);
   }, [paramsUserId])
-  
+
+  useEffect(() => {
+    return () => {
+      clearUser();
+    };
+  }, []);
+
   if (!profileUser) return null;
-  
+
   return (
     <>
       <Profile

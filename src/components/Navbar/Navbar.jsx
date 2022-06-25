@@ -6,18 +6,18 @@ const Navbar = () => {
   const {state: {user}} = useAuthContext();
 
   return (
-    <nav className={classes.nav}>
+    <nav className={classes.Navbar__Box}>
       {/* <div className={`${classes.item} ${classes.active}`}></div> */}
       {!user
         ? null 
         : <>
-          <div className={classes.item}>
+          <div className={classes.Navbar__Link}>
             <NavLink to={`/profile/${user?._id}`} activeClassName={classes.active}>Профиль</NavLink>
           </div>
-          <div className={classes.item}>
+          <div className={classes.Navbar__Link}>
             <NavLink to='/users' activeClassName={classes.active}>Пользователи</NavLink>
           </div>
-           <div className={classes.item}>
+           <div className={classes.Navbar__Link}>
             <NavLink to='/settings' activeClassName={classes.active}>Настройки профиля</NavLink>
           </div>
         </>

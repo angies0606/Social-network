@@ -5,10 +5,7 @@ import { FormControl } from "@mui/material";
 import FilledInput from "@mui/material/FilledInput";
 import Button from "@ui-kit/Button/Button";
 import Avatar from "@ui-kit/Avatar/Avatar";
-
-const commentTextValidator = (value) => {
-  return value?.length <= 750 && value?.length > 0;
-}
+import { commentTextValidator } from "@utils/validators/validators";
 
 function CommentsCreator ({
   authedUser,
@@ -48,16 +45,16 @@ function CommentsCreator ({
   };
 
   return (
-    <div className={classes.CommentsCreator_Box}>
-      <div className={classes.CommentsCreator_UserCommentBox}>
+    <div className={classes.CommentsCreator__Box}>
+      <div className={classes.CommentsCreator__UserCommentBox}>
         <Avatar
-          className={classes.CommentsCreator_Avatar}
+          className={classes.CommentsCreator__Avatar}
           userAvatar={authedUser.avatar}
           avatarHeight={30}
           avatarWidth={30}
         />
         <FormControl
-          className={classes.CommentsCreator_TextField}
+          className={classes.CommentsCreator__TextField}
           variant='filled'
           sx={{}}
         >
@@ -66,6 +63,7 @@ function CommentsCreator ({
             multiline
             fullWidth
             maxRows={4}
+            color='success'
             size='small'
             sx={{}}
             onChange={onTextChange}
@@ -74,8 +72,9 @@ function CommentsCreator ({
         </FormControl>
       </div>
       <Button
-        className={classes.CommentsCreator_Button}
+        className={classes.CommentsCreator__Button}
         variant='outlined'
+        color='success'
         sx={{ height: 30 }}
         onClick={onConfirm}
         disabled={isDisabled()}

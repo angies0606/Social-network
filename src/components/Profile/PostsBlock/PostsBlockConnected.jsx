@@ -1,10 +1,11 @@
 
 import {
-  addPostActionCreator, 
+  newPostActionCreator, 
   deletePostActionCreator, 
   editPostActionCreator,
   putCommentsActionCreator,
-  setPostsActionCreator
+  setPostsActionCreator,
+  addPostsActionCreator
 } from "@redux/actions/post.actions";
 import PostsBlock from './PostsBlock';
 import { connect } from "react-redux";
@@ -18,8 +19,11 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
   return {
-    addPost: (post) => {
-      dispatch(addPostActionCreator(post));
+    newPost: (post) => {
+      dispatch(newPostActionCreator(post));
+    },
+    addPosts: (posts) => {
+      dispatch(addPostsActionCreator(posts));
     },
     setPosts: (posts) => {
       dispatch(setPostsActionCreator(posts));

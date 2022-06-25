@@ -6,13 +6,22 @@ import {
   PUT_COMMENTS,
   DELETE_COMMENT,
   SET_POSTS,
-  ADD_POST
+  ADD_POSTS,
+  NEW_POST
 } from "@redux/actions/post.actions.js";
 
 function entitiesPostsReducer(state = initialState.entities.posts, action) {
   switch (action.type) {
-    case ADD_POST:
-    case SET_POSTS:  {
+    case NEW_POST: {
+      const newState = {
+        ...state,
+        [action.data._id]: action.data
+      };
+      return newState;
+    }
+
+    case ADD_POSTS:
+    case SET_POSTS: {
       const newState = {
         ...state
       };

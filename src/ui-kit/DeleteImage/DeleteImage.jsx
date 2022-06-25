@@ -7,10 +7,10 @@ import { XCircleFill } from "react-bootstrap-icons";
 function DeleteImage ({
   children,
   className = '',
-  deleteImage
+  onDeleteImage
 }) {
   const onClick = () => {
-    deleteImage();
+    onDeleteImage?.();
   };
 
   return (

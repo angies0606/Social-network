@@ -1,4 +1,4 @@
-.Comment_Box {
+.Comment__Box {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -10,18 +10,32 @@
   flex-direction: column;
 }
 
-.Comment_UserCommentBox {
+.Comment__UserCommentBox {
   display: flex;
   align-items: center;
   min-height: 50px;
   flex: 1 0;
 }
 
-.Comment_Typography.Comment_Typography {
-  margin-left: 20px;
+.Comment__Header.Comment__Header {
+  width: 100%;
+  padding: 0;
 }
 
-.Comment_DateBar {
+.Comment__Typography.Comment__Typography {
+  padding: 20px;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.Comment__Text {
+  overflow-wrap: break-word;
+  flex: 1 0;
+  overflow: hidden;
+}
+
+.Comment__DateBar {
   margin: 0;
   font-family: "Roboto","Helvetica","Arial",sans-serif;
   font-weight: 400;
@@ -32,13 +46,13 @@
   display: block;
 }
 
-.Comment_Icon.Comment_Icon {
+.Comment__Icon.Comment__Icon {
   display: flex;
   align-self: flex-end;  
-  padding: 0;
+  margin-right: 5px;
 }
 
-.Comment_CloseIcon.Comment_CloseIcon {
+.Comment__CloseIcon.Comment__CloseIcon {
   width: 15px;
   height: 15px;
 }
