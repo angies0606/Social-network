@@ -1,8 +1,9 @@
 import initialState from "@redux/store/initial-state";
 import {
-  ADD_POST,
+  ADD_POSTS,
   DELETE_POST,
-  SET_POSTS
+  SET_POSTS,
+  NEW_POST
 } from "@redux/actions/post.actions.js";
 import {
   SET_USER
@@ -10,23 +11,32 @@ import {
 
 function userPageReducer(state = initialState.pages.userPage, action) {
   switch (action.type) {
-    case ADD_POST: {
-      const [{_id: newPostId}] = action.data;
-      return {
+    case NEW_POST: {
+      const newState = {
         ...state,
         posts: [
-          newPostId,
+          action.data._id,
           ...state.posts
         ]
-      }
+      };
+      return newState;
+    }
+
+    case ADD_POSTS: {
+      const newState = {
+        ...state,
+        posts: [
+          ...state.posts,
+          ...action.data.map(post => post._id)
+        ]
+      };
+      return newState;
     }
 
     case SET_POSTS: {
       return {
         ...state,
-        posts: [
-          ...action.data.map(post => post._id)
-        ]
+        posts: action.data.map(post => post._id)
       }
     }
 

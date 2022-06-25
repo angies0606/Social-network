@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
-import {getUser} from "@redux/thunks/users.thunks";
+import {getUserActionCreator} from "@redux/thunks/users.thunks";
 import {getUserPageUser} from "@redux/selectors/user.selectors";
+import {setUserActionCreator} from '@redux/actions/users.actions';
 
 let mapStateToProps = (state) => ({ 
   profileUser: getUserPageUser(state)
@@ -9,4 +10,11 @@ let mapStateToProps = (state) => ({
   // isAuth: state.auth.isAuth
 });
 
-export default connect(mapStateToProps, {getUser});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearUser: () => dispatch(setUserActionCreator(null)),
+    getUser: (userId) => dispatch(getUserActionCreator(userId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps);

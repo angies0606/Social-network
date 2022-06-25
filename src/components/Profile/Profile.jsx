@@ -1,3 +1,4 @@
+import classes from "./Profile.module.css";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import PostsBlockConnected from "./PostsBlock/PostsBlockConnected";
 
@@ -6,7 +7,7 @@ const Profile = ({
   profileUser
 }) => {
   return (
-    <div>
+    <div className={classes.Profile__Container}>
       <ProfileInfo 
         profileUser={profileUser} 
         // status={props.status}
@@ -14,7 +15,6 @@ const Profile = ({
       />
       <PostsBlockConnected
         profileUser={profileUser}
-        profileUserId={profileUser._id}
         isForCurrentUser={isForCurrentUser}
       />
     </div>

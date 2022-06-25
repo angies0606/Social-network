@@ -16,7 +16,6 @@
   margin-top: 10px;
 }
 
-
 .PostCreator__CardContentBox {
   padding: 20px 30px;
   display: flex;
@@ -33,6 +32,15 @@
 .PostCreator__Button.PostCreator__Button {
   height: 30px;
   margin: 5px;
+  font-size: 12px;
+}
+
+.PostCreator__IconButton:active {
+  color: rgb(255, 158, 32);
+}
+
+.PostCreator__IconButton:hover {
+  color: rgb(255, 158, 32);
 }
 
 .PostCreator__ImagePreview {

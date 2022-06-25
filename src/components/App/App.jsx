@@ -5,17 +5,24 @@ import Progress from "@features/progress/Progress";
 import AppRouting from "@components/AppRouting/AppRouting";
 import Navbar from "../Navbar/Navbar";
 import Header from "@components/Header/Header";
+import ScrollProvider from '@features/scroll/ScrollProvider'
 
 function App () {
   return (
     <Auth>
     <Progress>
       <div className={classes.App__Container}>
-        <div className={classes.App_Content}>
-          <AppRouting />
+        <div className={classes.Header__Container}>
+          <Header />
         </div>
-        <Header />
-        <Navbar />
+        <div className={classes.App__ContentContainer}>
+          <Navbar />
+          <div className={classes.App__MainInfoContainer} id={classes.App__MainInfoContainer}>
+            <ScrollProvider scrollableTargetId={classes.App__MainInfoContainer}>
+              <AppRouting />
+            </ScrollProvider>
+          </div>
+        </div>
       </div>
     </Progress>
     </Auth>

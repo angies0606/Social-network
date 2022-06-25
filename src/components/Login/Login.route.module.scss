@@ -1,0 +1,31 @@
+.Login__Container.Login__Container {
+  min-width: 400px;
+  min-height: 300px;
+  max-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  justify-content: center;
+}
+
+.Login__FormBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+.Login__Field.Login__Field {
+  width: 300px;
+}
+
+.Login__ButtonContainer {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.Login__Button.Login__Button {
+  font-size: 12px;
+}

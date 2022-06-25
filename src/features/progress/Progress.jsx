@@ -1,11 +1,13 @@
 import classes from "./Progress.module.css";
-import { useProgress } from "./useProgress";
+import { useProgress, useProgressInAxiosInterceptors } from "./useProgress";
 import { ProgressContext } from "./progress.context";
 import LinearProgress from "@mui/material/LinearProgress";
 
 function Progress({children}) {
   const progress = useProgress();
-  
+
+  useProgressInAxiosInterceptors(progress.increment, progress.decrement);
+
   return (
     <>
       <ProgressContext.Provider value={progress}>

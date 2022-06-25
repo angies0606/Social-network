@@ -1,3 +1,4 @@
+import classes from './Menu.module.scss';
 import { useState, Children, cloneElement, useCallback, useEffect } from "react";
 import MuiMenu from "@mui/material/Menu";
 import IconButton from "@ui-kit/IconButton/IconButton";
@@ -49,7 +50,7 @@ function Menu({
         onClick={handleClick}
         disabled={isDisabled()}
       >
-        <MoreVertIcon />
+        <MoreVertIcon className={classes.Menu__IconButton}/>
       </IconButton>
       <MuiMenu
         id='basic-menu'

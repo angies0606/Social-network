@@ -1,4 +1,4 @@
-.CommentsCreator_Box {
+.CommentsCreator__Box {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -10,14 +10,14 @@
   background-color: white;
 }
 
-.CommentsCreator_UserCommentBox {
+.CommentsCreator__UserCommentBox {
   display: flex;
   align-items: center;
   min-height: 60px;
   flex: 1 0;
 }
 
-.CommentsCreator_Avatar {
+.CommentsCreator__Avatar {
   flex: 0 0 auto;
   align-self: flex-start;
   height: 30px;
@@ -25,14 +25,15 @@
   margin-top: 15px;
 }
 
-.CommentsCreator_TextField.CommentsCreator_TextField {
+.CommentsCreator__TextField.CommentsCreator__TextField {
   flex: 1 0;
   margin-left: 20px;
 }
 
-.CommentsCreator_Button.CommentsCreator_Button {
+.CommentsCreator__Button.CommentsCreator__Button {
   flex: 0 0 auto;
   align-self: flex-start;
   margin-top: 15px;
   margin-left: 20px;
+  font-size: 12px;
 }

@@ -1,0 +1,28 @@
+.ImageDialog__Title.ImageDialog__Title {
+  display: flex;
+  margin-bottom: 10px;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 17px;
+}
+
+.ImageDialog__Content.ImageDialog__Content {
+  display: flex;
+  font-size: 16px;
+  min-height: 50px;
+  min-width: 400px;
+  align-content: center;
+  flex-direction: column;
+}
+
+.ImageDialog__ButtonContainer.ImageDialog__ButtonContainer {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.ImageDialog__Button.ImageDialog__Button {
+  font-size: 12px;
+}

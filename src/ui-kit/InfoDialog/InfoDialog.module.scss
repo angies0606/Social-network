@@ -1,0 +1,22 @@
+.InfoDialog__Title.InfoDialog__Title {
+  display: flex;
+  margin-bottom: 10px;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+
+.InfoDialog__Content.InfoDialog__Content {
+  font-size: 16px;
+  min-height: 50px;
+  min-width: 400px;
+}
+
+.InfoDialog__ButtonContainer {
+  padding: 15px;
+}
+
+.InfoDialog__Button.InfoDialog__Button {
+  font-size: 12px;
+}
