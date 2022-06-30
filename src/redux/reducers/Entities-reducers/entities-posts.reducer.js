@@ -67,7 +67,7 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
       const newState = {
         ...state
       };
-      const comments = action.data.commentsData;
+      const comments = action.data;
 
       comments.forEach(comment => {
         if (newState[comment.post].comments?.includes(comment._id)) {
@@ -75,8 +75,7 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
         }
         newState[comment.post] = {
           ...newState[comment.post],
-          comments: [...(newState[comment.post].comments || []), comment._id, ],
-          nComments: action.data.nComments
+          comments: [...(newState[comment.post].comments || []), comment._id],
         }
       })
       return newState;

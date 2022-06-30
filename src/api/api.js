@@ -69,8 +69,10 @@ export const postsApi = {
   addComment(comment) {
     return instance.post(`posts/${comment.postId}/comment`, comment);
   },
-  getComments(postId) {
-    return instance.get(`posts/${postId}/comments`);
+  getComments(postId, params) {
+    return instance.get(`posts/${postId}/comments`, {
+      params
+    });
   },
   deleteComment(commentId) {
     return instance.delete(`comments/${commentId}`);

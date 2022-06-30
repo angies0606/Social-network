@@ -11,7 +11,7 @@ function entitiesCommentsReducer(state = initialState.entities.comments, action)
       const newState = {
         ...state
       };
-      const comments = action.data.commentsData;
+      const comments = action.data;
       comments.forEach(comment => {
         newState[comment._id] = comment
       })

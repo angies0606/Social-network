@@ -1,9 +1,3 @@
-/* .nav {
-  grid-area: n ;
-  background-color:rgb(243, 161, 53);
-  padding:20px;
-} */
-
 .Navbar__Box {
   display: flex;
   flex-direction: column;
@@ -15,6 +9,7 @@
   background-color: rgb(243, 161, 53);
   box-sizing: border-box;
 }
+
 .Navbar__Link {
   margin: 10px 0 10px 0;
   flex-wrap: nowrap;

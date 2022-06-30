@@ -2,7 +2,7 @@ import "@assets/styles/preloader.css";
 import classes from "./App.module.css";
 import Auth from "@features/auth/Auth";
 import Progress from "@features/progress/Progress";
-import AppRouting from "@components/AppRouting/AppRouting";
+import AppRouting from "@features/AppRouting/AppRouting";
 import Navbar from "../Navbar/Navbar";
 import Header from "@components/Header/Header";
 import ScrollProvider from '@features/scroll/ScrollProvider'

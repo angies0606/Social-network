@@ -7,7 +7,6 @@ const Navbar = () => {
 
   return (
     <nav className={classes.Navbar__Box}>
-      {/* <div className={`${classes.item} ${classes.active}`}></div> */}
       {!user
         ? null 
         : <>

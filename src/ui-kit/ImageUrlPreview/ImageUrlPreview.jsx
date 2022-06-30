@@ -13,9 +13,6 @@ function ImageUrlPreview ({
     return null;
   }
 
-  // let imagePreview =  <img src={imageUrl} className={classNames(classes.ImagePreview__Image, {
-  //                       [classes['ImagePreview__Image--post']]: isPostImage
-  //                     })}/>
   let imagePreview = <img src={imageUrl} className={classNames(classes.ImagePreview__Image, imageClassName)}/>
   return (
     <>

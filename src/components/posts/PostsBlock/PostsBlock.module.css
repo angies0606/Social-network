@@ -1,0 +1,59 @@
+.PostsBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.PostsBlock__Header {
+  flex: 1 0 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+  margin-top: 10px;
+  color: rgb(89, 85, 85);
+  font-weight: bolder;
+}
+
+.PostsBlock__Posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 680px;
+  margin: auto;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.PostsBlock__PostsCreatorCard {
+  width: 100%;
+  flex: 1 0 auto;
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.PostsBlock__TextField {
+  width: 100%;
+  height: 100%;
+}
+
+.PostsBlock__NoDataCard {
+  width: 100%;
+  flex: 1 0 auto;
+  max-height: 100%;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+}
+
+.PostsBlock__NoDataText {
+  color: rgb(151, 147, 147);
+}

@@ -1,0 +1,38 @@
+.Register__Container.Register__Container {
+  min-width: 400px;
+  min-height: 355px;
+  max-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  justify-content: space-between;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.Register__FormBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: space-between;
+  flex: 1 0;
+}
+
+.Register__Field.Register__Field {
+  width: 300px;
+}
+
+.Register__ButtonContainer {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.Register__Button.Register__Button {
+  font-size: 12px;
+}
+
+.Login__CardHeader {
+  flex: 0 0;
+}

@@ -40,25 +40,16 @@ const Header = () => {
                 <IconButton onClick={logout}>
                   <LogoutIcon className={classes.Header__LogoutIcon}/>
                 </IconButton>
-                {/* <Button 
-                  onClick={logout}
-                  className={classes.Button}
-                >
-                  Выйти
-                </Button> */}
-                {/* <button onClick={logout}>
-                  Выйти
-                </button> */}
               </div>
             </>
           : <>
               <div className={classes.Header__UserInfo}>
-                  <Avatar 
-                    userAvatar = {''}
-                    avatarHeight = {40}
-                    avatarWidth = {40}
-                    className={''}
-                  />
+                <Avatar 
+                  userAvatar = {''}
+                  avatarHeight = {40}
+                  avatarWidth = {40}
+                  className={''}
+                />
               </div>
               <div className={classes.Header__Options}>
                 <NavLink className={classNames(classes.Header__NavLink, classes.Header__LoginLink)} to={'/login'}>Войти</NavLink>
@@ -68,8 +59,6 @@ const Header = () => {
         }
       </div>
     </>
-    // <header className={classes.Header__Content}>
-    // </header>
   )
 }
 

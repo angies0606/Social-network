@@ -36,7 +36,6 @@ function ImageChanger ({
         title={title}
         closeDialog={onCloseDialog}
         onImageConfirm={onImageDataFormed}
-        isProgress={isProgress}
       />
     </>
   )
