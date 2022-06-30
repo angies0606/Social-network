@@ -1,15 +1,3 @@
-/* .App__Container {
-  display: grid;
-  margin: auto;
-  width: 100%;
-  grid-template-areas:
-  "h h"
-  "n c";
-  grid-template-rows: 60px 1fr;
-  grid-template-columns: 170px 1fr;
-  /* grid-gap: 10px; */
-/* } */ 
-
 .App__Container {
   height: 100%;
   display: flex;
@@ -43,13 +31,3 @@
   display: flex;
   justify-content: space-between;
 }
-
-/* .App__GlobalProgress.App__GlobalProgrees {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-} */
-
-
-

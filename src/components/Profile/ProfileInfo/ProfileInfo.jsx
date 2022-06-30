@@ -1,7 +1,7 @@
 import classes from "./ProfileInfo.module.scss";
 import Avatar from "@ui-kit/Avatar/Avatar";
 import Preloader from "../../../ui-kit/Preloader/Preloader";
-import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+import ProfileStatusWithHooks from "../ProfileStatus/ProfileStatusWithHooks";
 import DefaultBanner from "@assets/images/defaultBanner.jpg";
 
 const ProfileInfo = ({
@@ -26,7 +26,6 @@ const ProfileInfo = ({
       }
       <div className={classes.ProfileInfo__Avatar}>
         <Avatar
-          // className={classes.ProfileInfo__Avatar}
           userAvatar={profileUser.avatar}
           avatarHeight={150}
           avatarWidth={150}

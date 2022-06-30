@@ -1,4 +1,5 @@
 import classes from "./ConfirmDialog.module.scss";
+import { useProgressContext } from "@features/progress/progress.context";
 import MUIDialog from "@mui/material/Dialog";
 import MUIDialogActions from "@mui/material/DialogActions";
 import MUIDialogContent from "@mui/material/DialogContent";
@@ -8,11 +9,11 @@ import Button from "@ui-kit/Button/Button";
 function ConfirmDialog ({
   isShown,
   title,
-  isProgress,
   onConfirm,
   onCancel,
   message
 }) {
+  const {isProgress} = useProgressContext();
   return (
     <div>
       <MUIDialog

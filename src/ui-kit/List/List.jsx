@@ -7,11 +7,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 function List({
   className = null,
   items,
-  nextMethod,
-  isHasMore,
-  scrollableTargetId,
+  nextMethod = null,
+  isHasMore = null,
+  scrollableTargetId = null,
   itemBuilder,
-  noData
+  noData = null
 }) {
   let isNoDataShown = !isHasMore && items.length === 0;
   return (

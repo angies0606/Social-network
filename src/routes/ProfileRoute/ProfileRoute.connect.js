@@ -5,9 +5,7 @@ import {setUserActionCreator} from '@redux/actions/users.actions';
 
 let mapStateToProps = (state) => ({ 
   profileUser: getUserPageUser(state)
-  // status: state.userData.status,
-  // authUserId: state.auth.userId,
-  // isAuth: state.auth.isAuth
+  // status: state.userData.status
 });
 
 const mapDispatchToProps = (dispatch) => {

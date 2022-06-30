@@ -2,7 +2,7 @@
 import {useEffect} from "react";
 import {useAuthContext} from "@features/auth/auth.context";
 import { useParams } from "react-router-dom";
-import Profile from "@components/Profile/Profile";
+import Profile from "@components/profile/ProfilePage/Profile";
 import ProfileRouteConnect from "./ProfileRoute.connect";
 
 function ProfileRoute({
@@ -30,7 +30,6 @@ function ProfileRoute({
   return (
     <>
       <Profile
-        // {...props}
         profileUser={profileUser}
         isForCurrentUser={authedUserId === profileUser._id}
         // status={this.props.status}

@@ -1,5 +1,6 @@
 import classes from './Menu.module.scss';
 import { useState, Children, cloneElement, useCallback, useEffect } from "react";
+import { useProgress } from "@features/progress/useProgress.js";
 import MuiMenu from "@mui/material/Menu";
 import IconButton from "@ui-kit/IconButton/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -9,38 +10,30 @@ function Menu({
   changeMode
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isMenuInProgress, setIsMenuInProgress] = useState(false);
-  //TODO: можно ли переписать на общий прогресс?
+  const {increment, decrement, isProgress} = useProgress();
+
   useEffect(() => {
     if(changeMode) {
-      startProgress();
+      increment();
     }
-    else endProgress();
+    else decrement();
   },[changeMode])
-
-  const startProgress = useCallback(() => {
-    setIsMenuInProgress(true);
-  }, [setIsMenuInProgress]);
-
-  const endProgress = useCallback(() => {
-    setIsMenuInProgress(false);
-  }, [setIsMenuInProgress]);
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
-    startProgress();
+    increment();
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
     if(!changeMode) {
-      endProgress()
+      decrement();
     }
   };
 
   const isDisabled = () => {
-    return isMenuInProgress;
+    return isProgress;
   };
 
   return (

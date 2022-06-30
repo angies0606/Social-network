@@ -24,7 +24,6 @@ function SelectFile ({
       return;
     }
     return cloneElement(children, {
-      // className: classNames(textField.props.className, classes.PostCreator__TextField),
       onClick: (e) => {
         children.props?.onClick?.(e);
         if(!post) {

@@ -9,7 +9,6 @@ function Avatar ({
   return (
     <MUIAvatar  
       src={userAvatar}
-      // className={className}
       sx={{ width: avatarWidth, height: avatarHeight}}
     />
   )

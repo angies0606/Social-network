@@ -1,8 +1,8 @@
 import classes from "./Settings.module.scss";
 import { useState } from "react";
 import { usersApi } from '@api/api';
-import { useProgressContext } from "@features/progress/progress.context";
 import { useAuthContext } from "@features/auth/auth.context";
+import { useProgress } from "@features/progress/useProgress.js";
 import Avatar from "@ui-kit/Avatar/Avatar";
 import Button from "@ui-kit/Button/Button";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
@@ -20,26 +20,34 @@ const Settings = ({
   userProfileId,
   changeProfileImage
 }) => {
-  //TODO: сделать стили в Настройках
   const {changeUserData} = useAuthContext();
-  const {isProgress} = useProgressContext();
+  const {increment: incrementAvatarProgress, decrement: decrementAvatarProgress, isProgress: isAvatarProgress} = useProgress();
+  const {increment: incrementBannerProgress, decrement: decrementBannerProgress, isProgress: isBannerProgress} = useProgress();
   const [isAvatarDialogOpened, setIsAvatarDialogOpened] = useState(false);
   const [isBannerDialogOpened, setIsBannerDialogOpened] = useState(false);
 
   const isTheSameUser = authedUser._id === userProfileId;
 
   const onBannerChange = (formData) => {
+    incrementBannerProgress();
     return usersApi.changeUserBanner(formData)
       .then(user => {
         onChangeUserImages(user);
       })
+      .finally(() => {
+        decrementBannerProgress();
+      })
   };
 
   const onAvatarChange = (formData) => {
+    incrementAvatarProgress();
     return usersApi.changeUserAvatar(formData)
-    .then(user => {
-      onChangeUserImages(user);
-    })
+      .then(user => {
+        onChangeUserImages(user);
+      })
+      .finally(() => {
+        decrementAvatarProgress();
+      })
   };
 
   const onChangeUserImages = (data) => {
@@ -50,19 +58,27 @@ const Settings = ({
   };
 
   const onBannerDeleteConfirm = () => {
+    incrementBannerProgress();
     return usersApi.deleteUserBanner(authedUser.banner)
-    .then(user => {
-      onChangeUserImages(user);
-      setIsBannerDialogOpened(false);
-    })
+      .then(user => {
+        onChangeUserImages(user);
+        setIsBannerDialogOpened(false);
+      })
+      .finally(() => {
+        decrementBannerProgress();
+      })
   };
 
   const onAvatarDeleteConfirm = () => {
+    incrementAvatarProgress();
     return usersApi.deleteUserAvatar(authedUser.avatar)
-    .then(user => {
-      onChangeUserImages(user);
-      setIsAvatarDialogOpened(false);
-    })
+      .then(user => {
+        onChangeUserImages(user);
+        setIsAvatarDialogOpened(false);
+      })
+      .finally(() => {
+        decrementBannerProgress();
+      })
   };
 
   return (
@@ -72,7 +88,6 @@ const Settings = ({
       </div>
       <div className={classes.Settings__Avatar}>
         <Avatar
-          // className={classes.ProfileInfo__Avatar}
           userAvatar={authedUser.avatar}
           avatarHeight={150}
           avatarWidth={150}
@@ -82,11 +97,11 @@ const Settings = ({
         <ImageChanger
           title={TITLES.AVATAR}
           onImageChange={onAvatarChange}
-          isProgress={isProgress}
+          isProgress={isAvatarProgress}
         >
           <Button 
             startIcon={<AddPhotoAlternateIcon />}
-            disabled={isProgress}
+            disabled={isAvatarProgress}
             color='success'
             variant='outlined'
             className={classes.Settings__Button}
@@ -96,7 +111,7 @@ const Settings = ({
         </ImageChanger>
         {authedUser.avatar && 
           <Button 
-            disabled={isProgress}
+            disabled={isAvatarProgress}
             onClick={() => setIsAvatarDialogOpened(true)}
             color='success'
             variant='outlined'
@@ -119,11 +134,11 @@ const Settings = ({
         <ImageChanger
           title={TITLES.BANNER}
           onImageChange={onBannerChange}
-          isProgress={isProgress}
+          isProgress={isBannerProgress}
         >
           <Button 
             startIcon={<AddPhotoAlternateIcon />}
-            disabled={isProgress}
+            disabled={isBannerProgress}
             color='success'
             variant='outlined'
             className={classes.Settings__Button}
@@ -133,7 +148,7 @@ const Settings = ({
         </ImageChanger>
         {authedUser.banner && 
           <Button 
-            disabled={isProgress}
+            disabled={isBannerProgress}
             onClick={() => setIsBannerDialogOpened(true)}
             color='success'
             variant='outlined'
@@ -147,7 +162,6 @@ const Settings = ({
         isShown={isAvatarDialogOpened}
         title={"Удаление аватара"}
         message={"Вы действительно хотите удалить аватар?"}
-        isProgress={isProgress}
         onCancel={() => {setIsAvatarDialogOpened(false)}}
         onConfirm={onAvatarDeleteConfirm}
       />
@@ -155,7 +169,6 @@ const Settings = ({
         isShown={isBannerDialogOpened}
         title={"Удаление баннера"}
         message={"Вы действительно хотите удалить баннер?"}
-        isProgress={isProgress}
         onCancel={() => {setIsBannerDialogOpened(false)}}
         onConfirm={onBannerDeleteConfirm}
       />
