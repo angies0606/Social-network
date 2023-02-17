@@ -62,6 +62,7 @@ function useAuth() {
       })
       .catch((e) => {
         dispatch(setUnauthedActionCreator());
+        throw e;
       });
   }, []);
 

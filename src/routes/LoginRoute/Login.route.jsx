@@ -1,5 +1,6 @@
 // import classes from "@components/common/FormsControls/FormsControls.module.css";
 import classes from "./Login.route.module.scss";
+import { useState } from "react";
 import { useAuthContext } from "@features/auth/auth.context";
 import { useProgressContext } from "@features/progress/progress.context";
 import { Field, reduxForm } from "redux-form";
@@ -7,6 +8,7 @@ import { validate } from "@utils/validators/validators";
 import { Input } from "@features/FormsControls/FormsControls";
 import { Card, CardContent, CardHeader } from "@mui/material";
 import Button from "@ui-kit/Button/Button";
+import InfoDialog from "@ui-kit/InfoDialog/InfoDialog";
 
 const LoginForm = (props) => {
   const {isProgress} = useProgressContext();
@@ -64,19 +66,38 @@ const LoginReduxForm = reduxForm({
 
 const Login = () => {
   const {login} = useAuthContext();
+  const {isProgress} = useProgressContext();
+  const [isShown, setIsShown] = useState(false);
 
   const onSubmit = (formData) => {
-    login(formData.login, formData.password);
+    login(formData.login, formData.password)
+    .catch((error) => {
+      setIsShown(true);
+    });
   }
 
+  const onClose = () => {
+    setIsShown(false);
+  };
+
   return (
-    <Card className={classes.Login__Container}>
-      <CardHeader title={'Войти'} className={classes.Login__CardHeader}>
-      </CardHeader>
-      <CardContent className={classes.Login__FormBox}>
-        <LoginReduxForm onSubmit={onSubmit} />
-      </CardContent>
-    </Card>
+    <>
+      <Card className={classes.Login__Container}>
+        <CardHeader title={'Войти'} className={classes.Login__CardHeader}>
+        </CardHeader>
+        <CardContent className={classes.Login__FormBox}>
+          <LoginReduxForm onSubmit={onSubmit} />
+        </CardContent>
+      </Card>
+
+      <InfoDialog 
+        isShown={isShown}
+        title={'Ошибка ввода'}
+        isProgress={isProgress}
+        onClose={onClose}
+        message={'Неправильно введен логин или пароль'}
+      />
+    </>
   )
 }
 
