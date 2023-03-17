@@ -5,7 +5,7 @@ import Progress from "@features/progress/Progress";
 import AppRouting from "@features/AppRouting/AppRouting";
 import Navbar from "../Navbar/Navbar";
 import Header from "@components/Header/Header";
-import ScrollProvider from '@features/scroll/ScrollProvider'
+import ScrollProvider from '@features/scroll/ScrollProvider';
 
 function App () {
   return (
