@@ -33,12 +33,7 @@ const PostsBlock = ({
 
     return postsApi.getPosts(profileUser._id, {page, limit: pageSize, sort: {createdAt: -1}})
       .then(response => {
-        addPosts(response.items.map(post => {
-          return {
-            ...post,
-            comments: []
-          }
-        }));
+        addPosts(response.items);
         setIsHasMore(response.hasNextPage);
         setPage(page + 1);
       });

@@ -19,7 +19,7 @@ function List({
       {isNoDataShown 
         ? noData
         : <InfiniteScroll
-            dataLength={items.length}
+            dataLength={(items || []).length}
             next={nextMethod}
             hasMore={isHasMore}
             scrollableTarget={scrollableTargetId}
