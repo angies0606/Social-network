@@ -10,7 +10,7 @@ let mapStateToProps = (state, ownProps) => {
   return {
     comments: state.entities.posts[postId].comments?.map(commentId => {
       return state.entities.comments[commentId];
-    })
+    }) || []
   }
 };
 
