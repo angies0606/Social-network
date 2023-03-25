@@ -15,12 +15,13 @@ function CommentsBlock ({
   comments,
   expanded,
   postId,
+  post,
   putComments,
   putOneComment,
   deleteComment
 }) {
   const {state: {user: authedUser}} = useAuthContext();
-  const [isHasMore, setIsHasMore] = useState(true);
+  const [isHasMore, setIsHasMore] = useState(false);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -74,16 +75,17 @@ function CommentsBlock ({
           </div>
         )}
       />
-      {isHasMore 
-        && 
-        <div className={classes.CommentsBlock__ButtonBox}>
-          <Button 
-            onClick={loadNextPage}
-            sx={{fontWeight: 'bolder'}}
-          >
-            Показать еще
-          </Button>
-        </div>
+      {isHasMore && post.nComments > comments.length
+        ?
+          <div className={classes.CommentsBlock__ButtonBox}>
+            <Button 
+              onClick={loadNextPage}
+              sx={{fontWeight: 'bolder'}}
+            >
+              Показать еще
+            </Button>
+          </div>
+        : null
       }
     
     <Separator />

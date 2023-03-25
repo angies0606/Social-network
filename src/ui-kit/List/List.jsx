@@ -14,16 +14,13 @@ function List({
   noData = null
 }) {
   let isNoDataShown = !isHasMore && items.length === 0;
-  function onNext(...args) {
-    nextMethod(...args)
-  } 
   return (
     <div className={classNames(classes.List, className)}>
       {isNoDataShown 
         ? noData
         : <InfiniteScroll
             dataLength={(items || []).length}
-            next={onNext}
+            next={nextMethod}
             hasMore={isHasMore}
             scrollableTarget={scrollableTargetId}
             scrollThreshold='300px'

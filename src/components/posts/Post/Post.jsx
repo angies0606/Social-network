@@ -290,6 +290,7 @@ const Post = ({
         <Collapse in={expanded} timeout='auto' unmountOnExit>
           <CommentsBlockConnected 
             postId={post._id}
+            post={post}
             expanded={expanded}
           />
         </Collapse>

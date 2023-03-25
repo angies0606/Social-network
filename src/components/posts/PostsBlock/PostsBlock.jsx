@@ -24,7 +24,7 @@ const PostsBlock = ({
 }) => {
   const {state: {user: authedUser}} = useAuthContext();
   const {isProgress} = useProgressContext();
-  const [isHasMore, setIsHasMore] = useState(true);
+  const [isHasMore, setIsHasMore] = useState(false);
   const [page, setPage] = useState(1);
   const scrollableTargetId = useScrollContext();
 

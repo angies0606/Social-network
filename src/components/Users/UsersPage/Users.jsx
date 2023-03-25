@@ -12,7 +12,7 @@ function Users ({
   addUsers,
   users
 }) {
-  const [isHasMore, setIsHasMore] = useState(true);
+  const [isHasMore, setIsHasMore] = useState(false);
   const [page, setPage] = useState(1);
   const scrollableTargetId = useScrollContext();
   const [isUsersListReady, setIsUsersListReady] = useState(false);
