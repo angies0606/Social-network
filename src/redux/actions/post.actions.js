@@ -54,6 +54,14 @@ export function putCommentsActionCreator(data) {
   }
 }
 
+export const PUT_ONE_COMMENT = 'PUT_ONE_COMMENT';
+export function putOneCommentActionCreator(data) {
+  return {
+    type: PUT_ONE_COMMENT,
+    data
+  }
+}
+
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export function deleteCommentActionCreator(data) {
   return {

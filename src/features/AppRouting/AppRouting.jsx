@@ -4,7 +4,7 @@ import RegisterRoute from "@routes/RegisterRoute/Register.route";
 import ProfileRoute from "@routes/ProfileRoute/ProfileRoute";
 import Login from "../../routes/LoginRoute/Login.route";
 import SettingsConnected from "@components/Settings/SettingsConnected.js";
-import UsersConnected from "@components/users/UsersPage/UsersConnected.js";
+import UsersConnected from "@components/Users/UsersPage/UsersConnected.js";
 
 
 function AppRouting() {

@@ -94,7 +94,7 @@ const Post = ({
                 .then(() => {
                   return uploadImageRequest();
                 })
-            : null
+            : getImageRequest()
             ).then(imageUrl => {
               editedPost.image = imageUrl
               return editPost(editedPost)
@@ -171,12 +171,20 @@ const Post = ({
       })
   };
 
+  const getImageRequest = () => {
+    return postsApi.getImage(post._id)
+    .then(response => {
+      return response.imageUrl
+    })
+  };
+
   const deletePostImageRequest = () => {
     return postsApi.deleteImage(post._id)
       .then(() => {
         return '';
       })
   };
+
 
   const onCancelEdit = () => {
     setEditingImageUrl(null);
@@ -232,7 +240,7 @@ const Post = ({
             </div> : null
           }
          
-        <CardContent className={classes.Post__CardContent} >
+        <CardContent className={classes.Post__CardContent}>
           {!changeMode &&
             <Typography variant='body1' className={classes.Post__PostText}>
               {post.text}

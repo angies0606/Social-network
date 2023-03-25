@@ -2,7 +2,7 @@
 import {useEffect} from "react";
 import {useAuthContext} from "@features/auth/auth.context";
 import { useParams } from "react-router-dom";
-import Profile from "@components/profile/ProfilePage/Profile";
+import Profile from "@components/Profile/ProfilePage/Profile";
 import ProfileRouteConnect from "./ProfileRoute.connect";
 
 function ProfileRoute({

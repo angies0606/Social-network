@@ -16,6 +16,7 @@ function CommentsBlock ({
   expanded,
   postId,
   putComments,
+  putOneComment,
   deleteComment
 }) {
   const {state: {user: authedUser}} = useAuthContext();
@@ -32,7 +33,7 @@ function CommentsBlock ({
   const loadNextPage = useCallback(() => {
     postsApi.getComments(postId, {page, limit: pageSize, sort: {createdAt: 1}})
           .then(response => {
-            putComments(response.items)
+            putComments(response)
             setIsHasMore(response.hasNextPage);
             setPage(page + 1);
           })
@@ -44,7 +45,7 @@ function CommentsBlock ({
       ...commentData
     })
       .then(response => {
-        putComments([response]);
+        putOneComment(response);
       })
   };
 

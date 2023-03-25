@@ -77,6 +77,9 @@ export const postsApi = {
   deleteComment(commentId) {
     return instance.delete(`comments/${commentId}`);
   },
+  getImage(postId) {
+    return instance.get(`posts/${postId}/image`);
+  },
   deleteImage(postId) {
     return instance.delete(`posts/${postId}/image`);
   }

@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import {
   putCommentsActionCreator,
+  putOneCommentActionCreator,
   deleteCommentActionCreator,
 } from "@redux/actions/post.actions";
 import CommentsBlock from "./CommentsBlock";
@@ -18,6 +19,9 @@ let mapDispatchToProps = (dispatch) => {
   return {
     putComments: (data) => {
       dispatch(putCommentsActionCreator(data));
+    },
+    putOneComment: (data) => {
+      dispatch(putOneCommentActionCreator(data));
     },
     deleteComment: (comment) => {
       dispatch(deleteCommentActionCreator(comment));

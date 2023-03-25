@@ -77,7 +77,7 @@ const Settings = ({
         setIsAvatarDialogOpened(false);
       })
       .finally(() => {
-        decrementBannerProgress();
+        decrementAvatarProgress();
       })
   };
 

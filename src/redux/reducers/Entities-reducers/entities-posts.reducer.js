@@ -7,7 +7,8 @@ import {
   DELETE_COMMENT,
   SET_POSTS,
   ADD_POSTS,
-  NEW_POST
+  NEW_POST,
+  PUT_ONE_COMMENT
 } from "@redux/actions/post.actions.js";
 
 function entitiesPostsReducer(state = initialState.entities.posts, action) {
@@ -67,7 +68,7 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
       const newState = {
         ...state
       };
-      const comments = action.data;
+      const comments = action.data.commentsData;
 
       comments.forEach(comment => {
         if (newState[comment.post].comments?.includes(comment._id)) {
@@ -75,9 +76,22 @@ function entitiesPostsReducer(state = initialState.entities.posts, action) {
         }
         newState[comment.post] = {
           ...newState[comment.post],
-          comments: [...(newState[comment.post].comments || []), comment._id],
+          comments: [...(newState[comment.post].comments || []), comment._id]
         }
       })
+      return newState;
+    }
+
+    case PUT_ONE_COMMENT: {
+      const newState = {
+        ...state
+      };
+      const comment = action.data.commentData;
+      newState[comment.post] = {
+        ...newState[comment.post],
+        comments: [...(newState[comment.post].comments || []), comment._id],
+        nComments: action.data.nComments
+      }
       return newState;
     }
     
