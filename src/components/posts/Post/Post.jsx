@@ -1,4 +1,3 @@
-
 import classes from "./Post.module.scss";
 import classNames from "classnames";
 import { useState, useMemo, useEffect } from "react";
