@@ -11,9 +11,10 @@ function List({
   isHasMore = null,
   scrollableTargetId = null,
   itemBuilder,
-  noData = null
+  noData = null,
+  isListDataReady
 }) {
-  let isNoDataShown = !isHasMore && items.length === 0;
+  let isNoDataShown = !isHasMore && items.length === 0 && isListDataReady;
   return (
     <div className={classNames(classes.List, className)}>
       {isNoDataShown 

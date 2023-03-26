@@ -32,15 +32,14 @@ function Users ({
     setPage(1);
     loadNextPage();
   }, []);
-
-  const isShowNoData = users?.length === 0 && isUsersListReady;
-  
+ 
   return (
     <div className={classes.Users__Container}>
       <List
         items={users}
         nextMethod={loadNextPage}
         isHasMore={isHasMore}
+        isListDataReady={isUsersListReady}
         scrollableTargetId={scrollableTargetId}
         itemBuilder={user => (
           <UserInfo 

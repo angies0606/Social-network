@@ -25,6 +25,7 @@ const PostsBlock = ({
   const {state: {user: authedUser}} = useAuthContext();
   const {isProgress} = useProgressContext();
   const [isHasMore, setIsHasMore] = useState(false);
+  const [isPostsDataReady, setPostsDataReady] = useState(false);
   const [page, setPage] = useState(1);
   const scrollableTargetId = useScrollContext();
 
@@ -33,6 +34,7 @@ const PostsBlock = ({
 
     return postsApi.getPosts(profileUser._id, {page, limit: pageSize, sort: {createdAt: -1}})
       .then(response => {
+        setPostsDataReady(true);
         addPosts(response.items);
         setIsHasMore(response.hasNextPage);
         setPage(page + 1);
@@ -99,6 +101,7 @@ const PostsBlock = ({
             items={posts}
             nextMethod={loadNextPage}
             isHasMore={isHasMore}
+            isListDataReady={isPostsDataReady}
             scrollableTargetId={scrollableTargetId}
             itemBuilder={post => (
               <PostConnected 
