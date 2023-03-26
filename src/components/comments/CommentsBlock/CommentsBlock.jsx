@@ -21,6 +21,7 @@ function CommentsBlock ({
   deleteComment
 }) {
   const {state: {user: authedUser}} = useAuthContext();
+  const [isCommentsDataReady, setIsCommentsDataReady] = useState(false);
   const [isHasMore, setIsHasMore] = useState(false);
   const [page, setPage] = useState(1);
 
@@ -34,6 +35,7 @@ function CommentsBlock ({
   const loadNextPage = useCallback(() => {
     postsApi.getComments(postId, {page, limit: pageSize, sort: {createdAt: 1}})
           .then(response => {
+            setIsCommentsDataReady(true);
             putComments(response)
             setIsHasMore(response.hasNextPage);
             setPage(page + 1);
@@ -64,6 +66,7 @@ function CommentsBlock ({
       <List
         items={comments}
         isHasMore={isHasMore}
+        isListDataReady={isCommentsDataReady}
         itemBuilder={comment => (
           <div key={comment._id} className={classes.CommentsBlock__CommentContainer}>
             <Separator />
